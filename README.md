@@ -1,4 +1,5 @@
 <div align="center"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/hyperion.png" width="390" /></div>
+<br />
 
 Experimental framework for working with IIIF in JavaScript and Typescript.
 
