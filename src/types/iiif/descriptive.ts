@@ -14,7 +14,7 @@ export type DescriptiveProperties = {
     label: InternationalString | null;
     metadata: MetadataItem[];
     summary: InternationalString | null;
-    requiredStatement: InternationalString | null;
+    requiredStatement: MetadataItem | null;
     rights: string | null;
     navDate: string | null;
     language: string[];
