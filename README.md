@@ -1,5 +1,6 @@
-# Hyperion
-Experimental framework for IIIF in JavaScript and Typescript.
+<img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/hyperion.png" width="390" />
+
+Experimental framework for working with IIIF in JavaScript and Typescript.
 
 Aims to provide safe typings for valid Presentation 3 JSON-LD and normalization step (also with typings). 
 
