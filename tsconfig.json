@@ -17,8 +17,8 @@
       "es2016",
       "es2017.object"
     ],
-    "target": "es5", // "es2015" for ES6+ engines
-    "module": "commonjs", // "es2015" for tree-shaking
+    "target": "es2015", // "es2015" for ES6+ engines
+    "module": "es2015", // "es2015" for tree-shaking
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,

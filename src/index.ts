@@ -1,19 +1,18 @@
 import {Collection} from './types/resources/collection';
-import {ResourceType} from './types/iiif/technical';
 
 const collection: Collection = {
     id: 'http://...',
-    type: ResourceType.Collection,
+    type: 'Collection',
     label: {en: ['testing']},
     items: [
         {
             id: 'http://...',
-            type: ResourceType.Manifest,
+            type: 'Manifest',
             label: {en: ['my manifest']},
             items: [
                 {
                     id: 'http://...',
-                    type: ResourceType.Canvas,
+                    type: 'Canvas',
                     label: {en: ['my canvas']},
                 },
             ],

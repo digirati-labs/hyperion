@@ -374,7 +374,7 @@ canvasReference.define({
 
 const preprocess = buildProcess([addMissingIds]);
 
-const normalizeResource = (rawResource, customSchema = resource) =>
+const normalizeResource = (rawResource: any, customSchema = resource) =>
     normalize(preprocess(rawResource), customSchema);
 
 export {

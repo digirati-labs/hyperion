@@ -1,16 +1,15 @@
-export enum ResourceType {
-    Collection = 'Collection',
-    Manifest = 'Manifest',
-    Canvas = 'Canvas',
-    Annotation = 'Annotation',
-    AnnotationPage = 'AnnotationPage',
-    AnnotationCollection = 'AnnotationCollection',
-    Range = 'Range',
-    ContentResource = 'ContentResource',
-    Choice = 'Choice',
-    CanvasReference = 'CanvasReference',
-    Service = 'Service',
-}
+type ResourceType =
+    'Collection' |
+    'Manifest' |
+    'Canvas' |
+    'Annotation' |
+    'AnnotationPage' |
+    'AnnotationCollection' |
+    'Range' |
+    'ContentResource' |
+    'Choice' |
+    'CanvasReference' |
+    'Service';
 
 export enum ViewingDirection {
     LeftToRight = 'left-to-right',
