@@ -243,7 +243,7 @@ type Agent = {
 };
 
 type AnnotationW3C = OtherProperties & {
-  '@context': 'http://www.w3.org/ns/anno.jsonld';
+  '@context'?: 'http://www.w3.org/ns/anno.jsonld';
   body?: AnnotationBody | AnnotationBody[];
   bodyValue?: string;
   target?: AnnotationTarget | AnnotationTarget[];
