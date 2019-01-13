@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./", // enables project relative paths config
+    "outDir": "dist/", // target for compiled files
+    "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
+    "esModuleInterop": true,
+    "allowJs": false, // include js files
+    "checkJs": false, // typecheck js files
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true, // importing helper functions from tslib
+    "noEmitHelpers": true, // disable emitting inline helper functions
+    "lib": [
+      "dom",
+      "es2016",
+      "es2017.object"
+    ],
+    "target": "es2015", // "es2015" for ES6+ engines
+    "module": "es2015", // "es2015" for tree-shaking
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "pretty": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
