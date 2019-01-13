@@ -6,6 +6,8 @@ import princetonManifest from '../../../fixtures/2-to-3-converter/manifests/prin
 import ncsuManifest from '../../../fixtures/2-to-3-converter/manifests/ncsu-libraries-manifest.json';
 import nlwNewspaper from '../../../fixtures/2-to-3-converter/manifests/nlw-newspaper-manifest.json';
 import nlwManuscript from '../../../fixtures/2-to-3-converter/manifests/nlw-manuscript-manifest.json';
+import { matchAnnotationBody } from '../../../src/types/resources/annotation';
+import { ContentResource } from '../../../src/types/resources/contentResource';
 
 describe('types/manifest', () => {
   describe('Manifests converted from Presentation 2', () => {
@@ -27,6 +29,43 @@ describe('types/manifest', () => {
           id: 'https://api.bl.uk/text/plain/ark:/81055/vdc_00000004216B.0x000001',
           label: { '@none': ['Plain text OCR'] },
           type: 'Dataset',
+        },
+      ]);
+
+      const mapper = matchAnnotationBody<ContentResource>({
+        ContentResource: (p1: ContentResource) => p1,
+      });
+
+      const body = manifest.items[0].items![0].items![0].body;
+
+      expect(body).toBeDefined();
+
+      if (typeof body === 'undefined') {
+        throw new Error('Body is not defined');
+      }
+
+      expect(mapper(body)).toEqual([
+        {
+          format: 'image/jpg',
+          id: 'https://api.bl.uk/image/iiif/ark:/81055/vdc_00000004216A.0x000001/full/max/0/default.jpg',
+          service: [
+            {
+              height: 2920,
+              id: 'https://api.bl.uk/image/iiif/ark:/81055/vdc_00000004216A.0x000001',
+              profile: [
+                'http://iiif.io/api/image/2/level2.json',
+                {
+                  qualities: ['gray', 'color', 'bitonal'],
+                  supports: ['profileLinkHeader', 'rotationArbitrary', 'regionSquare', 'mirroring'],
+                },
+              ],
+              protocol: 'http://iiif.io/api/image',
+              tiles: [{ scaleFactors: [1, 2, 4, 8, 16], width: 256 }],
+              type: 'ImageService2',
+              width: 2181,
+            },
+          ],
+          type: 'Image',
         },
       ]);
     });
