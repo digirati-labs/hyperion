@@ -9,25 +9,21 @@ getSeeAlso,
   getSupplementary,
  */
 
-import {Reference, SingleReference} from '../reference';
+import { Reference, SingleReference } from '../reference';
+import { ContentResource } from '../resources/contentResource';
+import { Service } from '../resources/service';
+import { Canvas } from '../resources/canvas';
+import { AnnotationCollection } from '../resources/annotationCollection';
 
 export type LinkingProperties = {
-    // @todo see also
-    seeAlso: [any];
-    // @todo service
-    service: [any];
-    // @todo logo
-    logo: [any];
-    // @todo homepage
-    homepage: [any];
-    // @todo rendering
-    rendering: [any];
-    // @todo part of
-    partOf: [any];
-    // @todo start
-    start: [any];
-    // @todo supplementary
-    supplementary: [any];
+  seeAlso: ContentResource[];
+  service: Service[];
+  logo: ContentResource[];
+  homepage: ContentResource[];
+  rendering: ContentResource[];
+  partOf: Array<ContentResource | Canvas | AnnotationCollection>;
+  start: Canvas[];
+  supplementary: ContentResource[];
 };
 
 export type LinkingNormalized = {

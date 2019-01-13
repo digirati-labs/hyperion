@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "allowJs": false, // include js files
     "checkJs": false, // typecheck js files
-    "declaration": false, // don't emit declarations
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,

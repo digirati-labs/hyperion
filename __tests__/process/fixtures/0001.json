@@ -5,7 +5,11 @@
   ],
   "id": "https://example.org/iiif/book1/manifest",
   "type": "Manifest",
-  "label": { "en": [ "Image 1" ] },
+  "label": {
+    "en": [
+      "Image 1"
+    ]
+  },
   "items": [
     {
       "id": "https://example.org/iiif/book1/canvas/p1",
