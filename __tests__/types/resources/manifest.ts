@@ -6,8 +6,8 @@ import princetonManifest from '../../../fixtures/2-to-3-converter/manifests/prin
 import ncsuManifest from '../../../fixtures/2-to-3-converter/manifests/ncsu-libraries-manifest.json';
 import nlwNewspaper from '../../../fixtures/2-to-3-converter/manifests/nlw-newspaper-manifest.json';
 import nlwManuscript from '../../../fixtures/2-to-3-converter/manifests/nlw-manuscript-manifest.json';
-import { matchAnnotationBody } from '../../../src/types/resources/annotation';
 import { ContentResource } from '../../../src/types/resources/contentResource';
+import { matchAnnotationBody } from '../../../src/pattern-matching/annotation';
 
 describe('types/manifest', () => {
   describe('Manifests converted from Presentation 2', () => {
