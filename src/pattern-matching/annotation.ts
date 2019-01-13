@@ -18,7 +18,7 @@ export function matchAnnotationBody<T>(p: AnnotationBodyPattern<T>): (a?: Annota
       return p.String ? [p.String(a as string)] : [];
     }
 
-    const items: AnnotationBody[] = a instanceof Array ? a : [a];
+    const items: AnnotationBody[] = Array.isArray(a) ? a : [a];
 
     return items
       .map(item => {
