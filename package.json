@@ -10,7 +10,7 @@
   "scripts": {
     "build": "microbundle src/index.ts -o dist/hyperion-framework.js",
     "start": "microbundle watch",
-    "test": "jest"
+    "test": "jest --verbose --coverage"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
