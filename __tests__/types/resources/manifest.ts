@@ -36,15 +36,7 @@ describe('types/manifest', () => {
         ContentResource: (p1: ContentResource) => p1,
       });
 
-      const body = manifest.items[0].items![0].items![0].body;
-
-      expect(body).toBeDefined();
-
-      if (typeof body === 'undefined') {
-        throw new Error('Body is not defined');
-      }
-
-      expect(mapper(body)).toEqual([
+      expect(mapper(manifest.items[0].items![0].items![0].body)).toEqual([
         {
           format: 'image/jpg',
           id: 'https://api.bl.uk/image/iiif/ark:/81055/vdc_00000004216A.0x000001/full/max/0/default.jpg',

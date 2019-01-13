@@ -9,12 +9,16 @@ export interface AnnotationBodyPattern<T> {
   OtherContentResource?: (o: ContentResource) => T;
 }
 
-export function matchAnnotationBody<T>(p: AnnotationBodyPattern<T>): (a: AnnotationBody | AnnotationBody[]) => T[] {
-  return (a: AnnotationBody | AnnotationBody[]): T[] => {
+export function matchAnnotationBody<T>(p: AnnotationBodyPattern<T>): (a?: AnnotationBody | AnnotationBody[]) => T[] {
+  return (a?: AnnotationBody | AnnotationBody[]): T[] => {
+    if (typeof a === 'undefined' || a === null) {
+      return [];
+    }
     if (typeof a === 'string') {
       return p.String ? [p.String(a as string)] : [];
     }
-    const items = a instanceof Array ? a : [a];
+
+    const items: AnnotationBody[] = a instanceof Array ? a : [a];
 
     return items
       .map(item => {
