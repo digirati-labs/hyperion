@@ -1,5 +1,6 @@
 import { Reference, SingleReference } from '../reference';
 import { AnnotationPage } from '../resources/annotationPage';
+import { Range } from '../resources/range';
 
 export type StructuralProperties<T> = {
   items: T[];
