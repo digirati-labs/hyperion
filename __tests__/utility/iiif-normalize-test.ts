@@ -1,5 +1,5 @@
-import { normalize } from '../../packages/vault/src/processing/iiif-normalize';
-import { Manifest } from '../../packages/legacy/src';
+import {Manifest} from "@hyperion-framework/types";
+import {normalize} from "@hyperion-framework/vault/src/processing/normalize";
 
 describe('utility/normalize', () => {
   const manifest = (): Manifest => ({

@@ -1,12 +1,11 @@
-import { Manifest } from '../../../packages/types';
+import {ContentResource, Manifest} from '../../../packages/types';
 import ghentManifest from '../../../fixtures/2-to-3-converter/manifests/ghent-university-manifest.json';
 import blManifest from '../../../fixtures/2-to-3-converter/manifests/british-library-manifest.json';
 import princetonManifest from '../../../fixtures/2-to-3-converter/manifests/princeton-manifest.json';
 import ncsuManifest from '../../../fixtures/2-to-3-converter/manifests/ncsu-libraries-manifest.json';
 import nlwNewspaper from '../../../fixtures/2-to-3-converter/manifests/nlw-newspaper-manifest.json';
 import nlwManuscript from '../../../fixtures/2-to-3-converter/manifests/nlw-manuscript-manifest.json';
-import { ContentResource } from '../../../packages/legacy/src/types/resources/contentResource';
-import { matchAnnotationBody } from '../../../packages/pattern-matching/src/annotation-body';
+import {matchAnnotationBody} from "@hyperion-framework/pattern-matching";
 
 describe('types/manifest', () => {
   describe('Manifests converted from Presentation 2', () => {

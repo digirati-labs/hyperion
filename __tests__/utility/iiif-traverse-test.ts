@@ -1,6 +1,5 @@
-import { Traverse } from '../../packages/vault/src/processing/iiif-traverse';
-import { Manifest } from '../../packages/legacy/src';
-import { Canvas } from '../../packages/legacy/src/types/resources/canvas';
+import {Canvas, Manifest} from "@hyperion-framework/types";
+import {Traverse} from "@hyperion-framework/vault/src/processing/traverse";
 
 describe('utility/iiif-traverse', () => {
   const manifest = (): Manifest => ({

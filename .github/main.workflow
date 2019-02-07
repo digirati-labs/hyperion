@@ -13,3 +13,9 @@ action "Yarn tests" {
   args = "yarn test"
   needs = ["Yarn install"]
 }
+
+action "Typescript types tests" {
+  uses = "docker://node:8"
+  args = "yarn test-types"
+  needs = ["Yarn install"]
+}

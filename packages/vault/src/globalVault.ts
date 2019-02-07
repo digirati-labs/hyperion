@@ -15,10 +15,10 @@ export function globalVault(options?: VaultOptions) {
 
   const newVault = new Vault(options);
 
-  if (global) {
+  if (typeof global !== 'undefined') {
     (global as any).__hyperionVault__ = newVault;
   }
-  if (window) {
+  if (typeof window !== 'undefined') {
     window.__hyperionVault__ = newVault;
   }
 
