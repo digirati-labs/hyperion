@@ -1,4 +1,4 @@
-import { Manifest } from '../../../src';
+import { Manifest } from '../../../packages/legacy/src';
 import json from './0001.json';
 
 describe('process/fixtures/0001', () => {

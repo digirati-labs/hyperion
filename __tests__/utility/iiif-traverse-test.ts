@@ -1,6 +1,6 @@
-import { Traverse } from '../../src/utility/iiif-traverse';
-import { Manifest } from '../../src';
-import { Canvas } from '../../src/types/resources/canvas';
+import { Traverse } from '../../packages/vault/src/processing/iiif-traverse';
+import { Manifest } from '../../packages/legacy/src';
+import { Canvas } from '../../packages/legacy/src/types/resources/canvas';
 
 describe('utility/iiif-traverse', () => {
   const manifest = (): Manifest => ({

@@ -8,27 +8,27 @@
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle src/index.ts -o dist/hyperion-framework.js",
-    "start": "microbundle watch",
+    "build": "lerna run build",
+    "start": "lerna run build && lerna run start --parallel --stream --concurrency=100",
+    "test-types": "typings-tester --dir types",
     "test": "jest --verbose --coverage"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
+    "dtslint": "^0.4.2",
     "jest": "^23.6.0",
+    "lerna": "^3.10.7",
     "microbundle": "^0.9.0",
     "prettier": "^1.15.3",
     "ts-jest": "^23.10.5",
     "tslib": "^1.9.3",
     "tslint": "^5.12.0",
-    "tslint-plugin-prettier": "^2.0.1"
+    "tslint-plugin-prettier": "^2.0.1",
+    "typings-tester": "^0.3.2"
   },
-  "dependencies": {
-    "@types/object-hash": "^1.2.0",
-    "@types/traverse": "^0.6.32",
-    "normalizr": "^3.3.0",
-    "object-hash": "^1.3.1",
-    "traverse": "^0.6.6",
-    "tslint-config-prettier": "^1.17.0",
-    "typesafe-actions": "^3.0.0"
-  }
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ]
 }

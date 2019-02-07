@@ -1,0 +1,32 @@
+{
+  "name": "@hyperion-framework/legacy",
+  "version": "1.0.0",
+  "main": "dist/hyperion-framework.js",
+  "umd:main": "dist/hyperion-framework.umd.js",
+  "module": "dist/hyperion-framework.mjs",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "author": "Stephen Fraser <stephen.fraser@digirati.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "microbundle src/index.ts -o dist/hyperion-framework.js",
+    "start": "microbundle watch"
+  },
+  "devDependencies": {
+    "microbundle": "^0.9.0",
+    "prettier": "^1.15.3",
+    "tslib": "^1.9.3",
+    "tslint": "^5.12.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "tslint-config-prettier": "^1.17.0"
+  },
+  "dependencies": {
+    "@hyperion-framework/types": "1.0.0",
+    "@types/object-hash": "^1.2.0",
+    "@types/traverse": "^0.6.32",
+    "normalizr": "^3.3.0",
+    "object-hash": "^1.3.1",
+    "traverse": "^0.6.6",
+    "typesafe-actions": "^3.0.0"
+  }
+}

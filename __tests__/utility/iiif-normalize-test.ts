@@ -1,5 +1,5 @@
-import { normalize } from '../../src/utility/iiif-normalize';
-import { Manifest } from '../../src';
+import { normalize } from '../../packages/vault/src/processing/iiif-normalize';
+import { Manifest } from '../../packages/legacy/src';
 
 describe('utility/normalize', () => {
   const manifest = (): Manifest => ({
@@ -99,6 +99,7 @@ describe('utility/normalize', () => {
       },
       Range: {},
       Service: {},
+      Selector: {},
     });
 
     expect(result.mapping).toEqual({

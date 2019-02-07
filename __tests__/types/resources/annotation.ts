@@ -1,4 +1,4 @@
-import { Annotation } from '../../../src/types/resources/annotation';
+import { Annotation } from '../../../packages/legacy/src/types/resources/annotation';
 
 describe('types/resources/annotations', () => {
   test('it passes fixtures from W3C', () => {

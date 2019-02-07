@@ -1,0 +1,125 @@
+
+<html>
+<head>
+  <title>tiny</title>
+  <style>
+    #mf { width: 400px; }
+    #th { width:220px; border-right: 1px solid #999; margin: 5px; float:left; height:90%; overflow-y:scroll; }
+    #main { margin-top:30px; margin-left:10px; float:left; height:90%;}
+    .tc { display: inline-block; padding:5px; cursor: pointer; }
+    #big { height:95%; }
+  </style>
+</head>
+<body>
+<h1>Minimal</h1>
+<div>
+  <input id="mf" type="text" value="https://wellcomelibrary.org/iiif/b18035723/manifest" />
+  <input class="go" type="button" value="Go" />
+</div>
+<div>
+  <div id="th"></div><div id="main"><img id="big" /></div>
+</div>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="/dist/hyperion-framework.umd.js"></script>
+<script>
+
+  // Set up our selectors.
+  $mf = $('#mf');
+  $th = $('#th');
+  $big = $('#big');
+  $go = $('input.go');
+
+  // These could be part of a library of selectors
+  // They could be composed.
+  // Each key in the object is a function that takes the full state, context and returns a single value. ((state, ctx) => value)
+  // In this example, the `api` is returning functions that select fields off of a single canvas
+  // The `ctx` context would probably contain which canvas it is.
+  // So api.getLabel() might return: function(state, ctx) { return state.resources.Canvas[ctx.id].label }
+  function canvasSelector(api) {
+    return {
+      label: api.getLabel(),
+      thumbnail: api.getImageAtSize(90),
+      image: api.getImageAtSize(700),
+    };
+  }
+
+  // The state of Hyperion is just a flat version of the IIIF objects.
+  // {
+  //   resources: {
+  //     Manifest: {
+  //      'http://../': { id: '..', label: '..', }
+  //      'http://../': { id: '..', label: '..', }
+  //      'http://../': { id: '..', label: '..', }
+  //     },
+  //     Canvas: {
+  //      'http://../': { id: '..', label: '..', }
+  //      'http://../': { id: '..', label: '..', }
+  // ...
+  //
+  // If a manifest for example references another resource, only its ID and Type are present:
+  // {
+  //   id: '..',
+  //   type: 'Manifest',
+  //   items: [
+  //     { id: '..', type: 'Canvas' },
+  //     { id: '..', type: 'Canvas' },
+  //     { id: '..', type: 'Canvas' },
+  //     { id: '..', type: 'Canvas' },
+  //  ]
+  // }
+  //
+  // So if you want the label of the canvas, you have to look in `state.resource.Canvas[id].label` for it.
+  // This example assumes some sort of 'helper' that makes this easier.
+  //
+  // h.select(reference, selector)
+  //
+  // Where reference is an Id and a Type of something
+  // And a selector is something like the first example above, resolving real data.
+  // The selectors are made in such a way that they can be created, reused and shared, without
+  // being tied to any specific implementation.
+  //
+  // So an example, implementing https://github.com/tomcrane/wellcome-today/blob/gh-pages/viewer.html
+  // using vanilla JS.
+  $go.click(function() {
+    // Manifest id.
+    const id = $mf.val();
+    // Load it into Hyperion.
+    Hyperion.load(id).then((h) => {
+      $th.empty();
+      // Get references directly from the state.
+      const canvases = h.state.resources.Manifest[id].items; //[{id: ..., type: ...}]
+      $.each(canvases, function(canvasRef) {
+        // Pass in our canvas, and apply a selector (above).
+        const cv = h.select(canvasRef, canvasSelector); // cv: { label: '..', thumbnail: '..', image: '..' }
+        const $c = $('<div class="tc">' + cv.label + '<br/><img src="' + cv.thumbnail + '" /></div>');
+        $c.click(() => {
+          $('#big').attr('src', cv.image);
+        });
+        $('#th').append($c);
+      });
+      $('#th img')[ 0 ].click();
+    });
+  });
+  $go.click();
+
+  /*
+  Original.
+
+  $('input.go').click(function() {
+    $.getJSON( $('#mf').val(), function( mf ) {
+      $('#th').empty();
+      $.each(mf.sequences[0].canvases, function(i, cv){
+        iiif = cv.images[0].resource.service["@id"];
+        $('#th').append('<div class="tc">' + cv.label + '<br/><img data-uri="' + iiif + '" src="' + iiif + '/full/90,/0/default.jpg" /></div>')
+      });
+      $('#th img').click(function(){
+        $('#big').attr('src', $(this).attr('data-uri') + '/full/700,/0/default.jpg');
+      });
+      $('#th img')[0].click();
+    });
+  });
+  $('input.go').click();
+  */
+</script>
+</body>
+</html>

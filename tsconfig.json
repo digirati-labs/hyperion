@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": "./", // enables project relative paths config
-    "outDir": "dist/", // target for compiled files
+    //"baseUrl": "./", // enables project relative paths config
+    //"outDir": "dist/", // target for compiled files
     "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
     "esModuleInterop": true,
     "allowJs": false, // include js files
@@ -33,10 +33,7 @@
     "sourceMap": true,
     "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*"
-  ],
   "exclude": [
     "node_modules"
-  ]
+  ],
 }
