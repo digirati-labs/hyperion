@@ -8,10 +8,15 @@ action "Yarn install" {
   args = "yarn install"
 }
 
+action "Yarn build" {
+  uses = "docker://node:8"
+    args = "yarn build"
+}
+
 action "Yarn tests" {
   uses = "docker://node:8"
   args = "yarn test"
-  needs = ["Yarn install"]
+  needs = ["Yarn build"]
 }
 
 action "Typescript types tests" {
