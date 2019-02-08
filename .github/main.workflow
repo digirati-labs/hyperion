@@ -10,7 +10,8 @@ action "Yarn install" {
 
 action "Yarn build" {
   uses = "docker://node:8"
-    args = "yarn build"
+  args = "yarn build"
+  needs = ["Yarn install"]
 }
 
 action "Yarn tests" {
