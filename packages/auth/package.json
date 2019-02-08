@@ -1,15 +1,15 @@
 {
   "name": "@hyperion-framework/auth",
   "version": "1.0.0",
-  "main": "dist/hyperion-framework.auth.js",
-  "umd:main": "dist/hyperion-framework.auth.umd.js",
-  "module": "dist/hyperion-framework.auth.mjs",
+  "main": "dist/hyperion-framework-auth.js",
+  "umd:main": "dist/hyperion-framework-auth.umd.js",
+  "module": "dist/hyperion-framework-auth.mjs",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle src/index.ts -o dist/hyperion-framework.auth.js",
+    "build": "microbundle src/index.ts -o dist/hyperion-framework-auth.js",
     "start": "microbundle watch"
   },
   "devDependencies": {

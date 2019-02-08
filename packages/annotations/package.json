@@ -1,15 +1,15 @@
 {
   "name": "@hyperion-framework/annotations",
   "version": "1.0.0",
-  "main": "dist/hyperion-framework.annotations.js",
-  "umd:main": "dist/hyperion-framework.annotations.umd.js",
-  "module": "dist/hyperion-framework.annotations.mjs",
+  "main": "dist/hyperion-framework-annotations.js",
+  "umd:main": "dist/hyperion-framework-annotations.umd.js",
+  "module": "dist/hyperion-framework-annotations.mjs",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle src/index.ts -o dist/hyperion-framework.annotations.js",
+    "build": "microbundle src/index.ts -o dist/hyperion-framework-annotations.js",
     "start": "microbundle watch"
   },
   "devDependencies": {

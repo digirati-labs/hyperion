@@ -1,15 +1,15 @@
 {
   "name": "@hyperion-framework/vue-vault",
   "version": "1.0.0",
-  "main": "dist/hyperion-framework.vue-vault.js",
-  "umd:main": "dist/hyperion-framework.vue-vault.umd.js",
-  "module": "dist/hyperion-framework.vue-vault.mjs",
+  "main": "dist/hyperion-framework-vue-vault.js",
+  "umd:main": "dist/hyperion-framework-vue-vault.umd.js",
+  "module": "dist/hyperion-framework-vue-vault.mjs",
   "source": "src/index.ts",
   "types": "dist/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle src/index.ts -o dist/hyperion-framework.vue-vault.js",
+    "build": "microbundle src/index.ts -o dist/hyperion-framework-vue-vault.js",
     "start": "microbundle watch"
   },
   "devDependencies": {
