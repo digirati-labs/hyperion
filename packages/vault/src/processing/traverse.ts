@@ -11,15 +11,19 @@ import {
   Range,
   RangeItems,
   Service,
+  Selector,
+  AnnotationCollection,
+  LinkingProperties,
 } from '@hyperion-framework/types';
 
-type Traversal<T> = (jsonLd: T) => T;
+type Traversal<T> = (jsonLd: T) => Partial<T> | any;
 // type Reducer<T> = (jsonLd: T, action: any) => T;
 
 type TraversalMap = {
   collection?: Array<Traversal<Collection>>;
   manifest?: Array<Traversal<Manifest>>;
   canvas?: Array<Traversal<Canvas>>;
+  annotationCollection?: Array<Traversal<AnnotationCollection>>;
   annotationPage?: Array<Traversal<AnnotationPage>>;
   annotation?: Array<Traversal<Annotation>>;
   contentResource?: Array<Traversal<ContentResource>>;
@@ -39,6 +43,18 @@ export type TraversableEntityTypes =
   | 'Range'
   | 'Service'
   | 'Selector';
+
+export type TraversableEntity =
+  | Collection
+  | Manifest
+  | Canvas
+  | AnnotationPage
+  | AnnotationCollection
+  | Annotation
+  | ContentResource
+  | Range
+  | Service
+  | Selector;
 
 export const types: TraversableEntityTypes[] = [
   'Collection',
@@ -86,6 +102,7 @@ export class Traverse {
       collection: [],
       manifest: [],
       canvas: [],
+      annotationCollection: [],
       annotationPage: [],
       annotation: [],
       contentResource: [],
@@ -101,6 +118,7 @@ export class Traverse {
       collection: [traversal],
       manifest: [traversal],
       canvas: [traversal],
+      annotationCollection: [traversal],
       annotationPage: [traversal],
       annotation: [traversal],
       contentResource: [traversal],
@@ -108,6 +126,51 @@ export class Traverse {
       range: [traversal],
       service: [traversal],
     });
+  }
+
+  traverseLinking<T extends Partial<LinkingProperties>>(resource: T) {
+    if (resource.seeAlso) {
+      resource.seeAlso = resource.seeAlso.map(content => this.traverseType(content, this.traversals.contentResource));
+    }
+    if (resource.service) {
+      resource.service = resource.service.map(service => this.traverseType(service, this.traversals.service));
+    }
+    if (resource.logo) {
+      resource.logo = resource.logo.map(content => this.traverseType(content, this.traversals.contentResource));
+    }
+    if (resource.homepage) {
+      resource.homepage = this.traverseType(resource.homepage, this.traversals.contentResource);
+    }
+    if (resource.partOf) {
+      // Array<ContentResource | Canvas | AnnotationCollection>
+      resource.partOf = resource.partOf.map(partOf => {
+        if (typeof partOf === 'string' || !partOf.type) {
+          return this.traverseType(partOf as ContentResource, this.traversals.contentResource);
+        }
+        if (partOf.type === 'Canvas') {
+          return this.traverseType(partOf as Canvas, this.traversals.canvas);
+        }
+        if (partOf.type === 'AnnotationCollection') {
+          return this.traverseType(partOf as AnnotationCollection, this.traversals.annotationCollection);
+        }
+        return this.traverseType(partOf as ContentResource, this.traversals.contentResource);
+      });
+    }
+    if (resource.start) {
+      resource.start = resource.start.map(start => this.traverseType(start, this.traversals.canvas));
+    }
+    if (resource.rendering) {
+      resource.rendering = resource.rendering.map(content =>
+        this.traverseType(content, this.traversals.contentResource)
+      );
+    }
+    if (resource.supplementary) {
+      resource.supplementary = resource.supplementary.map(content =>
+        this.traverseType(content, this.traversals.contentResource)
+      );
+    }
+
+    return resource;
   }
 
   traverseCollectionItems(collection: Collection): Collection {
@@ -122,7 +185,10 @@ export class Traverse {
   }
 
   traverseCollection(collection: Collection): Collection {
-    return this.traverseType<Collection>(this.traverseCollectionItems(collection), this.traversals.collection);
+    return this.traverseType<Collection>(
+      this.traverseLinking(this.traverseCollectionItems(collection)),
+      this.traversals.collection
+    );
   }
 
   traverseManifestItems(manifest: Manifest): Manifest {
@@ -139,7 +205,7 @@ export class Traverse {
 
   traverseManifest(manifest: Manifest): Manifest {
     return this.traverseType<Manifest>(
-      this.traverseManifestStructures(this.traverseManifestItems(manifest)),
+      this.traverseManifestStructures(this.traverseLinking(this.traverseManifestItems(manifest))),
       this.traversals.manifest
     );
   }
@@ -155,7 +221,7 @@ export class Traverse {
   }
 
   traverseCanvas(canvas: Canvas): Canvas {
-    return this.traverseType<Canvas>(this.traverseCanvasItems(canvas), this.traversals.canvas);
+    return this.traverseType<Canvas>(this.traverseLinking(this.traverseCanvasItems(canvas)), this.traversals.canvas);
   }
 
   traverseAnnotationPageItems(annotationPage: AnnotationPage): AnnotationPage {
@@ -171,7 +237,7 @@ export class Traverse {
 
   traverseAnnotationPage(annotationPageJson: AnnotationPage): AnnotationPage {
     return this.traverseType<AnnotationPage>(
-      this.traverseAnnotationPageItems(annotationPageJson),
+      this.traverseLinking(this.traverseAnnotationPageItems(annotationPageJson)),
       this.traversals.annotationPage
     );
   }
@@ -206,7 +272,7 @@ export class Traverse {
   // @todo traverseAnnotationSelector
   traverseAnnotation(annotationJson: Annotation): Annotation {
     return this.traverseType<Annotation>(
-      this.traverseAnnotationTarget(this.traverseAnnotationBody(annotationJson)),
+      this.traverseAnnotationTarget(this.traverseLinking(this.traverseAnnotationBody(annotationJson))),
       this.traversals.annotation
     );
   }
@@ -232,7 +298,7 @@ export class Traverse {
   }
 
   traverseRange(range: Range): Range {
-    return this.traverseType<Range>(this.traverseRangeRanges(range), this.traversals.range);
+    return this.traverseType<Range>(this.traverseLinking(this.traverseRangeRanges(range)), this.traversals.range);
   }
 
   traverseType<T>(object: T, traversals: Array<Traversal<T>>): T {

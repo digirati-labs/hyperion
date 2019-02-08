@@ -1,7 +1,7 @@
 import { createStandardAction, ActionType } from 'typesafe-actions';
-import { Entities, Mapping } from '../processing/normalize';
+import {defaultEntities, Entities, Mapping} from '../processing/normalize';
 import produce from 'immer';
-import { defaultEntities, TraversableEntityTypes } from '..';
+import { TraversableEntityTypes } from '../processing/traverse';
 
 // Entities
 export const IMPORT_ENTITIES = '@hyperion/IMPORT_ENTITIES';

@@ -1,19 +1,11 @@
 {
   "name": "@hyperion-framework/types",
   "version": "1.0.0",
-  "main": "dist/hyperion-framework.types.js",
-  "umd:main": "dist/hyperion-framework.types.umd.js",
-  "module": "dist/hyperion-framework.types.mjs",
-  "source": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "source": "lib/index.ts",
+  "types": "lib/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
-  "scripts": {
-    "build": "microbundle src/index.ts -o dist/hyperion-framework.types.js",
-    "start": "microbundle watch"
-  },
   "devDependencies": {
-    "microbundle": "^0.9.0",
     "tslib": "^1.9.3"
   }
 }

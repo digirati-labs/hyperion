@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
-    "start": "lerna run build && lerna run start --parallel --stream --concurrency=100",
+    "start": "lerna run build --parallel --stream --concurrency=100 && lerna run start --parallel --stream --concurrency=100",
     "test-types": "typings-tester --dir types-tests",
     "test": "jest --verbose --coverage"
   },

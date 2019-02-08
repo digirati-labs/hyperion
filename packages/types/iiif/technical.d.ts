@@ -1,4 +1,4 @@
-export type ResourceType =
+export declare type ResourceType =
   | 'Collection'
   | 'Manifest'
   | 'Canvas'
@@ -11,9 +11,9 @@ export type ResourceType =
   | 'CanvasReference'
   | 'Service';
 
-export type ViewingDirection = 'left-to-right' | 'right-to-left' | 'top-to-bottom' | 'bottom-to-top';
+export declare type ViewingDirection = 'left-to-right' | 'right-to-left' | 'top-to-bottom' | 'bottom-to-top';
 
-export type SpecificationBehaviours =
+export declare type SpecificationBehaviours =
   | 'auto-advance'
   | 'continuous'
   | 'facing-pages'
@@ -29,9 +29,9 @@ export type SpecificationBehaviours =
   | 'together'
   | 'unordered';
 
-export type SpecificationTimeMode = 'trim' | 'scale' | 'loop';
+export declare type SpecificationTimeMode = 'trim' | 'scale' | 'loop';
 
-export type TechnicalProperties = {
+export declare type TechnicalProperties = {
   id: string;
   type: ResourceType;
   format: string;
@@ -41,6 +41,6 @@ export type TechnicalProperties = {
   duration: number;
   viewingDirection: ViewingDirection;
   behaviour: SpecificationBehaviours[] | string[];
-  timeMode: SpecificationTimeMode | string;
-  motivation: string;
+  timeMode: SpecificationTimeMode | string | null;
+  motivation: string | null;
 };

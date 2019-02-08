@@ -1,0 +1,27 @@
+import { RangeNormalized } from '@hyperion-framework/types';
+
+export const emptyRange: RangeNormalized = {
+  id: 'https://hyperion/empty-canvas',
+  type: 'Range',
+  label: null,
+  behaviour: [],
+  motivation: null,
+  thumbnail: [],
+  posterCanvas: null,
+  summary: null,
+  requiredStatement: null,
+  metadata: [],
+  rights: null,
+  navDate: null,
+  items: [],
+  annotations: [],
+  seeAlso: [],
+  homepage: null,
+  logo: [],
+  partOf: [],
+  rendering: [],
+  service: [],
+  start: null,
+  supplementary: null,
+  viewingDirection: 'left-to-right',
+};

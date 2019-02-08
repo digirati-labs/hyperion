@@ -1,0 +1,27 @@
+import { ManifestNormalized } from '@hyperion-framework/types';
+
+export const emptyManifest: ManifestNormalized = {
+  id: 'https://hyperion/empty-manifest',
+  type: 'Manifest',
+  annotations: [],
+  behaviour: [],
+  homepage: null,
+  items: [],
+  label: null,
+  logo: [],
+  metadata: [],
+  motivation: null,
+  navDate: null,
+  partOf: [],
+  posterCanvas: null,
+  rendering: [],
+  requiredStatement: null,
+  rights: null,
+  seeAlso: [],
+  service: [],
+  start: null,
+  structures: [],
+  summary: null,
+  thumbnail: [],
+  viewingDirection: 'left-to-right',
+};

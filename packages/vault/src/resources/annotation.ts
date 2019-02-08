@@ -1,0 +1,36 @@
+import { AnnotationNormalized } from '@hyperion-framework/types';
+
+// This won't be used, it's overkill. But it shows you what a completely empty AND NORMALIZED annotation looks like.
+// This is where we will lean on pattern matching to ensure we are safely accessing annotation fields.
+export const emptyAnnotation: AnnotationNormalized = {
+  id: 'https://hyperion/annotation-page',
+  type: 'AnnotationPage',
+  behaviour: [],
+  label: null,
+  thumbnail: [],
+  summary: null,
+  requiredStatement: null,
+  metadata: [],
+  seeAlso: [],
+  homepage: null,
+  logo: [],
+  rendering: [],
+  service: [],
+  accessibility: [],
+  audience: [],
+  body: [],
+  bodyValue: null,
+  canonical: null,
+  created: null,
+  creator: [],
+  generated: null,
+  generator: [],
+  modified: null,
+  motivation: [],
+  rights: [],
+  stylesheet: null,
+  target: [],
+  timeMode: null,
+  via: [],
+  partOf: [],
+};

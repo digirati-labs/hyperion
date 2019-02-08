@@ -1,7 +1,7 @@
 import { EmbeddedResource, ExternalResourceTypes, ExternalWebResource, SpecificResource } from './annotation';
 import { Service } from './service';
 
-export type ContentResource =
+export declare type ContentResource =
   | string
   | EmbeddedResource
   | ExternalWebResource

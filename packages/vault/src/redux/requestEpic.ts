@@ -16,7 +16,8 @@ import {
 import { isActionOf } from 'typesafe-actions';
 import { ajax } from 'rxjs/ajax';
 import { VaultState } from '../Vault';
-import {normalize, TraversableEntityTypes} from '..';
+import { normalize } from '../processing/normalize';
+import { TraversableEntityTypes } from '../processing/traverse';
 import { of } from 'rxjs/internal/observable/of';
 
 const requestEpic: Epic<AllActions, AllActions, VaultState, { fetch: typeof ajax.getJSON }> = (

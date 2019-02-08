@@ -1,12 +1,14 @@
-export type ImageSize = { width: number; height: number };
+import {OmitProperties, SomeRequired} from "../utility";
 
-export type ImageTile = {
+export declare type ImageSize = { width: number; height: number };
+
+export declare type ImageTile = {
   width: number;
   scaleFactors: number[];
 };
 
 // @todo add in IIIF-Vocabulary
-export type ImageProfile =
+export declare type ImageProfile =
   | string
   | {
       formats: string[];
@@ -19,8 +21,10 @@ export interface Service {
   id: string;
   profile: ImageProfile | ImageProfile[];
   protocol: string;
-  width?: number;
-  height?: number;
+  width?: number | null;
+  height?: number | null;
   sizes?: ImageSize[];
   tiles?: ImageTile[];
 }
+
+export declare type ServiceNormalized = Required<OmitProperties<Service, '@context'>>;

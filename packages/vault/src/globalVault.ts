@@ -1,5 +1,5 @@
 import { VaultOptions, Vault } from './Vault';
-import {CollectionNormalized, ManifestNormalized, Reference} from '@hyperion-framework/types';
+import { CollectionNormalized, ManifestNormalized, Reference } from '@hyperion-framework/types';
 import { TraversableEntityTypes } from './processing/traverse';
 
 export function globalVault(options?: VaultOptions) {

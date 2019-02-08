@@ -6,29 +6,26 @@ import { OmitProperties, SomeRequired } from '../utility';
 import { Reference } from '../reference';
 import { Canvas } from './canvas';
 
-export type ManifestItems = Canvas;
+export declare type RangeItems = Range | Canvas | string;
 
 type OmittedTechnical = 'format' | 'profile' | 'height' | 'width' | 'duration' | 'timeMode';
 type OmittedDescriptive = 'language';
-type OmittedLinking = 'supplementary';
+type OmittedStructural = 'structures';
 
 type Technical = OmitProperties<TechnicalProperties, OmittedTechnical>;
 type Descriptive = OmitProperties<DescriptiveProperties, OmittedDescriptive>;
-type Structural = StructuralProperties<ManifestItems>;
-type Linking = OmitProperties<LinkingProperties, OmittedLinking>;
+type Structural = OmitProperties<StructuralProperties<RangeItems>, OmittedStructural>;
+type Linking = LinkingProperties;
 
-export interface Manifest
+export interface Range
   extends SomeRequired<Technical, 'id' | 'type'>,
     SomeRequired<Descriptive, 'label'>,
-    SomeRequired<Structural, 'items'>,
-    Partial<Linking> {
-  '@context'?: string | string[];
-}
+    Partial<Structural>,
+    Partial<Linking> {}
 
-type ItemSchemas = 'Canvas';
+type ItemSchemas = 'Range' | 'Canvas';
 
-export interface ManifestNormalized
-  extends OmitProperties<TechnicalProperties, OmittedTechnical>,
-    OmitProperties<DescriptiveNormalized, OmittedDescriptive>,
-    StructuralNormalized<Reference<ItemSchemas>, ItemSchemas>,
-    OmitProperties<LinkingNormalized, OmittedLinking> {}
+export declare type RangeNormalized = OmitProperties<TechnicalProperties, OmittedTechnical> &
+  OmitProperties<DescriptiveNormalized, OmittedDescriptive> &
+  OmitProperties<StructuralNormalized<Reference<ItemSchemas>, ItemSchemas>, OmittedStructural> &
+  LinkingNormalized & { type: 'Range' };

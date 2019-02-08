@@ -4,24 +4,24 @@ import { Service } from '../resources/service';
 import { Canvas } from '../resources/canvas';
 import { AnnotationCollection } from '../resources/annotationCollection';
 
-export type LinkingProperties = {
+export declare type LinkingProperties = {
   seeAlso: ContentResource[];
   service: Service[];
   logo: ContentResource[];
-  homepage: ContentResource[];
+  homepage: ContentResource;
   rendering: ContentResource[];
   partOf: Array<ContentResource | Canvas | AnnotationCollection>;
   start: Canvas[];
   supplementary: ContentResource[];
 };
 
-export type LinkingNormalized = {
+export declare type LinkingNormalized = {
   seeAlso: Array<Reference<'ContentResource'>>;
   service: Array<Reference<'Service'>>;
   logo: Array<Reference<'ContentResource'>>;
-  homepage: Reference<'ContentResource'>;
+  homepage: Reference<'ContentResource'> | null;
   rendering: Array<Reference<'ContentResource'>>;
   partOf: Array<Reference<'Collection' | 'Manifest'>>;
-  start: Reference<'Canvas' | 'Selector'>;
-  supplementary: Reference<'AnnotationCollection'>;
+  start: Reference<'Canvas' | 'Selector'> | null;
+  supplementary: Reference<'AnnotationCollection'> | null;
 };

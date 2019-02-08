@@ -15,7 +15,14 @@ import {
   Selector,
   Service,
   Range,
+  ServiceNormalized,
 } from '@hyperion-framework/types';
+import { emptyCollection } from '../resources/collection';
+import { emptyManifest } from '../resources/manifest';
+import { emptyCanvas } from '../resources/canvas';
+import { emptyAnnotationPage } from '../resources/annotationPage';
+import { emptyRange } from '../resources/range';
+import { emptyService } from '../resources/service';
 
 export type Entities = {
   Collection: {
@@ -43,7 +50,7 @@ export type Entities = {
     [id: string]: RangeNormalized;
   };
   Service: {
-    [id: string]: Service;
+    [id: string]: ServiceNormalized;
   };
   Selector: {
     [id: string]: Selector;
@@ -147,22 +154,30 @@ function addMissingIdToContentResource<T extends EntityReference>(type: string) 
   };
 }
 
+function ensureDefaultFields<T, R>(defaultResource: R) {
+  return (resource: T): R => {
+    return {
+      ...defaultResource,
+      ...resource,
+    };
+  };
+}
 
 // @todo Plan for tomorrow.
-//    - Wrap head around normalized types.
-//    - Fully implement Normalized resources (all fields)
-//    - Start working on selector API (steal from IIIF Redux)
-//    - Create a thumbnail generator
-//    - Get tiles parsed, taken from IIIF image matrix
-//    - Get first Vanilla implementation done
-//    - Expand traversal to linking properties
-//    - Get a proof of concept to dereference resources
-//    - Create React bindings (hooks only)
-//    - Create Vue bindings
-//    - Implement Search
-//    - Implement Auth
-//    - Get list of pattern matching required
-//    - Get Open annotation to W3C converter created
+//    - [x] Wrap head around normalized types.
+//    - [x] Fully implement Normalized resources (all fields)
+//    - [ ] Start working on selector API (steal from IIIF Redux)
+//    - [ ] Create a thumbnail generator
+//    - [ ] Get tiles parsed, taken from IIIF image matrix
+//    - [ ] Get first Vanilla implementation done
+//    - [ ] Expand traversal to linking properties
+//    - [ ] Get a proof of concept to dereference resources
+//    - [ ] Create React bindings (hooks only)
+//    - [ ] Create Vue bindings
+//    - [ ] Implement Search
+//    - [ ] Implement Auth
+//    - [ ] Get list of pattern matching required
+//    - [ ] Get Open annotation to W3C converter created
 
 export function normalize(entity: unknown) {
   const entities: Entities = { ...defaultEntities };
@@ -170,26 +185,52 @@ export function normalize(entity: unknown) {
   const addToEntities = mapToEntities(entities);
   const addToMapping = recordTypeInMapping(mapping);
   const traversal = new Traverse({
-    collection: [addToMapping<Collection>('Collection'), addToEntities<Collection>('Collection')],
-    manifest: [addToMapping<Manifest>('Manifest'), addToEntities<Manifest>('Manifest')],
-    canvas: [addToMapping<Canvas>('Canvas'), addToEntities<Canvas>('Canvas')],
+    collection: [
+      ensureDefaultFields<Collection, CollectionNormalized>(emptyCollection),
+      addToMapping<Collection>('Collection'),
+      addToEntities<Collection>('Collection'),
+    ],
+    manifest: [
+      ensureDefaultFields<Manifest, ManifestNormalized>(emptyManifest),
+      addToMapping<Manifest>('Manifest'),
+      addToEntities<Manifest>('Manifest'),
+    ],
+    canvas: [
+      ensureDefaultFields<Canvas, CanvasNormalized>(emptyCanvas),
+      addToMapping<Canvas>('Canvas'),
+      addToEntities<Canvas>('Canvas'),
+    ],
     annotationPage: [
       addMissingIdToContentResource('AnnotationPage'),
+      ensureDefaultFields<AnnotationPage, AnnotationPageNormalized>(emptyAnnotationPage),
       addToMapping<AnnotationPage>('AnnotationPage'),
       addToEntities<AnnotationPage>('AnnotationPage'),
     ],
     annotation: [
+      // This won't be normalized before going into the state.
+      // It will be normalized through selectors and pattern matching.
       addMissingIdToContentResource('Annotation'),
       addToMapping<Annotation>('Annotation'),
       addToEntities<Annotation>('Annotation'),
     ],
     contentResource: [
+      // This won't be normalized before going into the state.
+      // It will be normalized through selectors and pattern matching.
       addMissingIdToContentResource('ContentResource'),
       addToMapping<ContentResource>('ContentResource'),
       addToEntities<ContentResource>('ContentResource'),
     ],
-    range: [addToMapping<Range>('Range'), addToEntities<Range>('Range')],
-    service: [addToMapping<Service>('Service'), addToEntities<Service>('Service')],
+    range: [
+      // This will add a LOT to the state, maybe this will be configurable down the line.
+      ensureDefaultFields<Range, RangeNormalized>(emptyRange),
+      addToMapping<Range>('Range'),
+      addToEntities<Range>('Range'),
+    ],
+    service: [
+      ensureDefaultFields<Service, ServiceNormalized>(emptyService),
+      addToMapping<Service>('Service'),
+      addToEntities<Service>('Service'),
+    ],
   });
   const resource = traversal.traverseUnknown(entity) as EntityReference;
 

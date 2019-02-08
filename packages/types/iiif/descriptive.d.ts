@@ -1,16 +1,16 @@
 import { Reference } from '../reference';
 import { OmitProperties } from '../utility';
 
-export type InternationalString = {
+export declare type InternationalString = {
   [language: string]: string[];
 };
 
-export type MetadataItem = {
+export declare type MetadataItem = {
   label: InternationalString;
   value: InternationalString;
 };
 
-export type DescriptiveProperties = {
+export declare type DescriptiveProperties = {
   label: InternationalString | null;
   metadata: MetadataItem[];
   summary: InternationalString | null;
@@ -24,7 +24,7 @@ export type DescriptiveProperties = {
   posterCanvas: any;
 };
 
-export type DescriptiveNormalized = OmitProperties<DescriptiveProperties, 'thumbnail' | 'posterCanvas'> & {
+export declare type DescriptiveNormalized = OmitProperties<DescriptiveProperties, 'thumbnail' | 'posterCanvas'> & {
   thumbnail: Array<Reference<'ContentResource'>>;
   posterCanvas: Reference<'Canvas'> | null;
 };

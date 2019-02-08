@@ -1,6 +1,8 @@
 import { select, loadManifest, subscribe } from '@hyperion-framework/vault';
 
-loadManifest('https://adam-digirati.github.io/balenciaga1-behaviors.json').then(res => {
+const manifestId = 'https://adam-digirati.github.io/balenciaga1-behaviors.json';
+
+loadManifest(manifestId).then(res => {
   document.getElementById('title').innerText = res.label.en[0];
 
   const $canvasList = document.getElementById('canvasList');
@@ -18,7 +20,7 @@ loadManifest('https://adam-digirati.github.io/balenciaga1-behaviors.json').then(
 
 const $loadingState = document.getElementById('loading-state');
 subscribe(
-  state => state.hyperion.requests['https://stephenwf.github.io/ocean-liners.json'],
+  state => state.hyperion.requests[manifestId],
   (res, vault) => {
     if (res) {
       $loadingState.innerText = res.loadingState;

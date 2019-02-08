@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    //"baseUrl": "./", // enables project relative paths config
+    "baseUrl": "./", // enables project relative paths config
     //"outDir": "dist/", // target for compiled files
     "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
     "esModuleInterop": true,
@@ -31,9 +31,16 @@
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "composite": true,
+    "declarationMap": true
   },
   "exclude": [
     "node_modules"
   ],
+  "references": [
+    {
+      "path": "./packages/types"
+    }
+  ]
 }
