@@ -8,11 +8,16 @@ loadManifest(manifestId).then(res => {
   const $canvasList = document.getElementById('canvasList');
   $canvasList.innerHTML = '';
 
-  for (let item of res.items) {
-    const label = select(item, (state, ctx) => ctx.label);
+
+  res.items.forEach(ref => {
+    const canvas = select(ref);
+  })
+  for (let ref of res.items) {
+    const canvas = select(ref);
+
     // Add our label to the Dom.
     const $item = document.createElement('div');
-    $item.innerText = label ? label.en[0] : 'untitled canvas';
+    $item.innerText = canvas.label ? canvas.label.en[0] : 'untitled canvas';
     $canvasList.append($item)
   }
 });
