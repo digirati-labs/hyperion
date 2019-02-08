@@ -1,6 +1,6 @@
 workflow "Hyperion" {
   on = "push"
-  resolves = ["Yarn tests"]
+  resolves = ["Yarn tests", "Typescript types tests"]
 }
 
 action "Yarn install" {
