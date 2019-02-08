@@ -6,7 +6,7 @@ function cast<T>(m: T): T {
   return m;
 }
 
-// typings: expect-error
+// typings:expect-error
 cast<Collection>({});
 
 cast<Collection>({
