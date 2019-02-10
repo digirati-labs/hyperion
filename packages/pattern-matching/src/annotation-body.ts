@@ -5,7 +5,7 @@ export interface AnnotationBodyPattern<T> {
   ChoiceBody?: (c: ChoiceBody) => T;
   ContentResource?: (w: ContentResource) => T;
   SpecificResource?: (s: SpecificResource) => T;
-  OtherContentResource?: (o: ContentResource) => T;
+  OtherContentResource?: (o: Exclude<ContentResource, string>) => T;
 }
 
 export function matchAnnotationBody<T>(p: AnnotationBodyPattern<T>): (a?: AnnotationBody | AnnotationBody[]) => T[] {
@@ -34,10 +34,10 @@ export function matchAnnotationBody<T>(p: AnnotationBodyPattern<T>): (a?: Annota
         }
 
         if (['Dataset', 'Image', 'Video', 'Sound', 'Text']) {
-          return p.ContentResource ? p.ContentResource(item as ContentResource) : null;
+          return p.ContentResource ? p.ContentResource(item as Exclude<ContentResource, string>) : null;
         }
 
-        return p.OtherContentResource ? p.OtherContentResource(item as ContentResource) : null;
+        return p.OtherContentResource ? p.OtherContentResource(item as Exclude<ContentResource, string>) : null;
       })
       .reduce((acc: T[], next: unknown): T[] => {
         if (next !== null) {

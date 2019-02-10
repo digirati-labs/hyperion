@@ -16,6 +16,7 @@ import {
   Service,
   Range,
   ServiceNormalized,
+  AnnotationNormalized,
 } from '@hyperion-framework/types';
 import { emptyCollection } from '../resources/collection';
 import { emptyManifest } from '../resources/manifest';
@@ -23,6 +24,18 @@ import { emptyCanvas } from '../resources/canvas';
 import { emptyAnnotationPage } from '../resources/annotationPage';
 import { emptyRange } from '../resources/range';
 import { emptyService } from '../resources/service';
+
+export type NormalizedEntity =
+  | CollectionNormalized
+  | ManifestNormalized
+  | CanvasNormalized
+  | AnnotationPageNormalized
+  | AnnotationCollection
+  | AnnotationNormalized
+  | ContentResource
+  | RangeNormalized
+  | ServiceNormalized
+  | Selector;
 
 export type Entities = {
   Collection: {
@@ -41,7 +54,7 @@ export type Entities = {
     [id: string]: AnnotationCollection;
   };
   Annotation: {
-    [id: string]: Annotation;
+    [id: string]: AnnotationNormalized;
   };
   ContentResource: {
     [id: string]: ContentResource;
@@ -163,6 +176,36 @@ function ensureDefaultFields<T, R>(defaultResource: R) {
   };
 }
 
+function ensureArray<T>(maybeArray: T | T[]): T[] {
+  if (Array.isArray(maybeArray)) {
+    return maybeArray;
+  }
+  return [maybeArray];
+}
+
+function ensureArrayOnAnnotation(annotation: Annotation): Annotation {
+  if (annotation.body) {
+    annotation.body = ensureArray(annotation.body);
+  }
+  if (annotation.seeAlso) {
+    annotation.seeAlso = ensureArray(annotation.seeAlso);
+  }
+  if (annotation.body) {
+    annotation.body = ensureArray(annotation.body);
+  }
+  if (annotation.audience) {
+    annotation.audience = ensureArray(annotation.audience);
+  }
+  if (annotation.accessibility) {
+    annotation.accessibility = ensureArray(annotation.accessibility);
+  }
+  if (annotation.motivation) {
+    annotation.motivation = ensureArray(annotation.motivation);
+  }
+
+  return annotation;
+}
+
 // @todo Plan for tomorrow.
 //    - [x] Wrap head around normalized types.
 //    - [x] Fully implement Normalized resources (all fields)
@@ -210,6 +253,7 @@ export function normalize(entity: unknown) {
       // This won't be normalized before going into the state.
       // It will be normalized through selectors and pattern matching.
       addMissingIdToContentResource('Annotation'),
+      ensureArrayOnAnnotation,
       addToMapping<Annotation>('Annotation'),
       addToEntities<Annotation>('Annotation'),
     ],

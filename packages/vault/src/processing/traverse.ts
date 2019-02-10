@@ -186,7 +186,7 @@ export class Traverse {
 
   traverseCollection(collection: Collection): Collection {
     return this.traverseType<Collection>(
-      this.traverseLinking(this.traverseCollectionItems(collection)),
+      this.traverseLinking(this.traversePosterCanvas(this.traverseCollectionItems(collection))),
       this.traversals.collection
     );
   }
@@ -205,7 +205,9 @@ export class Traverse {
 
   traverseManifest(manifest: Manifest): Manifest {
     return this.traverseType<Manifest>(
-      this.traverseManifestStructures(this.traverseLinking(this.traverseManifestItems(manifest))),
+      this.traverseManifestStructures(
+        this.traversePosterCanvas(this.traverseLinking(this.traverseManifestItems(manifest)))
+      ),
       this.traversals.manifest
     );
   }
@@ -221,7 +223,10 @@ export class Traverse {
   }
 
   traverseCanvas(canvas: Canvas): Canvas {
-    return this.traverseType<Canvas>(this.traverseLinking(this.traverseCanvasItems(canvas)), this.traversals.canvas);
+    return this.traverseType<Canvas>(
+      this.traversePosterCanvas(this.traverseLinking(this.traverseCanvasItems(canvas))),
+      this.traversals.canvas
+    );
   }
 
   traverseAnnotationPageItems(annotationPage: AnnotationPage): AnnotationPage {
@@ -242,6 +247,8 @@ export class Traverse {
     );
   }
 
+  // Disabling these.
+  /*
   traverseAnnotationBody(annotation: Annotation): Annotation {
     if (Array.isArray(annotation.body)) {
       annotation.body = annotation.body.map(
@@ -268,11 +275,21 @@ export class Traverse {
 
     return annotation;
   }
+  */
+
+  traversePosterCanvas<T extends Collection | Manifest | Canvas | Range>(json: T): T {
+    if (json.posterCanvas) {
+      json.posterCanvas = this.traverseType(json.posterCanvas, this.traversals.canvas);
+    }
+    return json;
+  }
 
   // @todo traverseAnnotationSelector
   traverseAnnotation(annotationJson: Annotation): Annotation {
     return this.traverseType<Annotation>(
-      this.traverseAnnotationTarget(this.traverseLinking(this.traverseAnnotationBody(annotationJson))),
+      // Disabled these for now.
+      // this.traverseAnnotationTarget(this.traverseLinking(this.traverseAnnotationBody(annotationJson))),
+      this.traverseLinking(annotationJson),
       this.traversals.annotation
     );
   }
@@ -298,7 +315,10 @@ export class Traverse {
   }
 
   traverseRange(range: Range): Range {
-    return this.traverseType<Range>(this.traverseLinking(this.traverseRangeRanges(range)), this.traversals.range);
+    return this.traverseType<Range>(
+      this.traversePosterCanvas(this.traverseLinking(this.traverseRangeRanges(range))),
+      this.traversals.range
+    );
   }
 
   traverseType<T>(object: T, traversals: Array<Traversal<T>>): T {

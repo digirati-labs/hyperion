@@ -1,4 +1,4 @@
-import { Entities, Mapping } from './processing/normalize';
+import {Entities, Mapping, NormalizedEntity} from './processing/normalize';
 import createStore from './redux/createStore';
 import { Store } from 'redux';
 import { Epic } from 'redux-observable';
@@ -6,7 +6,7 @@ import Mitt from 'mitt';
 import { AllActions, requestResource, RequestState } from './redux/entities';
 import { ActionType } from 'typesafe-actions';
 import {CollectionNormalized, ManifestNormalized, Reference} from "@hyperion-framework/types";
-import {TraversableEntityTypes} from "./processing/traverse";
+import { TraversableEntityTypes} from "./processing/traverse";
 // import { ManifestNormalized } from '@hyperion-framework/types';
 
 export type VaultOptions = {
@@ -23,6 +23,7 @@ export type VaultState = {
     requests: RequestState;
   };
 };
+
 
 export class Vault<S extends VaultState = VaultState> {
   private readonly options: VaultOptions;
@@ -53,12 +54,10 @@ export class Vault<S extends VaultState = VaultState> {
   };
 
 
-  select<T, R>(reference: Reference<TraversableEntityTypes>, selector?: <T>(state: S, ctx: T) => R | null): R | T | null {
+  select<T extends NormalizedEntity, R = T>(reference: Reference<TraversableEntityTypes>, selector?: <T>(state: S, ctx: T) => R): R | T {
     const state = this.getState();
     const resource = state.hyperion.entities[reference.type][reference.id] as T;
-    if (!resource) {
-      return null;
-    }
+
     if (!selector) {
       return resource as T;
     }

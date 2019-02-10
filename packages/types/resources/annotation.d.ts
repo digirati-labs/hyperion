@@ -3,6 +3,7 @@ import { DescriptiveNormalized, DescriptiveProperties } from '../iiif/descriptiv
 import { LinkingNormalized, LinkingProperties } from '../iiif/linking';
 import {JsonLDContext, OmitProperties, SomeRequired} from '../utility';
 import { ContentResource } from './contentResource';
+import {Reference} from "../reference";
 
 type AnnotationOmittedTechnical = 'format' | 'profile' | 'height' | 'width' | 'duration' | 'viewingDirection' | 'motivation';
 type AnnotationOmittedDescriptive = 'posterCanvas' | 'navDate' | 'language' | 'rights';
@@ -287,11 +288,11 @@ export declare type AnnotationW3C = OtherProperties & {
   stylesheet?: string | Stylesheet;
 };
 
-export declare type AnnotationW3cNormalised = JsonLDContext & OtherPropertiesNormalized & {
-  body: AnnotationBody[] | [];
-  bodyValue: string | null;
-  target: AnnotationTarget[] | [];
-  stylesheet: Stylesheet | null;
+export declare type AnnotationW3cNormalised = JsonLDContext & Partial<OtherPropertiesNormalized> & {
+  body: Reference<'ContentResource'>[];
+  bodyValue?: string | null;
+  target: Reference<'ContentResource'>[];
+  stylesheet?: Stylesheet | null;
 };
 
 export interface Annotation
@@ -304,7 +305,7 @@ export interface Annotation
 }
 
 export interface AnnotationNormalized
-  extends OmitProperties<TechnicalProperties, AnnotationOmittedTechnical>,
-    OmitProperties<DescriptiveNormalized, AnnotationOmittedDescriptive>,
-    OmitProperties<LinkingNormalized, AnnotationOmittedLinking>,
+  extends SomeRequired<OmitProperties<TechnicalProperties, AnnotationOmittedTechnical>, 'id' | 'type'>,
+    Partial<OmitProperties<DescriptiveNormalized, AnnotationOmittedDescriptive>>,
+    Partial<OmitProperties<LinkingNormalized, AnnotationOmittedLinking>>,
     AnnotationW3cNormalised {}

@@ -1,5 +1,6 @@
 import { Reference } from '../reference';
 import { OmitProperties } from '../utility';
+import {Canvas} from "..";
 
 export declare type InternationalString = {
   [language: string]: string[];
@@ -21,7 +22,7 @@ export declare type DescriptiveProperties = {
   // @todo Thumbnail
   thumbnail: any;
   // @todo Poster canvas
-  posterCanvas: any;
+  posterCanvas: Canvas;
 };
 
 export declare type DescriptiveNormalized = OmitProperties<DescriptiveProperties, 'thumbnail' | 'posterCanvas'> & {

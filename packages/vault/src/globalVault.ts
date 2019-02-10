@@ -1,5 +1,17 @@
 import { VaultOptions, Vault } from './Vault';
-import { CollectionNormalized, ManifestNormalized, Reference } from '@hyperion-framework/types';
+import {
+  AnnotationCollection,
+  AnnotationNormalized,
+  AnnotationPageNormalized,
+  CanvasNormalized,
+  CollectionNormalized,
+  ContentResource,
+  ManifestNormalized,
+  RangeNormalized,
+  Reference,
+  Selector,
+  ServiceNormalized,
+} from '@hyperion-framework/types';
 import { TraversableEntityTypes } from './processing/traverse';
 
 export function globalVault(options?: VaultOptions) {
@@ -44,9 +56,46 @@ export function subscribe<S>(
   return globalVault().subscribe(selector, subscription);
 }
 
-export function select(
-  reference: Reference<TraversableEntityTypes>,
-  selector?: (state: unknown, ctx: unknown) => unknown
-): unknown {
-  return globalVault().select(reference, selector);
+type MappedType<T extends TraversableEntityTypes> = T extends 'Collection'
+  ? CollectionNormalized
+  : T extends 'Manifest'
+  ? ManifestNormalized
+  : T extends 'Canvas'
+  ? CanvasNormalized
+  : T extends 'AnnotationPage'
+  ? AnnotationPageNormalized
+  : T extends 'AnnotationCollection'
+  ? AnnotationCollection
+  : T extends 'Annotation'
+  ? AnnotationNormalized
+  : T extends 'ContentResource'
+  ? ContentResource
+  : T extends 'Range'
+  ? RangeNormalized
+  : T extends 'Service'
+  ? ServiceNormalized
+  : Selector;
+
+export function select<T extends TraversableEntityTypes>(reference: Reference<T>): MappedType<T> {
+  return globalVault().select<MappedType<T>>(reference);
 }
+
+export function selectAll<T extends TraversableEntityTypes>(references: Array<Reference<T>>): Array<MappedType<T>> {
+  return references.map(reference => select(reference));
+}
+
+// export function select<T extends TraversableEntity>(
+//   reference: Reference<TraversableEntityTypes>
+// ): T;
+//
+// export function select<T extends TraversableEntity, R>(
+//   reference: Reference<TraversableEntityTypes>,
+//   selector: <T>(state: VaultState, ctx: T) => R | null
+// ): R | null;
+//
+// export function select<T extends TraversableEntity, R>(
+//   reference: Reference<TraversableEntityTypes>,
+//   selector?: <T>(state: VaultState, ctx: T) => R | null
+// ): R | T | null {
+//   return globalVault().select<T, R>(reference, selector);
+// }
