@@ -1,4 +1,5 @@
 import { CanvasNormalized } from '@hyperion-framework/types';
+import { createContext } from '../context/createContext';
 
 export const emptyCanvas: CanvasNormalized = {
   id: 'https://hyperion/empty-canvas',
@@ -25,3 +26,11 @@ export const emptyCanvas: CanvasNormalized = {
   height: 0,
   width: 0,
 };
+
+export const canvasContext = createContext({
+  name: 'canvas',
+  creator: (id: string) => ({ id, type: 'Canvas' }),
+  resolve: (ref, state) => {
+    return state.hyperion.entities.Canvas[ref.id];
+  },
+});

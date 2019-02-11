@@ -4,16 +4,20 @@ exports[`utility/normalize it can normalize a simple manifest 1`] = `
 Object {
   "Annotation": Object {
     "https://example.org/iiif/book1/annotation/p0001-image": Object {
-      "body": Object {
-        "id": "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png",
-        "type": "ContentResource",
-      },
+      "body": Array [
+        Object {
+          "format": "image/png",
+          "height": 1800,
+          "id": "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png",
+          "type": "Image",
+          "width": 1200,
+        },
+      ],
       "id": "https://example.org/iiif/book1/annotation/p0001-image",
-      "motivation": "painting",
-      "target": Object {
-        "id": "https://example.org/iiif/book1/canvas/p1",
-        "type": "ContentResource",
-      },
+      "motivation": Array [
+        "painting",
+      ],
+      "target": "https://example.org/iiif/book1/canvas/p1",
       "type": "Annotation",
     },
   },
@@ -77,19 +81,8 @@ Object {
   },
   "Collection": Object {},
   "ContentResource": Object {
-    "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png": Object {
-      "format": "image/png",
-      "height": 1800,
-      "id": "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png",
-      "type": "Image",
-      "width": 1200,
-    },
     "http://myhomepage.com": Object {
       "id": "http://myhomepage.com",
-      "type": "ContentResource",
-    },
-    "https://example.org/iiif/book1/canvas/p1": Object {
-      "id": "https://example.org/iiif/book1/canvas/p1",
       "type": "ContentResource",
     },
   },

@@ -4,3 +4,6 @@ export * from './globalVault';
 export * from './redux/createStore';
 export * from './redux/entities';
 export * from './Vault';
+export * from './context/combineContext';
+export * from './context/createContext';
+export * from './context/createSelector';

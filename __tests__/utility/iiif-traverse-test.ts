@@ -1,5 +1,5 @@
-import {Canvas, Manifest} from "@hyperion-framework/types";
-import {Traverse} from "@hyperion-framework/vault/src/processing/traverse";
+import { Canvas, Manifest } from '@hyperion-framework/types';
+import { Traverse } from '@hyperion-framework/vault/src/processing/traverse';
 
 describe('utility/iiif-traverse', () => {
   const manifest = (): Manifest => ({
@@ -106,7 +106,13 @@ describe('utility/iiif-traverse', () => {
     expect(store).toEqual({
       Annotation: {
         'https://example.org/iiif/book1/annotation/p0001-image': {
-          body: { id: 'http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png', type: 'Image' },
+          body: {
+            format: 'image/png',
+            height: 1800,
+            id: 'http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png',
+            type: 'Image',
+            width: 1200,
+          },
           id: 'https://example.org/iiif/book1/annotation/p0001-image',
           motivation: 'painting',
           target: 'https://example.org/iiif/book1/canvas/p1',
@@ -126,15 +132,6 @@ describe('utility/iiif-traverse', () => {
           id: 'https://example.org/iiif/book1/canvas/p1',
           items: [{ id: 'https://example.org/iiif/book1/page/p1/1', type: 'AnnotationPage' }],
           type: 'Canvas',
-          width: 1200,
-        },
-      },
-      Image: {
-        'http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png': {
-          format: 'image/png',
-          height: 1800,
-          id: 'http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png',
-          type: 'Image',
           width: 1200,
         },
       },
@@ -168,7 +165,6 @@ describe('utility/iiif-traverse', () => {
     traversal.traverseManifest(manifest());
 
     expect(ids).toEqual([
-      'http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png',
       'https://example.org/iiif/book1/annotation/p0001-image',
       'https://example.org/iiif/book1/page/p1/1',
       'https://example.org/iiif/book1/canvas/p1',

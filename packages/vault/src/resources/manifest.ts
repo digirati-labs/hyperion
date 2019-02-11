@@ -1,4 +1,5 @@
 import { ManifestNormalized } from '@hyperion-framework/types';
+import { createContext } from '../context/createContext';
 
 export const emptyManifest: ManifestNormalized = {
   id: 'https://hyperion/empty-manifest',
@@ -25,3 +26,11 @@ export const emptyManifest: ManifestNormalized = {
   thumbnail: [],
   viewingDirection: 'left-to-right',
 };
+
+export const manifestContext = createContext({
+  name: 'manifest',
+  creator: (id: string) => ({ id, type: 'Manifest' }),
+  resolve: (ref, state) => {
+    return state.hyperion.entities.Manifest[ref.id];
+  },
+});

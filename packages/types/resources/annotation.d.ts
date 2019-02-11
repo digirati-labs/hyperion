@@ -1,11 +1,18 @@
 import { TechnicalProperties } from '../iiif/technical';
 import { DescriptiveNormalized, DescriptiveProperties } from '../iiif/descriptive';
 import { LinkingNormalized, LinkingProperties } from '../iiif/linking';
-import {JsonLDContext, OmitProperties, SomeRequired} from '../utility';
+import { JsonLDContext, OmitProperties, SomeRequired } from '../utility';
 import { ContentResource } from './contentResource';
-import {Reference} from "../reference";
+import { Reference } from '../reference';
 
-type AnnotationOmittedTechnical = 'format' | 'profile' | 'height' | 'width' | 'duration' | 'viewingDirection' | 'motivation';
+type AnnotationOmittedTechnical =
+  | 'format'
+  | 'profile'
+  | 'height'
+  | 'width'
+  | 'duration'
+  | 'viewingDirection'
+  | 'motivation';
 type AnnotationOmittedDescriptive = 'posterCanvas' | 'navDate' | 'language' | 'rights';
 type AnnotationOmittedLinking = 'start' | 'supplementary';
 
@@ -288,12 +295,13 @@ export declare type AnnotationW3C = OtherProperties & {
   stylesheet?: string | Stylesheet;
 };
 
-export declare type AnnotationW3cNormalised = JsonLDContext & Partial<OtherPropertiesNormalized> & {
-  body: Reference<'ContentResource'>[];
-  bodyValue?: string | null;
-  target: Reference<'ContentResource'>[];
-  stylesheet?: Stylesheet | null;
-};
+export declare type AnnotationW3cNormalised = JsonLDContext &
+  Partial<OtherPropertiesNormalized> & {
+    body: Array<Reference<'ContentResource'>>;
+    bodyValue?: string | null;
+    target: Array<Reference<'ContentResource'>>;
+    stylesheet?: Stylesheet | null;
+  };
 
 export interface Annotation
   extends SomeRequired<AnnotationTechnical, 'id' | 'type'>,

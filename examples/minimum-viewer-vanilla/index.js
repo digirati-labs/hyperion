@@ -1,23 +1,23 @@
-import { select, loadManifest, subscribe } from '@hyperion-framework/vault';
+import { fromRef, loadManifest, subscribe } from '@hyperion-framework/vault';
 
 const manifestId = 'https://adam-digirati.github.io/balenciaga1-behaviors.json';
 
 loadManifest(manifestId).then(res => {
-  document.getElementById('title').innerText = res.label.en[ 0 ];
+  document.getElementById('title').innerText = res.label.en[0];
 
   const $canvasList = document.getElementById('canvasList');
   $canvasList.innerHTML = '';
 
   for (let ref of res.items) {
-    const canvas = select(ref);
+    const canvas = fromRef(ref);
     if (canvas) {
       // Loop canvases
       canvas.items.forEach(annotationPageRef => {
-        const annotationPage = select(annotationPageRef);
+        const annotationPage = fromRef(annotationPageRef);
         // Loop the annotation pages.
         annotationPage.items.forEach(annotationRef => {
           // Loop the annotations.
-          const annotation = select(annotationRef);
+          const annotation = fromRef(annotationRef);
           // Map the body
           annotation.body.map(
             resource => {
@@ -37,7 +37,7 @@ loadManifest(manifestId).then(res => {
 
     // Add our label to the Dom.
     const $item = document.createElement('div');
-    $item.innerText = canvas.label ? canvas.label.en[ 0 ] : 'untitled canvas';
+    $item.innerText = canvas.label ? canvas.label.en[0] : 'untitled canvas';
     $canvasList.append($item);
   }
 });
@@ -45,7 +45,7 @@ loadManifest(manifestId).then(res => {
 
 const $loadingState = document.getElementById('loading-state');
 subscribe(
-  state => state.hyperion.requests[ manifestId ],
+  state => state.hyperion.requests[manifestId],
   (res, vault) => {
     if (res) {
       $loadingState.innerText = res.loadingState;

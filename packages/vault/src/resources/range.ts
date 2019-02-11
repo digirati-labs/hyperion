@@ -1,4 +1,5 @@
 import { RangeNormalized } from '@hyperion-framework/types';
+import { createContext } from '../context/createContext';
 
 export const emptyRange: RangeNormalized = {
   id: 'https://hyperion/empty-canvas',
@@ -25,3 +26,11 @@ export const emptyRange: RangeNormalized = {
   supplementary: null,
   viewingDirection: 'left-to-right',
 };
+
+export const rangeContext = createContext({
+  name: 'range',
+  creator: (id: string) => ({ id, type: 'Range' }),
+  resolve: (ref, state) => {
+    return state.hyperion.entities.Range[ref.id];
+  },
+});

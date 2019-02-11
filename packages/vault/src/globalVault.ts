@@ -15,14 +15,14 @@ import {
 import { TraversableEntityTypes } from './processing/traverse';
 
 export function globalVault(options?: VaultOptions) {
-  const globalVault: Vault | null = global
+  const gv: Vault | null = global
     ? (global as any).__hyperionVault__
     : null || window
     ? window.__hyperionVault__
     : null || null;
 
-  if (globalVault) {
-    return globalVault;
+  if (gv) {
+    return gv;
   }
 
   const newVault = new Vault(options);
@@ -76,12 +76,16 @@ type MappedType<T extends TraversableEntityTypes> = T extends 'Collection'
   ? ServiceNormalized
   : Selector;
 
-export function select<T extends TraversableEntityTypes>(reference: Reference<T>): MappedType<T> {
-  return globalVault().select<MappedType<T>>(reference);
+export function fromRef<T extends TraversableEntityTypes>(reference: Reference<T>): MappedType<T> {
+  return globalVault().fromRef<MappedType<T>>(reference);
 }
 
-export function selectAll<T extends TraversableEntityTypes>(references: Array<Reference<T>>): Array<MappedType<T>> {
-  return references.map(reference => select(reference));
+export function allFromRef<T extends TraversableEntityTypes>(references: Array<Reference<T>>): Array<MappedType<T>> {
+  return references.map(reference => fromRef(reference));
+}
+
+export function select(selector: any, context: any): any {
+  return globalVault().select(selector, context);
 }
 
 // export function select<T extends TraversableEntity>(

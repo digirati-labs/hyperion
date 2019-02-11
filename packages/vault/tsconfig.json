@@ -2,5 +2,11 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "src"
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/__tests__/*.test.ts",
+    "__tests__"
+  ]
 }

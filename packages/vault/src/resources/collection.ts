@@ -1,4 +1,5 @@
 import { CollectionNormalized } from '@hyperion-framework/types';
+import { createContext } from '../context/createContext';
 
 export const emptyCollection: CollectionNormalized = {
   id: 'https://hyperion/empty-collection',
@@ -23,3 +24,11 @@ export const emptyCollection: CollectionNormalized = {
   rendering: [],
   service: [],
 };
+
+export const collectionContext = createContext({
+  name: 'collection',
+  creator: (id: string) => ({ id, type: 'Collection' }),
+  resolve: (ref, state) => {
+    return state.hyperion.entities.Collection[ref.id];
+  },
+});
