@@ -1,7 +1,7 @@
-workflow "Build and test" {
-  on = "push"
-  resolves = ["Yarn tests", "Typescript types tests"]
-}
+//workflow "Build and test" {
+//  on = "push"
+//  resolves = ["Yarn tests", "Typescript types tests"]
+//}
 
 
 workflow "Deploy pre-release to NPM" {
