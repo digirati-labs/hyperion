@@ -3,6 +3,7 @@ workflow "Build and test" {
   resolves = ["Yarn tests", "Typescript types tests"]
 }
 
+
 workflow "Deploy pre-release to NPM" {
   on = "pull_request"
   resolves = ["Deploy prerelease"]
