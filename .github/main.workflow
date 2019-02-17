@@ -1,6 +1,11 @@
 workflow "Hyperion" {
   on = "push"
-  resolves = ["Yarn tests", "Typescript types tests", "Deploy prerelease"]
+  resolves = ["Yarn tests", "Typescript types tests"]
+}
+
+workflow "Hyperion" {
+  on = "pull_request"
+  resolves = ["Deploy prerelease"]
 }
 
 action "Yarn install" {
