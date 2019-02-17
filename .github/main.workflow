@@ -1,6 +1,6 @@
 workflow "Hyperion" {
   on = "push"
-  resolves = ["Yarn tests", "Typescript types tests"]
+  resolves = ["Yarn tests", "Typescript types tests", "Deploy prerelease"]
 }
 
 action "Yarn install" {
@@ -32,4 +32,5 @@ action "Deploy prerelease" {
     MODULE_RELEASE_DEBUG = "true"
   }
   needs = ["Yarn build"]
+  secrets = ["NPM_AUTH"]
 }
