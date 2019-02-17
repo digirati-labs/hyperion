@@ -25,3 +25,11 @@ action "Typescript types tests" {
   args = "yarn test-types"
   needs = ["Yarn install"]
 }
+
+action "Deploy prerelease" {
+  uses = "stephenwf/module-release-action@master"
+  env = {
+    MODULE_RELEASE_DEBUG = "true"
+  }
+  needs = ["Yarn build"]
+}
