@@ -31,6 +31,6 @@ action "Deploy prerelease" {
   env = {
     MODULE_RELEASE_DEBUG = "true"
   }
-  needs = ["Yarn build"]
+  needs = ["Yarn tests", "Typescript types tests"]
   secrets = ["NPM_AUTH"]
 }
