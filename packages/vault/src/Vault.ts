@@ -8,7 +8,6 @@ import { ActionType } from 'typesafe-actions';
 import { CollectionNormalized, ManifestNormalized, Reference } from '@hyperion-framework/types';
 import { TraversableEntityTypes } from './processing/traverse';
 import { CtxFunction } from './context/createContext';
-// import { ManifestNormalized } from '@hyperion-framework/types';
 
 export type VaultOptions = {
   reducers: {};
