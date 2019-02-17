@@ -3,7 +3,7 @@ workflow "Hyperion" {
   resolves = ["Yarn tests", "Typescript types tests"]
 }
 
-workflow "Hyperion" {
+workflow "Hyperion - Deploy pre-release to NPM" {
   on = "pull_request"
   resolves = ["Deploy prerelease"]
 }
