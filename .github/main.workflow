@@ -1,9 +1,9 @@
-workflow "Hyperion" {
+workflow "Build and test" {
   on = "push"
   resolves = ["Yarn tests", "Typescript types tests"]
 }
 
-workflow "Hyperion - Deploy pre-release to NPM" {
+workflow "Deploy pre-release to NPM" {
   on = "pull_request"
   resolves = ["Deploy prerelease"]
 }
@@ -36,6 +36,5 @@ action "Deploy prerelease" {
   env = {
     MODULE_RELEASE_DEBUG = "true"
   }
-  needs = ["Yarn tests", "Typescript types tests"]
   secrets = ["NPM_AUTH"]
 }
