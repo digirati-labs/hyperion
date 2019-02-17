@@ -9,6 +9,7 @@
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
+    "prepare": "microbundle src/index.ts -o dist/hyperion-framework-vault.js",
     "build": "microbundle src/index.ts -o dist/hyperion-framework-vault.js",
     "start": "microbundle watch"
   },
@@ -24,6 +25,9 @@
     "redux-saga": "^1.0.1",
     "rxjs": "^6.4.0",
     "typesafe-actions": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "microbundle": "^0.9.0",

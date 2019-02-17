@@ -12,6 +12,9 @@
     "build": "microbundle src/index.ts -o dist/hyperion-framework-react-vault.js",
     "start": "microbundle watch"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "microbundle": "^0.9.0",
     "tslib": "^1.9.3"

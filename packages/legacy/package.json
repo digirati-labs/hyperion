@@ -1,6 +1,7 @@
 {
   "name": "@hyperion-framework/legacy",
   "version": "1.0.0",
+  "priate": true,
   "main": "dist/hyperion-framework.js",
   "umd:main": "dist/hyperion-framework.umd.js",
   "module": "dist/hyperion-framework.mjs",

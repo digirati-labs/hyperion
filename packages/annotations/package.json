@@ -16,6 +16,9 @@
     "microbundle": "^0.9.0",
     "tslib": "^1.9.3"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@hyperion-framework/types": "1.0.0"
   }
