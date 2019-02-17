@@ -33,8 +33,5 @@ action "Typescript types tests" {
 
 action "Deploy prerelease" {
   uses = "stephenwf/module-release-action@master"
-  env = {
-    MODULE_RELEASE_DEBUG = "true"
-  }
   secrets = ["NPM_AUTH"]
 }
