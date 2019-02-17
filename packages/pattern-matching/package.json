@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/pattern-matching",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "dist/hyperion-framework-pattern-matching.js",
   "umd:main": "dist/hyperion-framework-pattern-matching.umd.js",
   "module": "dist/hyperion-framework-pattern-matching.mjs",
@@ -13,7 +13,7 @@
     "start": "microbundle watch"
   },
   "dependencies": {
-    "@hyperion-framework/types": "1.0.0"
+    "@hyperion-framework/types": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"

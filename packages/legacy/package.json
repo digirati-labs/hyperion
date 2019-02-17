@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/legacy",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "main": "dist/hyperion-framework.js",
   "umd:main": "dist/hyperion-framework.umd.js",
@@ -18,11 +18,11 @@
     "prettier": "^1.15.3",
     "tslib": "^1.9.3",
     "tslint": "^5.12.0",
-    "tslint-plugin-prettier": "^2.0.1",
-    "tslint-config-prettier": "^1.17.0"
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-plugin-prettier": "^2.0.1"
   },
   "dependencies": {
-    "@hyperion-framework/types": "1.0.0",
+    "@hyperion-framework/types": "^0.1.0",
     "@types/object-hash": "^1.2.0",
     "@types/traverse": "^0.6.32",
     "normalizr": "^3.3.0",

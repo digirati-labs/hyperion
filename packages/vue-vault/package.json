@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/vue-vault",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "dist/hyperion-framework-vue-vault.js",
   "umd:main": "dist/hyperion-framework-vue-vault.umd.js",
   "module": "dist/hyperion-framework-vue-vault.mjs",
