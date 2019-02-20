@@ -31,7 +31,9 @@ describe('create context', () => {
       ...emptyManifest,
     };
 
-    expect(context(stateToUse, {})).toEqual({
+    const contextValue = context(stateToUse, {});
+
+    expect(contextValue).toEqual({
       manifest: {
         id: 'http://iiif.org/manifest.json',
         type: 'Manifest',

@@ -25,6 +25,10 @@ export function createContext<N extends string, T, C, R = C>({
   };
 }
 
+export function emptyContext<S, U>() {
+  return (state: S, util: U) => ({});
+}
+
 export type CustomContext<N extends string, R> = <S extends VaultState, U>(state: S, util: U) => { [name in N]: R };
 
 export type CtxFunction<S extends VaultState, U, C> = (state: S, util: U) => C;

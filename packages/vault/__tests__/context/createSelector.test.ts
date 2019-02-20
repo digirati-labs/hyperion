@@ -63,9 +63,10 @@ describe('create selector', () => {
       metadata: [{ label: { en: ['testing metadata label'] }, value: { en: ['testing metadata value'] } }],
     };
 
+    const returnState = descriptiveFields(stateToUse, combineContext(englishLanguage, currentManifest), {});
     // Use our selector, passing in the context and state.
     // State + Context + Selector = Result.
-    expect(descriptiveFields(stateToUse, combineContext(englishLanguage, currentManifest), {})).toEqual({
+    expect(returnState).toEqual({
       label: 'testing label',
       metadata: [{ label: 'testing metadata label', value: 'testing metadata value' }],
       requiredStatement: { label: 'testing required statement label', value: 'testing required statement value' },
