@@ -1,4 +1,4 @@
-import { combineObjectSelector, combineSelector } from '../../src/context/combineSelector';
+import { combineSelector } from '../../src/context/combineSelector';
 import { createContext, createSelector, defaultEntities, combineContext } from '../../src';
 import { emptyManifest, manifestContext } from '../../src/resources/manifest';
 
