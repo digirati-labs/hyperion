@@ -34,4 +34,5 @@ action "Typescript types tests" {
 action "Deploy package to NPM" {
   uses = "stephenwf/module-release-action@master"
   secrets = ["NPM_AUTH"]
+  needs = ["Yarn install"]
 }
