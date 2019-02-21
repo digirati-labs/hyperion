@@ -5,7 +5,7 @@ workflow "Build and test" {
 
 workflow "Deploy pre-release to NPM" {
   on = "pull_request"
-  resolves = ["Deploy prerelease to NPM"]
+  resolves = ["Deploy package to NPM"]
 }
 
 action "Yarn install" {
@@ -31,7 +31,7 @@ action "Typescript types tests" {
   needs = ["Yarn install"]
 }
 
-action "Deploy prerelease to NPM" {
+action "Deploy package to NPM" {
   uses = "stephenwf/module-release-action@master"
   secrets = ["NPM_AUTH"]
 }
