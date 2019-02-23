@@ -7,3 +7,5 @@ export * from './Vault';
 export * from './context/combineContext';
 export * from './context/createContext';
 export * from './context/createSelector';
+export * from './resources/manifest';
+

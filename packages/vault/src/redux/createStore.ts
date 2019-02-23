@@ -3,13 +3,14 @@ import { Epic } from 'redux-observable';
 import reducers from './reducers';
 import epics from './epics';
 
-const composeEnhancers = typeof window !== 'undefined' ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
+const composeEnhancers =
+  typeof window !== 'undefined' ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
 
 export default function createStore(
-  customReducers = {},
+  customReducers: any = {},
   extraMiddleware: any[] = [],
   customEpics: Epic[] = [],
-  defaultState = {}
+  defaultState: any = {}
 ) {
   const { ajax } = require('rxjs/ajax');
   const { combineEpics, createEpicMiddleware } = require('redux-observable');

@@ -1,6 +1,7 @@
 import { VaultState } from '../Vault';
 import { CtxFunction } from './createContext';
 
+export function combineContext<S extends VaultState, U, ContextA>(): {};
 export function combineContext<S extends VaultState, U, ContextA>(a: CtxFunction<S, U, ContextA>): ContextA;
 export function combineContext<S extends VaultState, U, ContextA, ContextB>(
   a: CtxFunction<S, U, ContextA>,

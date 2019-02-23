@@ -25,8 +25,11 @@ export function createContext<N extends string, T, C, R = C>({
   };
 }
 
-export function emptyContext<S, U>() {
-  return (state: S, util: U) => ({});
+export function emptyContext() {
+  return createContext({
+    name: '_empty',
+    creator: () => null,
+  })({});
 }
 
 export type CustomContext<N extends string, R> = <S extends VaultState, U>(state: S, util: U) => { [name in N]: R };
