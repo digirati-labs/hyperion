@@ -57,7 +57,11 @@ describe('context/combine-selector', () => {
 
     const endState = selector(stateToUse, currentManifest, {});
 
-    expect(endState).toEqual({ label: { en: ['testing label'] }, summary: { en: ['testing summary'] } });
+    expect(endState).toEqual({
+      annotations: [],
+      label: { en: ['testing label'] },
+      summary: { en: ['testing summary'] },
+    });
   });
 
   test('combine selector with multiple context', () => {

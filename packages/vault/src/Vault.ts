@@ -1,5 +1,5 @@
 import { Entities, Mapping, NormalizedEntity } from './processing/normalize';
-import createStore from './redux/createStore';
+import { createStore } from './redux/createStore';
 import { Store } from 'redux';
 import { Epic } from 'redux-observable';
 import Mitt from 'mitt';
@@ -29,13 +29,13 @@ export class Vault<S extends VaultState = VaultState> {
   private readonly store: Store;
   private readonly emitter: Mitt.Emitter;
 
-  constructor(options?: VaultOptions) {
-    this.options = options || {
+  constructor(options?: Partial<VaultOptions>) {
+    this.options = Object.assign(options || {}, {
       reducers: {},
       epics: [],
       middleware: [],
       defaultState: {},
-    };
+    });
     this.store = createStore(
       this.options.reducers,
       [...this.options.middleware, this.middleware],

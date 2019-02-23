@@ -6,7 +6,7 @@ import epics from './epics';
 const composeEnhancers =
   typeof window !== 'undefined' ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
 
-export default function createStore(
+export function createStore(
   customReducers: any = {},
   extraMiddleware: any[] = [],
   customEpics: Epic[] = [],

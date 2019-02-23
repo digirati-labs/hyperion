@@ -1,0 +1,16 @@
+{
+  "name": "vanilla-minimum-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "@hyperion-framework/vault": "^0.1.0"
+  },
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --experimental-scope-hoisting"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0",
+    "parcel-plugin-bundle-visualiser": "^1.2.0"
+  }
+}
