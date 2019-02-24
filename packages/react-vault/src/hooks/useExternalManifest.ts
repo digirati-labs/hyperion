@@ -3,12 +3,14 @@ import { useVaultEffect } from './useVaultEffect';
 
 export const useExternalManifest = (id: string): { id: string; isLoaded: boolean } => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [realId, setRealId] = useState(id);
 
   useVaultEffect(
     vault => {
       vault
         .loadManifest(id)
-        .then(() => {
+        .then(resource => {
+          setRealId(resource.id);
           setIsLoaded(true);
         })
         .catch(err => {
@@ -18,5 +20,7 @@ export const useExternalManifest = (id: string): { id: string; isLoaded: boolean
     [id]
   );
 
-  return { isLoaded, id };
+  
+
+  return { isLoaded, id: realId };
 };

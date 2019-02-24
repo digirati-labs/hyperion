@@ -8,7 +8,7 @@ export function reactContextFactory<N extends string, T, C, R>(
   const ReactContext = React.createContext(hyperionContext(defaultValue));
 
   function Wrapper<Ch>({ id, children }: { id: T; children: Ch }) {
-    const [currentCtx, setCtx] = useState(defaultValue);
+    const [currentCtx, setCtx] = useState(id);
 
     useEffect(
       () => {
