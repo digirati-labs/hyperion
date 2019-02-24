@@ -1,5 +1,4 @@
 import { VaultState } from '../Vault';
-import {CtxFunction} from "../../dist";
 
 export type createContextArgs<N extends string, T, C, R> = {
   name: N;
