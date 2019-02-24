@@ -3,11 +3,6 @@ workflow "Build and test" {
   resolves = ["Yarn tests", "Typescript types tests"]
 }
 
-workflow "Deploy pre-release to NPM" {
-  on = "pull_request"
-  resolves = ["Deploy package to NPM"]
-}
-
 action "Yarn install" {
   uses = "docker://node:8"
   args = "yarn install"
