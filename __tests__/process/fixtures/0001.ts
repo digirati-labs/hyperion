@@ -1,5 +1,5 @@
-import { Manifest } from '../../../src';
 import json from './0001.json';
+import {Manifest} from "@hyperion-framework/types";
 
 describe('process/fixtures/0001', () => {
   test('fixture is correctly typed', () => {

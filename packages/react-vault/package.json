@@ -1,0 +1,33 @@
+{
+  "name": "@hyperion-framework/react-vault",
+  "version": "0.1.0",
+  "main": "dist/hyperion-framework-react-vault.js",
+  "umd:main": "dist/hyperion-framework-react-vault.umd.js",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "author": "Stephen Fraser <stephen.fraser@digirati.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "microbundle src/index.ts -o dist/hyperion-framework-react-vault.js",
+    "start": "microbundle watch"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@hyperion-framework/vault": "0.1.0",
+    "redux-react-hook": "^3.2.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.4",
+    "@types/react-dom": "^16.8.2",
+    "microbundle": "^0.9.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "tslib": "^1.9.3"
+  }
+}

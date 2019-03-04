@@ -1,0 +1,14 @@
+{
+  "name": "@hyperion-framework/types",
+  "version": "0.1.0",
+  "source": "lib/index.ts",
+  "types": "lib/index.d.ts",
+  "author": "Stephen Fraser <stephen.fraser@digirati.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "tslib": "^1.9.3"
+  }
+}
