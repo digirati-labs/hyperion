@@ -4,3 +4,10 @@ dist
 coverage
 .cache
 yarn-error.log
+.docz
+.vscode
+packages/*/lib
+packages/*/umd
+examples/*/lib
+examples/*/umd
+*.tsbuildinfo
