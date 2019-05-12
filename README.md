@@ -3,14 +3,14 @@
 
 Experimental framework for working with IIIF in JavaScript and Typescript.
 
-Aims to provide safe typings for valid Presentation 3 JSON-LD and normalization step (also with typings). 
+Aims to provide safe typings for valid Presentation 3 JSON-LD and normalization step (also with typings).
 
 3 steps in that the library does:
 - Preprocess resources to ensure valid Presentation 3
 - Cast JSON to Typescript interface
 - Normalize resources into flat tree of resources
 
-This library can be the basis of other tools that want to work deeper with IIIF Presentation 3 resources. 
+This library can be the basis of other tools that want to work deeper with IIIF Presentation 3 resources.
 
 ## Using JavaScript
 
@@ -18,14 +18,14 @@ This library can be the basis of other tools that want to work deeper with IIIF 
 
 If you're IDE supports it (like Intelij and VSCode) you can develop using types and hints by using the small utilities
 that will cast JSON objects to the strongly typed definitions. This way you get the same warnings when you try to access
-non-existent properties, or nullable ones. 
+non-existent properties, or nullable ones.
 
 ```javascript
 import { cast } from 'hyperion-framework';
 
 const json = getManifestFromUrlSomewhere('http://...');
 
-const manifest = cast.toManifest(json); 
+const manifest = cast.toManifest(json);
 
 // You now have a strongly typed Manifest object here
 console.log(manifest.items[0].annotations);
@@ -34,11 +34,11 @@ console.log(manifest.items[0].annotations);
 You can also use various utilities (in progress) included:
 
 ### Pattern matching
-Pattern matching is an imitation of a functional programming behaviour where you can run some code when certain
+Pattern matching is an imitation of a functional programming behavior where you can run some code when certain
 criteria matches, typically the type they have. This is used, with a JavaScript implementation to open up the type
 system for use in JavaScript so that you can handle fields in IIIF that have many different shapes and get strong
-typing on them. The body field of an Annotation is one example that has a pattern matching implementation: 
- 
+typing on them. The body field of an Annotation is one example that has a pattern matching implementation:
+
 ```javascript
 import { cast, matchAnnotationBody } from 'hyperion-framework';
 
@@ -60,14 +60,14 @@ console.log(bodyTypes); // ['ExternalResource', 'Video', 'Image'];
 
 The object you pass into `matchAnnotationBody` takes in a map of `Type => function` and when you pass an annotation
 body to that function it will run through all of the bodies and return you an array of results after passing them through
-your code. 
+your code.
 
-This can be incorporated into UI libraries, such as React, Stencil or VueJS to render different annotation bodies, or be 
+This can be incorporated into UI libraries, such as React, Stencil or VueJS to render different annotation bodies, or be
 used to process annotation bodies.
 
 ## Using Typescript
 With typescript you get access to the Types and Interfaces directly, and you can Type any functions you create to
-manipulate IIIF data accordingly. Rewriting the first Javascript example in Typescript: 
+manipulate IIIF data accordingly. Rewriting the first Javascript example in Typescript:
 ```typescript
 import { Manifest } from 'hyperion-framework';
 
@@ -82,9 +82,9 @@ typescript, we can also access the JSON using the nullable accessor, so the call
 tell you when you try to access a property that needs that check:
 ```typescript
 import {
-  Manifest, 
-  ChoiceBody, 
-  ContentResource, 
+  Manifest,
+  ChoiceBody,
+  ContentResource,
   SpecificResource,
   matchAnnotationBody
 } from 'hyperion-framework';
@@ -99,18 +99,18 @@ const getBodyTypes = matchAnnotationBody<string>({
    OtherContentResource: (o: ContentResource): string => o.type,
 });
 
-// Note the `items![0]` for the safe nullable check. 
-const bodyTypes: string[] = getBodyTypes(manifest.items[0].items![0].items![0].body); 
+// Note the `items![0]` for the safe nullable check.
+const bodyTypes: string[] = getBodyTypes(manifest.items[0].items![0].items![0].body);
 
 console.log(bodyTypes); // ['ExternalResource', 'Video', 'Image']
-``` 
+```
 
 **Note: In this example I've used complete types on all functions, they can mostly all be inferred, so the code you write
 will look more like the JS example, with the same Type-safety**
 
 ## Normalisation
-Normalisation of IIIF resources is useful when you start working with massive collections or many different resources 
-that you want to keep organised. It can also help to maintain a stable state object (for use in something like Redux) 
+Normalisation of IIIF resources is useful when you start working with massive collections or many different resources
+that you want to keep organised. It can also help to maintain a stable state object (for use in something like Redux)
 that makes managing external resources that have to be fetched, much easier.
 
 The process of normalisation takes a deeply nested structure of resources and flattens it down into a very shallow structure. So a manifest may go from:
@@ -213,12 +213,12 @@ To something like this:
 
 This is a scalable way to store many IIIF resources in a single state.
 
-The functionality of this is adapter from [IIIF Redux](https://github.com/stephenwf/iiif-redux) and is not yet ready. 
+The functionality of this is adapter from [IIIF Redux](https://github.com/stephenwf/iiif-redux) and is not yet ready.
 
 ## Traversal
-To achieve the Normalisation step, there is also a IIIF-specific traversal tool that lets you traverse through a deeply 
+To achieve the Normalisation step, there is also a IIIF-specific traversal tool that lets you traverse through a deeply
 nested IIIF resource choosing specific steps to run on specific resources. This could be a way to gather statistics about
-the resource, fix inconsistencies, or to map it to a completely different structure. 
+the resource, fix inconsistencies, or to map it to a completely different structure.
 
 Because its aware of the structure of IIIF, its smarter than a brute force object-traversal tool with the added bonus of strongly typed all the way down.
 
@@ -239,7 +239,7 @@ const traversal = Traverse.all(
 traversal.traverseManifest(someManifest);
 ```
 
-This goes through all of the currently supported IIIF resources in a structure and logs their ID to some variable, a 
+This goes through all of the currently supported IIIF resources in a structure and logs their ID to some variable, a
 simple example, but you can peel away the abstraction to traverse individual types too:
 
 ```typescript
@@ -267,8 +267,17 @@ traversal.traverseManifest(someManifest);
 
 The API for this is likely to change a lot, but you can see that each type takes in an array of transform steps, they
 each return the same type of resource (in this case the same resource) as the input, allowing you to immutably change fields
- on the resources. 
- 
- 
+ on the resources.
+
+
  ## Contributing
- All contributions and ideas are welcome. 
+ All contributions and ideas are welcome.
+
+
+## Future plans
+- Canvas abstraction and layer management
+- Authoring and draft framework
+- Commonly used fields (and types for them, based on research into IIIF resources)
+- Viewer checklist
+- OCR-based processing of resources
+- Metadata searching (lunr)
