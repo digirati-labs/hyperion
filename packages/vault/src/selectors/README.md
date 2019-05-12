@@ -112,3 +112,13 @@ The annotation, auth and search packages will cover most selectors for their dom
 will focus on data from the base IIIF resources for creating IIIF viewers. This package will also
 aim to implement all of the Presentation 3 cookbook examples, with React and Vue demos using the
 selectors.
+
+### Async selectors + Utilities
+One thing that has become clear is that some selectors might need to be asynchronous. The first large example of a selector, the canonical thumbnail raised a few problems:
+- It may have to call out to get an image service
+- It has to dereference resources as part of its selector
+- Lots of loops, need to flatten resources easily.
+
+This was a good test to see where gaps exist. This is a good time to add the start of a utility library to make selectors more powerful. Also it would be good if selectors could call other selectors easily.
+
+I think a new library dedicating to parsing the IIIF image API would also be useful, keep the selectors in there. It will start in the main vault API first though.

@@ -1,3 +1,4 @@
+import Upgrader from 'iiif-prezi2to3';
 import { TraversableEntityTypes, Traverse } from './traverse';
 import {
   Annotation,
@@ -206,27 +207,42 @@ function ensureArrayOnAnnotation(annotation: Annotation): Annotation {
   return annotation;
 }
 
-// @todo Plan for tomorrow.
-//    - [x] Wrap head around normalized types.
-//    - [x] Fully implement Normalized resources (all fields)
-//    - [ ] Start working on selector API (steal from IIIF Redux)
-//    - [ ] Create a thumbnail generator
-//    - [ ] Get tiles parsed, taken from IIIF image matrix
-//    - [ ] Get first Vanilla implementation done
-//    - [ ] Expand traversal to linking properties
-//    - [ ] Get a proof of concept to dereference resources
-//    - [ ] Create React bindings (hooks only)
-//    - [ ] Create Vue bindings
-//    - [ ] Implement Search
-//    - [ ] Implement Auth
-//    - [ ] Get list of pattern matching required
-//    - [ ] Get Open annotation to W3C converter created
+export function convertPresentation2<T extends any>(entity: T): T | Manifest | Collection {
+  if (
+    entity &&
+    (entity['@context'] === 'http://iiif.io/api/presentation/2/context.json' ||
+      entity['@context'].indexOf('http://iiif.io/api/presentation/2/context.json') !== -1 ||
+      // Yale context.
+      entity['@context'] === 'http://www.shared-canvas.org/ns/context.json') ||
+    entity['@context'] === 'http://iiif.io/api/image/2/context.json'
+  ) {
+    // Definitely presentation 3
+    const type = entity['@type'] || entity.type;
+    if (type === 'Manifest' || type === 'sc:Manifest') {
+      const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
+      return upgrade.processResource(entity, true);
+      // convert manifest.
+    }
+    if (type === 'Collection' || type === 'sc:Collection') {
+      const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
+      return upgrade.processResource(entity, true);
+    }
+    // Image service.
+    if (entity.profile) {
+      const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
+      return upgrade.processResource(entity, true);
+    }
+  }
+  return entity;
+}
 
-export function normalize(entity: unknown) {
+export function normalize(unknownEntity: unknown) {
+  const entity = convertPresentation2(unknownEntity);
   const entities: Entities = { ...defaultEntities };
   const mapping: Mapping = {};
   const addToEntities = mapToEntities(entities);
   const addToMapping = recordTypeInMapping(mapping);
+
   const traversal = new Traverse({
     collection: [
       ensureDefaultFields<Collection, CollectionNormalized>(emptyCollection),

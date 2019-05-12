@@ -9,5 +9,13 @@ export * from './context/createContext';
 export * from './context/createSelector';
 export * from './context/observeContext';
 export * from './context/observeSelector';
+export * from './resources/annotation';
+export * from './resources/annotationPage';
+export * from './resources/canvas';
+export * from './resources/collection';
 export * from './resources/manifest';
-
+export * from './resources/range';
+export * from './resources/service';
+export * from './selectors/getImageService';
+export * from './selectors/getThumbnailAtSize';
+export * from './tools/image-matrix';

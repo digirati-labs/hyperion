@@ -5,7 +5,7 @@ export const emptyCanvas: CanvasNormalized = {
   id: 'https://hyperion/empty-canvas',
   type: 'Canvas',
   label: null,
-  behaviour: [],
+  behavior: [],
   motivation: null,
   thumbnail: [],
   posterCanvas: null,

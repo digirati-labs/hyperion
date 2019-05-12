@@ -1,4 +1,4 @@
-import {Vault, VaultState} from './Vault';
+import { Vault, VaultState } from './Vault';
 import { AllActions } from './redux/entities';
 
 declare global {
