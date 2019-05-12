@@ -11,9 +11,11 @@
     "build": "lerna run build",
     "start": "lerna run start --parallel --stream --concurrency=100",
     "test-types": "typings-tester --dir types-tests",
+    "release": "fesk-release",
     "test": "NODE_ENV=test jest --verbose --coverage"
   },
   "devDependencies": {
+    "@fesk/module-release": "^0.0.3",
     "@fesk/eslint-config-standard": "^1.2.0",
     "@types/jest": "^23.3.12",
     "babel-eslint": "^10.0.1",
