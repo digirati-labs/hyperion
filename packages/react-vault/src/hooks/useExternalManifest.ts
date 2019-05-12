@@ -20,7 +20,5 @@ export const useExternalManifest = (id: string): { id: string; isLoaded: boolean
     [id]
   );
 
-  
-
   return { isLoaded, id: realId };
 };
