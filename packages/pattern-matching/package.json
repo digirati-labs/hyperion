@@ -8,9 +8,9 @@
   "license": "MIT",
   "scripts": {
     "start": "fesk-start --cjs --noServer",
-    "build": "fesk-build --cjs --umd",
-    "build-types": "tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./",
-    "prepublish": "fesk-build --cjs --umd && tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./"
+    "build": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
+    "build-types": "tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
+    "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types"
   },
   "dependencies": {
     "@hyperion-framework/types": "^0.1.0"

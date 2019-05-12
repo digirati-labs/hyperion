@@ -37,12 +37,7 @@
     "declarationMap": true,
     "rootDirs": [
       "./packages"
-    ],
-    "paths": {
-      "@hyperion-framework/vault": ["packages/vault/src"],
-      "@hyperion-framework/react-vault": ["packages/react-vault/src"],
-      "@hyperion-framework/atlas": ["packages/atlas/src"]
-    }
+    ]
   },
   "exclude": [
     "node_modules"
@@ -50,6 +45,18 @@
   "references": [
     {
       "path": "./packages/types"
+    },
+    {
+      "path": "./packages/vault"
+    },
+    {
+      "path": "./packages/react-vault"
+    },
+    {
+      "path": "./packages/atlas"
+    },
+    {
+      "path": "./packages/pattern-matching"
     }
   ]
 }

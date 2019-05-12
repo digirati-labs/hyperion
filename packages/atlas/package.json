@@ -7,10 +7,10 @@
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
-    "build": "fesk-build --cjs --umd",
+    "build": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
     "start": "fesk-start --cjs --noServer",
-    "build-types": "tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./",
-    "prepublish": "fesk-build --cjs --umd && tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./"
+    "build-types": "tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
+    "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types"
   },
   "dependencies": {
     "@hyperion-framework/vault": "^0.1.0",
