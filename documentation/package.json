@@ -1,0 +1,18 @@
+{
+  "name": "@hyperion-framework/documentation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "fesk-start",
+    "build": "fesk-build",
+    "watch": "fesk-watch"
+  },
+  "devDependencies": {
+    "@fesk/scripts": "^1.2.1"
+  },
+  "dependencies": {
+    "@canvas-panel/viewer-element": "^0.2.0",
+    "simplebar": "^4.0.0-alpha.9"
+  }
+}
