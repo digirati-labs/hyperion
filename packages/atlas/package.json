@@ -1,40 +1,31 @@
 {
-  "name": "@hyperion-framework/vault",
+  "name": "@hyperion-framework/atlas",
   "version": "0.1.0",
-  "main": "dist/umd/@hyperion-framework/vault/index.js",
+  "main": "dist/umd/@hyperion-framework/atlas/index.js",
   "module": "lib/index.js",
   "typings": "dist/@types/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
-    "start": "fesk-start --cjs --noServer",
     "build": "fesk-build --cjs --umd",
+    "start": "fesk-start --cjs --noServer",
     "build-types": "tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./",
     "prepublish": "fesk-build --cjs --umd && tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./"
   },
   "dependencies": {
+    "@hyperion-framework/vault": "^0.1.0",
     "@hyperion-framework/types": "^0.1.0",
-    "axios": "^0.18.0",
-    "deepmerge": "^3.1.0",
-    "hash-string": "^1.0.0",
-    "iiif-prezi2to3": "^1.0.8",
-    "immer": "^2.0.0",
-    "mitt": "^1.1.3",
     "popmotion": "^8.6.8",
-    "redux": "^4.0.1",
-    "redux-observable": "^1.0.0",
-    "redux-saga": "^1.0.1",
-    "rxjs": "^6.4.0",
-    "typesafe-actions": "^3.0.0"
+    "typescript-memoize": "^1.0.0-alpha.3"
   },
   "publishConfig": {
     "access": "public"
   },
-  "fesk": {
-    "typescript": true
-  },
   "devDependencies": {
     "@fesk/scripts": "^1.2.1",
-    "typescript": "^3.4.5"
+    "tslib": "^1.9.3"
+  },
+  "fesk": {
+    "typescript": true
   }
 }

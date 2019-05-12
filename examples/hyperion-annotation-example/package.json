@@ -1,0 +1,38 @@
+{
+  "name": "hyperion-annotation-example",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "@fesk/react-bem": "1.1.4",
+    "@hyperion-framework/react-vault": "^0.1.0",
+    "@hyperion-framework/vault": "^0.1.0",
+    "@reach/router": "^1.2.1",
+    "docz-theme-default": "1.0.4",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-router-dom": "^4.3.1"
+  },
+  "scripts": {
+    "start": "fesk-start",
+    "build": "fesk-build",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build"
+  },
+  "devDependencies": {
+    "@fesk/scripts": "^1.2.1",
+    "@fesk/webpack-config": "1.2.0",
+    "docz": "1.0.4"
+  },
+  "resolutions": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "fesk": {
+    "port": 5102,
+    "metalsmith": {
+      "nunjucks": {
+        "liveServerPort": 35731
+      }
+    }
+  }
+}

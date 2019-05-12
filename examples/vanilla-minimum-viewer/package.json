@@ -6,11 +6,18 @@
     "@hyperion-framework/vault": "^0.1.0"
   },
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --experimental-scope-hoisting"
+    "build": "fesk-build",
+    "start": "fesk-start"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.11.0",
-    "parcel-plugin-bundle-visualiser": "^1.2.0"
+    "@fesk/scripts": "^1.2.1"
+  },
+  "fesk": {
+    "port": 5103,
+    "metalsmith": {
+      "nunjucks": {
+        "liveServerPort": 35735
+      }
+    }
   }
 }

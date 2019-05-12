@@ -3,16 +3,23 @@
   "private": true,
   "version": "0.1.0",
   "dependencies": {
+    "@fesk/eslint-config-standard": "^1.2.0",
+    "@hyperion-framework/atlas": "^0.1.0",
+    "@hyperion-framework/react-vault": "^0.1.0",
     "@hyperion-framework/vault": "^0.1.0",
-    "@hyperion-framework/react-vault":  "^0.1.0",
+    "@reach/router": "^1.2.1",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "react-router-dom": "^4.3.1"
   },
   "scripts": {
     "start": "fesk-start",
     "build": "fesk-build"
   },
   "devDependencies": {
-    "@fesk/scripts": "^1.1.8"
+    "@fesk/scripts": "^1.2.1"
+  },
+  "fesk": {
+    "port": 5101
   }
 }
