@@ -20,6 +20,11 @@
     "@fesk/scripts": "^1.2.1"
   },
   "fesk": {
-    "port": 5101
+    "port": 5101,
+    "metalsmith": {
+      "nunjucks": {
+        "liveServerPort": 35733
+      }
+    }
   }
 }

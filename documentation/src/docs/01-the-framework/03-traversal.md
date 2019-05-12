@@ -6,6 +6,56 @@ order: 3
 There are many use-cases for wanting to traverse a IIIF resource. You may want to build statistics, or flatten out 
 ranges or, like Hyperion does, normalize IIIF resources into a flat structure.
 
+To achieve the Normalisation step, there is also a IIIF-specific traversal tool that lets you traverse through a deeply
+nested IIIF resource choosing specific steps to run on specific resources. This could be a way to gather statistics about
+the resource, fix inconsistencies, or to map it to a completely different structure.
+
+Because its aware of the structure of IIIF, its smarter than a brute force object-traversal tool with the added bonus of strongly typed all the way down.
+
+The simplest traversal you can do is the "all" type:
+```typescript
+import { Traverse } from 'hyperion-framework';
+
+const ids: string[] = [];
+const traversal = Traverse.all(
+  (resource: any): any => {
+    if (resource.id) {
+      ids.push(resource.id);
+    }
+    return resource;
+  }
+);
+
+traversal.traverseManifest(someManifest);
+```
+
+This goes through all of the currently supported IIIF resources in a structure and logs their ID to some variable, a
+simple example, but you can peel away the abstraction to traverse individual types too:
+
+```typescript
+import { Traverse } from 'hyperion-framework';
+
+const canvasList: string[] = [];
+const annotationList: string[] = [];
+const traversal = new Traverse({
+  canvas: [
+    currentCanvas => {
+      canvasList.push(currentCanvas.id);
+      return currentCanvas;
+    },
+  ],
+  annotation: [
+    currentAnnotation => {
+      annotationList.push(currentAnnotation.id);
+      return currentAnnotation;
+    },
+  ],
+});
+
+traversal.traverseManifest(someManifest);
+```
+
+
 ## The relationships
 
 ### Structural properties
