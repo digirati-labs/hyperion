@@ -12,19 +12,23 @@ Aims to provide safe typings for valid Presentation 3 JSON-LD and normalization 
 
 This library can be the basis of other tools that want to work deeper with IIIF Presentation 3 resources.
 
-<div align="center"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/vault-logo.png" width="390" /></div> 
+<hr />
+
+<div align="left"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/vault-logo.png" width="390" /></div> 
 
 This is the main library used to fetch, store and retrieve IIIF resources. It is not tied to a single framework and can be used with both JavaScript and Typescript.
+<hr />
 
 
-<div align="center"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/atlas-logo.png" width="390" /></div>
+<div align="left"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/atlas-logo.png" width="390" /></div>
 
 Super-fast, abstract IIIF Viewer. Build a world and fill it with canvases. Lets users move, pan and zoom, or take your users on a smooth tour of your world.
 
+<hr />
 
-<div align="center"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/react-vault-logo.png" width="390" /></div>
+<div align="left"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/react-vault-logo.png" width="390" /></div>
 React hooks are, hands down, the best way to work with IIIF.
-
+<hr />
 
 ## Development
 You need `yarn` in order to work with this monorepo. Simply clone the repository and run `yarn` followed by `yarn start`. This will build
