@@ -1,11 +1,11 @@
-import { createContext } from '../../src/context/createContext';
+import { createContext, emptyContext } from '../../src/context/createContext';
 import { createSelector } from '../../src/context/createSelector';
 import { emptyManifest, manifestContext } from '../../src/resources/manifest';
 import { combineContext } from '../../src/context/combineContext';
-import { defaultEntities } from '../../src';
+import { defaultEntities, VaultState } from '../../src';
 
 describe('create selector', () => {
-  const createState = () => ({
+  const createState = (): VaultState => ({
     hyperion: {
       entities: {
         ...defaultEntities,
@@ -71,6 +71,25 @@ describe('create selector', () => {
       metadata: [{ label: 'testing metadata label', value: 'testing metadata value' }],
       requiredStatement: { label: 'testing required statement label', value: 'testing required statement value' },
       summary: 'testing summary',
+    });
+  });
+
+  test('async selector', done => {
+    const requestsSelector = createSelector({
+      selector: async state => {
+        return new Promise(resolve =>
+          setTimeout(() => {
+            resolve(state.hyperion.mapping);
+          }, 500)
+        );
+      },
+    });
+    const stateToUse = createState();
+    stateToUse.hyperion.mapping['http://example.org/manifest'] = 'Manifest';
+
+    requestsSelector(stateToUse, emptyContext, {}).then(result => {
+      expect(result).toEqual({ 'http://example.org/manifest': 'Manifest' });
+      done();
     });
   });
 });

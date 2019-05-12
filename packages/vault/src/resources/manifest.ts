@@ -5,7 +5,7 @@ export const emptyManifest: ManifestNormalized = {
   id: 'https://hyperion/empty-manifest',
   type: 'Manifest',
   annotations: [],
-  behaviour: [],
+  behavior: [],
   homepage: null,
   items: [],
   label: null,

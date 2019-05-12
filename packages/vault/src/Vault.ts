@@ -3,7 +3,7 @@ import { createStore } from './redux/createStore';
 import { Store } from 'redux';
 import { Epic } from 'redux-observable';
 import Mitt from 'mitt';
-import { AllActions, requestResource, RequestState } from './redux/entities';
+import { AllActions, requestOfflineResource, requestResource, RequestState } from './redux/entities';
 import { ActionType } from 'typesafe-actions';
 import { CollectionNormalized, ManifestNormalized, Reference } from '@hyperion-framework/types';
 import { TraversableEntityTypes } from './processing/traverse';
@@ -29,14 +29,14 @@ export class Vault<S extends VaultState = VaultState> {
   private readonly store: Store;
   private readonly emitter: Mitt.Emitter;
 
-  constructor(options?: Partial<VaultOptions>) {
+  constructor(options?: Partial<VaultOptions>, store?: Store) {
     this.options = Object.assign(options || {}, {
       reducers: {},
       epics: [],
       middleware: [],
       defaultState: {},
     });
-    this.store = createStore(
+    this.store = store || createStore(
       this.options.reducers,
       [...this.options.middleware, this.middleware],
       this.options.epics,
@@ -67,10 +67,10 @@ export class Vault<S extends VaultState = VaultState> {
   }
 
   select<R, C>(
-    selector: (state: S, context: CtxFunction<S, this, C> | {}, util: this) => R,
-    context: CtxFunction<S, this, C> | {} = {}
+    selector: (state: S, context: CtxFunction<S, {}, C>, util: {}) => R,
+    context?: CtxFunction<S, {}, C> | undefined
   ): R {
-    return selector(this.getState(), context, this);
+    return selector(this.getState(), context ? context : () => ({} as C), {});
   }
 
   getStore(): Store {
@@ -81,17 +81,25 @@ export class Vault<S extends VaultState = VaultState> {
     return this.store.getState();
   }
 
-  loadManifest(id: string): Promise<ManifestNormalized> {
-    return this.load<ManifestNormalized>(id);
+  loadManifest(id: string, json?: unknown): Promise<ManifestNormalized> {
+    return this.load<ManifestNormalized>(id, json);
   }
 
-  loadCollection(id: string): Promise<CollectionNormalized> {
-    return this.load<CollectionNormalized>(id);
+  loadCollection(id: string, json?: unknown): Promise<CollectionNormalized> {
+    return this.load<CollectionNormalized>(id, json);
   }
 
-  load<T>(resource: string): Promise<T> {
+  load<T>(resource: string, json?: unknown): Promise<T> {
     return new Promise(resolve => {
-      this.store.dispatch(requestResource({ id: resource }));
+      const storeState = this.getState();
+      if (storeState.hyperion.requests[resource]) {
+        const { resourceUri } = storeState.hyperion.requests[resource];
+        const type = storeState.hyperion.mapping[resourceUri];
+        if (storeState.hyperion.entities[type][resourceUri]) {
+          resolve(storeState.hyperion.entities[type][resourceUri] as T);
+          return;
+        }
+      }
       this.emitter.on(
         'after:@hyperion/REQUEST_COMPLETE',
         ({ action, state }: { action: ActionType<typeof requestResource>; state: S }) => {
@@ -102,6 +110,16 @@ export class Vault<S extends VaultState = VaultState> {
             resolve(r as T);
           }
         }
+      );
+      this.store.dispatch(
+        json
+          ? requestOfflineResource({
+            id: resource,
+            entity: json,
+          })
+          : requestResource({
+            id: resource,
+          })
       );
     });
   }

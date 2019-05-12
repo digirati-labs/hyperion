@@ -14,6 +14,8 @@ import {
   Selector,
   AnnotationCollection,
   LinkingProperties,
+  DescriptiveProperties,
+  IIIFExternalWebResource,
 } from '@hyperion-framework/types';
 
 type Traversal<T> = (jsonLd: T) => Partial<T> | any;
@@ -128,6 +130,15 @@ export class Traverse {
     });
   }
 
+  traverseDescriptive<T extends Partial<DescriptiveProperties>>(resource: T) {
+    if (resource.thumbnail) {
+      resource.thumbnail = resource.thumbnail.map(thumbnail =>
+        this.traverseType(thumbnail, this.traversals.contentResource)
+      );
+    }
+    return resource;
+  }
+
   traverseLinking<T extends Partial<LinkingProperties>>(resource: T) {
     if (resource.seeAlso) {
       resource.seeAlso = resource.seeAlso.map(content => this.traverseType(content, this.traversals.contentResource));
@@ -186,13 +197,17 @@ export class Traverse {
 
   traverseCollection(collection: Collection): Collection {
     return this.traverseType<Collection>(
-      this.traverseLinking(this.traversePosterCanvas(this.traverseCollectionItems(collection))),
+      this.traverseDescriptive(
+        this.traverseLinking(this.traversePosterCanvas(this.traverseCollectionItems(collection)))
+      ),
       this.traversals.collection
     );
   }
 
   traverseManifestItems(manifest: Manifest): Manifest {
-    manifest.items = manifest.items.map(canvas => this.traverseCanvas(canvas));
+    if (manifest.items) {
+      manifest.items = manifest.items.map(canvas => this.traverseCanvas(canvas));
+    }
     return manifest;
   }
 
@@ -206,7 +221,7 @@ export class Traverse {
   traverseManifest(manifest: Manifest): Manifest {
     return this.traverseType<Manifest>(
       this.traverseManifestStructures(
-        this.traversePosterCanvas(this.traverseLinking(this.traverseManifestItems(manifest)))
+        this.traversePosterCanvas(this.traverseDescriptive(this.traverseLinking(this.traverseManifestItems(manifest))))
       ),
       this.traversals.manifest
     );
@@ -224,7 +239,7 @@ export class Traverse {
 
   traverseCanvas(canvas: Canvas): Canvas {
     return this.traverseType<Canvas>(
-      this.traversePosterCanvas(this.traverseLinking(this.traverseCanvasItems(canvas))),
+      this.traversePosterCanvas(this.traverseDescriptive(this.traverseLinking(this.traverseCanvasItems(canvas)))),
       this.traversals.canvas
     );
   }
@@ -242,13 +257,13 @@ export class Traverse {
 
   traverseAnnotationPage(annotationPageJson: AnnotationPage): AnnotationPage {
     return this.traverseType<AnnotationPage>(
-      this.traverseLinking(this.traverseAnnotationPageItems(annotationPageJson)),
+      this.traverseDescriptive(this.traverseLinking(this.traverseAnnotationPageItems(annotationPageJson))),
       this.traversals.annotationPage
     );
   }
 
   // Disabling these.
-  /*
+
   traverseAnnotationBody(annotation: Annotation): Annotation {
     if (Array.isArray(annotation.body)) {
       annotation.body = annotation.body.map(
@@ -262,6 +277,7 @@ export class Traverse {
 
     return annotation;
   }
+  /*
   traverseAnnotationTarget(annotation: Annotation): Annotation {
     if (Array.isArray(annotation.target)) {
       annotation.target = annotation.target.map(
@@ -289,13 +305,29 @@ export class Traverse {
     return this.traverseType<Annotation>(
       // Disabled these for now.
       // this.traverseAnnotationTarget(this.traverseLinking(this.traverseAnnotationBody(annotationJson))),
-      this.traverseLinking(annotationJson),
+      this.traverseLinking(this.traverseAnnotationBody(annotationJson)),
       this.traversals.annotation
     );
   }
 
+  traverseContentResourceLinking(contentResourceJson: ContentResource): ContentResource {
+    if (typeof contentResourceJson === 'string' || !contentResourceJson) {
+      return contentResourceJson;
+    }
+    if (contentResourceJson && (contentResourceJson as IIIFExternalWebResource)!.service) {
+      (contentResourceJson as IIIFExternalWebResource).service = (
+        (contentResourceJson as IIIFExternalWebResource).service || []
+      ).map(service => this.traverseType(service, this.traversals.service));
+    }
+
+    return contentResourceJson;
+  }
+
   traverseContentResource(contentResourceJson: ContentResource): ContentResource {
-    return this.traverseType<ContentResource>(contentResourceJson, this.traversals.contentResource);
+    return this.traverseType<ContentResource>(
+      this.traverseContentResourceLinking(contentResourceJson),
+      this.traversals.contentResource
+    );
   }
 
   traverseRangeRanges(range: Range): Range {
@@ -316,7 +348,7 @@ export class Traverse {
 
   traverseRange(range: Range): Range {
     return this.traverseType<Range>(
-      this.traversePosterCanvas(this.traverseLinking(this.traverseRangeRanges(range))),
+      this.traversePosterCanvas(this.traverseDescriptive(this.traverseLinking(this.traverseRangeRanges(range)))),
       this.traversals.range
     );
   }

@@ -1,6 +1,6 @@
 import { createStandardAction, ActionType } from 'typesafe-actions';
-import {defaultEntities, Entities, Mapping} from '../processing/normalize';
 import produce from 'immer';
+import {defaultEntities, Entities, Mapping, normalize} from '../processing/normalize';
 import { TraversableEntityTypes } from '../processing/traverse';
 
 // Entities
@@ -98,16 +98,19 @@ export const REQUEST_RESOURCE = '@hyperion/REQUEST_RESOURCE';
 export const REQUEST_ERROR = '@hyperion/REQUEST_ERROR';
 export const REQUEST_MISMATCH = '@hyperion/REQUEST_MISMATCH';
 export const REQUEST_COMPLETE = '@hyperion/REQUEST_COMPLETE';
+export const REQUEST_OFFLINE_RESOURCE = '@hyperion/REQUEST_OFFLINE_RESOURCE';
 
 export const requestResource = createStandardAction(REQUEST_RESOURCE)<{ id: string }>();
 export const requestError = createStandardAction(REQUEST_ERROR)<{ id: string; message: string }>();
 export const requestMismatch = createStandardAction(REQUEST_MISMATCH)<{ requestId: string; actualId: string }>();
 export const requestComplete = createStandardAction(REQUEST_COMPLETE)<{ id: string }>();
+export const requestOfflineResource = createStandardAction(REQUEST_OFFLINE_RESOURCE)<{ id: string, entity: unknown }>();
 
 export const requestReducer = (state: RequestState = {}, action: ActionType<typeof requestActions> | any) =>
   produce(state, (draft: RequestState) => {
     switch (action.type) {
       case REQUEST_RESOURCE:
+      case REQUEST_OFFLINE_RESOURCE:
         draft[action.payload.id] = {
           requestUri: action.payload.id,
           loadingState: 'RESOURCE_LOADING',
@@ -138,7 +141,7 @@ export const requestReducer = (state: RequestState = {}, action: ActionType<type
 
 // Action groups.
 export const mappingActions = { addMapping, addMappings };
-export const requestActions = { requestResource, requestError, requestMismatch, requestComplete };
+export const requestActions = { requestResource, requestError, requestMismatch, requestComplete, requestOfflineResource };
 export const importActions = { importEntities };
 
 // Action types.
@@ -146,3 +149,22 @@ export type MappingActions = ActionType<typeof mappingActions>;
 export type RequestActions = ActionType<typeof requestActions>;
 export type ImportActions = ActionType<typeof importActions>;
 export type AllActions = MappingActions | RequestActions | ImportActions;
+
+// Helpers.
+export const actionListFromResource = (id: string) => (response: unknown) => {
+  const { entities, resource, mapping } = normalize(response);
+  if (resource.id === undefined) {
+    return [requestError({ id, message: 'ID is not defined in resource.' })];
+  }
+  // Always import and add mappings.
+  const actions: AllActions[] = [importEntities({ entities }), addMappings({ mapping })];
+  // Check if we have a resource mismatch
+  if (resource.id !== id) {
+    actions.push(addMapping({ id, type: resource.type as TraversableEntityTypes }));
+    actions.push(requestMismatch({ requestId: id, actualId: resource.id }));
+  }
+  // Finally mark as complete.
+  actions.push(requestComplete({ id }));
+  // and return.
+  return actions;
+};

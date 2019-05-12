@@ -4,7 +4,7 @@ import { createContext } from '../context/createContext';
 export const emptyAnnotationPage: AnnotationPageNormalized = {
   id: 'https://hyperion/annotation-page',
   type: 'AnnotationPage',
-  behaviour: [],
+  behavior: [],
   motivation: null,
   label: null,
   thumbnail: [],

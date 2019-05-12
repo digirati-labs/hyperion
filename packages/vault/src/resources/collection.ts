@@ -6,7 +6,7 @@ export const emptyCollection: CollectionNormalized = {
   type: 'Collection',
   label: null,
   viewingDirection: 'left-to-right',
-  behaviour: [],
+  behavior: [],
   motivation: null,
   thumbnail: [],
   posterCanvas: null,

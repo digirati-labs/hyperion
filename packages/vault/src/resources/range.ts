@@ -5,7 +5,7 @@ export const emptyRange: RangeNormalized = {
   id: 'https://hyperion/empty-canvas',
   type: 'Range',
   label: null,
-  behaviour: [],
+  behavior: [],
   motivation: null,
   thumbnail: [],
   posterCanvas: null,
