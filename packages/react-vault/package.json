@@ -1,7 +1,7 @@
 {
   "name": "@hyperion-framework/react-vault",
   "version": "0.2.0",
-  "main": "dist/umd/@hyperion-framework/react-vault/index.js",
+  "main": "dist/umd/@hyperion-framework/react-vault.js",
   "module": "lib/index.js",
   "typings": "dist/@types/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",

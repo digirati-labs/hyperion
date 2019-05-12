@@ -2,7 +2,7 @@
   "name": "@hyperion-framework/pattern-matching",
   "version": "0.2.0",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
-  "main": "dist/umd/@hyperion-framework/pattern-matching/index.js",
+  "main": "dist/umd/@hyperion-framework/pattern-matching.js",
   "module": "lib/index.js",
   "typings": "dist/@types/index.d.ts",
   "license": "MIT",
