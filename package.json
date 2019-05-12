@@ -9,26 +9,32 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
-    "start": "lerna run build --parallel --stream --concurrency=100 && lerna run start --parallel --stream --concurrency=100",
+    "start": "lerna run start --parallel --stream --concurrency=100",
     "test-types": "typings-tester --dir types-tests",
-    "test": "jest --verbose --coverage"
+    "test": "NODE_ENV=test jest --verbose --coverage"
   },
   "devDependencies": {
+    "@fesk/eslint-config-standard": "^1.2.0",
     "@types/jest": "^23.3.12",
+    "babel-eslint": "^10.0.1",
     "dtslint": "^0.4.2",
+    "eslint": "^5.15.1",
+    "eslint-plugin-flowtype": "^3.4.2",
     "jest": "^23.6.0",
+    "jest-fetch-mock": "^2.1.2",
     "lerna": "^3.10.7",
-    "microbundle": "^0.9.0",
     "prettier": "^1.15.3",
     "ts-jest": "^23.10.5",
     "tslib": "^1.9.3",
     "tslint": "^5.12.0",
     "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.4.4",
     "typings-tester": "^0.3.2"
   },
   "private": true,
   "workspaces": [
     "packages/*",
-    "examples/*"
+    "examples/*",
+    "documentation"
   ]
 }
