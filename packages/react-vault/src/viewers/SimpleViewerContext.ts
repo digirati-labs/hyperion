@@ -5,7 +5,7 @@
  * This will be the context to use to get a basic IIIF viewer up and running.
  * It will not focus on having compatibility with the full range of IIIF
  * resources, instead offering a viewer for a Manifest, cycling through canvases
- * while ignoring the paged/facing-pages/continuous behaviours.
+ * while ignoring the paged/facing-pages/continuous behaviors.
  *
  * There will not be support for canvas-on-canvas annotations. Annotations will
  * be filtered, giving details of the canvas space and images to be annotated

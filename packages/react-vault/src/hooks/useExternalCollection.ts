@@ -1,14 +1,16 @@
-import {useState} from "react";
-import {useVaultEffect} from "./useVaultEffect";
+import { useState } from 'react';
+import { useVaultEffect } from './useVaultEffect';
 
 export const useExternalCollection = (id: string): { id: string; isLoaded: boolean } => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [realId, setRealId] = useState(id);
 
   useVaultEffect(
     vault => {
       vault
         .loadCollection(id)
-        .then(() => {
+        .then((resource) => {
+          setRealId(resource.id)
           setIsLoaded(true);
         })
         .catch(err => {
@@ -18,5 +20,5 @@ export const useExternalCollection = (id: string): { id: string; isLoaded: boole
     [id]
   );
 
-  return { isLoaded, id };
+  return { isLoaded, id: realId };
 };
