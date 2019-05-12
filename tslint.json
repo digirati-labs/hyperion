@@ -32,6 +32,7 @@
     "prefer-template": [true, "allow-single-concat"],
     "quotemark": [true, "single", "jsx-double"],
     "semicolon": [true, "always"],
+    "no-bitwise": false,
     "trailing-comma": [true, {
       "singleline": "never",
       "multiline": {
@@ -47,5 +48,10 @@
     "typedef": [true,"parameter", "property-declaration"],
     "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
     "prettier": [true, { "singleQuote": true, "trailingComma": "es5", "printWidth": 120 }]
+  },
+  "linterOptions": {
+    "exclude": [
+      "**/*.js"
+    ]
   }
 }

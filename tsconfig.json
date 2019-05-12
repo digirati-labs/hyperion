@@ -26,6 +26,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
+    "traceResolution": true,
     "strict": true,
     "strictNullChecks": true,
     "pretty": true,
@@ -33,7 +34,15 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "composite": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "rootDirs": [
+      "./packages"
+    ],
+    "paths": {
+      "@hyperion-framework/vault": ["packages/vault/src"],
+      "@hyperion-framework/react-vault": ["packages/react-vault/src"],
+      "@hyperion-framework/atlas": ["packages/atlas/src"]
+    }
   },
   "exclude": [
     "node_modules"
