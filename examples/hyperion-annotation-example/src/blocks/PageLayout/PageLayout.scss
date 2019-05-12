@@ -1,7 +1,7 @@
 .page-layout {
   display: grid;
-  grid-template-columns: 250px auto 400px;
-  grid-template-rows: 60px auto auto 50px;
+  grid-template-columns: 250px minmax(auto, 1fr) 400px;
+  grid-template-rows: 60px minmax(auto, 1fr) minmax(auto, 1fr) 50px;
   grid-template-areas:
     "header header header"
     "left-panel content-panel right-panel"

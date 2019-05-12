@@ -53,11 +53,13 @@ export function useThumbnail(config?: Partial<thumbnailSizeConfig>) {
       }
     : rawCtx;
 
-  if (ctx.thumbnailSize!.virtualThumbnailFromImageService || ctx.thumbnailSize!.atAnyCost) {
+  const thumbnailSize = ctx.thumbnailSize || defaultThumbnailSizeConfig;
+
+  if (thumbnailSize!.virtualThumbnailFromImageService || thumbnailSize!.atAnyCost) {
     //@todo Check if image service is loaded, if not load it up!
   }
 
-  if (ctx.thumbnailSize!.atAnyCost) {
+  if (thumbnailSize!.atAnyCost) {
     // @todo more overkill thumbnail methods.
   }
 
