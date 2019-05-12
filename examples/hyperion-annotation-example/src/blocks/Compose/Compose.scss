@@ -1,0 +1,78 @@
+.compose {
+  padding: 1em;
+
+  &__title {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
+  &__help-text {
+    font-size: .9em;
+    color: #5D5D5D;
+  }
+
+  &__box-button {
+    border-radius: 3px;
+    background: #413E96;
+    color: #fff;
+    border: 1px solid #363396;
+    line-height: 1.2em;
+    position: relative;
+    padding: 10px 10px 10px 30px;
+    margin: 1em 0;
+
+    &:before {
+      position: absolute;
+      content: '';
+      left: 10px;
+      top: 10px;
+      height: 12px;
+      width: 12px;
+      vertical-align: baseline;
+      border: 1px dashed #fff;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    &--isActive {}
+  }
+
+  &__text-area {
+    width: 100%;
+    border: 2px solid #D7D7D7;
+    resize: none;
+    font-size: 1em;
+    padding: .5em;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    &:focus {
+      border-color: #413E96;
+      outline: none;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+  }
+
+  &__counter {
+    font-size: .7em;
+    color: #5D5D5D;
+    flex: 1 1 0px;
+  }
+
+  &__post-button {
+    align-self: flex-end;
+    border-radius: 3px;
+    font-size: 1em;
+    background: #413E96;
+    color: #fff;
+    border: 1px solid #363396;
+    line-height: 1.2em;
+    position: relative;
+    padding: .5em 1.5em;
+    margin-top: .5em;
+  }
+}

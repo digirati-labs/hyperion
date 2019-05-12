@@ -1,0 +1,55 @@
+---
+title: Twitter feed
+menu: Blocks
+---
+
+import { Playground, Props } from 'docz';
+import { TwitterFeed as Twitter } from './TwitterFeed';
+
+# Twitter feed
+An integral part of the application, the twitter feed.
+
+## Simple example
+<Playground>
+  <Twitter>
+    <Twitter.Tweet isSelected={true}>
+      <Twitter.Author href="#">
+        <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+        <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+      </Twitter.Author>
+      <Twitter.Contents>
+        This is the body of some tweet.
+      </Twitter.Contents>
+      <Twitter.Link href="#">
+        view on twitter
+      </Twitter.Link>
+    </Twitter.Tweet>
+    
+    <Twitter.Tweet isSelected={false}>
+      <Twitter.Author href="#">
+        <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+        <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+      </Twitter.Author>
+      <Twitter.Contents>
+        This is the body of some tweet.
+      </Twitter.Contents>
+      <Twitter.Link href="#">
+        view on twitter
+      </Twitter.Link>
+    </Twitter.Tweet>
+        
+    <Twitter.Tweet isSelected={false}>
+      <Twitter.Author href="#">
+        <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+        <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+      </Twitter.Author>
+      <Twitter.Contents>
+        This is the body of some tweet.
+      </Twitter.Contents>
+      <Twitter.Link href="#">
+        view on twitter
+      </Twitter.Link>
+    </Twitter.Tweet>
+
+  </Twitter>
+</Playground>

@@ -1,0 +1,41 @@
+.twitter-login {
+  background: #eee;
+  border-radius: 5px;
+  padding: 1em;
+  margin: 10px;
+  max-width: 350px;
+
+  &__empty-state {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  &__login-button {
+    display: block;
+    background: #1DA1F2;
+    color: #fff;
+    border-radius: 15px;
+    font-size: .75em;
+    height: 30px;
+    width: 200px;
+    margin: 1em auto;
+    border: 1px solid #1da1f2;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+      border-color: #1da1f2;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px #71c9f8;
+    }
+    &:hover {
+      background-color: #006dbf;
+      border-color: #006dbf;
+    }
+  }
+  &__privacy-text {
+    margin: 20px 0;
+    font-weight: normal;
+    font-size: 0.6em;
+    color: #5D5D5D;
+    line-height: 1.4em;
+  }
+}

@@ -1,0 +1,33 @@
+---
+title: Compose
+menu: Blocks
+---
+
+import { Playground, Props } from 'docz';
+import { Compose } from './Compose';
+
+# Compose
+This allows you to compose tweets that annotate an image.
+
+<Playground>
+  <Compose>
+    <Compose.Title>Tweet about this image</Compose.Title>
+    <Compose.HelpText>
+      Compose a tweet and send it using your twitter account. Your tweet will 
+      contain a link back to this page and will highlight what you’ve drawn around 
+      for your followers to see.
+    </Compose.HelpText>
+    <Compose.BoxButton isActive={false}>
+      <Compose.BoxButtonIcon /> Draw a box
+    </Compose.BoxButton>
+    <Compose.TextArea>
+      Some comment about a tweet that will become a tweet.
+    </Compose.TextArea>
+    <Compose.Footer>
+      <Compose.Counter>
+        240 charaters remaining
+      </Compose.Counter>
+      <Compose.PostButton>post</Compose.PostButton>
+    </Compose.Footer>
+  </Compose>
+</Playground>
