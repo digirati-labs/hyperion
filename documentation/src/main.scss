@@ -3,13 +3,15 @@
 *, *:before, *:after { box-sizing: border-box; }
 body, html {
   font-family: sans-serif;
+  max-width: 100%;
 }
 div.markdown-body {
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 32px;
 }
 
 .container { 
-  max-width: 500px; 
+  max-width: 500px;
   margin: 100px auto;
   h1 {
     color: #005cc5;
@@ -62,7 +64,10 @@ li.fesk-menu__child-item--active a {
 }
 main.fesk-layout__content {
   padding-top: 80px;
-  max-width: 1100px;
+  width: 100%;
+  @media only screen and (min-width: 1220px) {
+    max-width: 1180px;
+  }
 }
 
 div.markdown-body {
@@ -81,5 +86,20 @@ div.markdown-body {
   }
   .token.tag {
     color: #DC6A73;
+  }
+}
+
+
+.markdown-body .fesk-grid {
+  display:flex;
+  &__item {
+    width: 33.3333%;
+  }
+  &__list {
+    text-align: center;
+    margin: 40px 0;
+    li {
+      list-style: none;
+    }
   }
 }
