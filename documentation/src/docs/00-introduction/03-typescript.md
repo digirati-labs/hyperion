@@ -54,7 +54,7 @@ const label = manifest.items[0].label;
 // this works for all properties
 const sequenceRange = manifest.structures.find(range => {
   // typescript knows what a `range` is and what properties it has
-  return (range.behaviour || []).indexOf('sequence') !== -1;
+  return (range.behavior || []).indexOf('sequence') !== -1;
 });
 ```
 
