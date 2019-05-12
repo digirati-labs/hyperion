@@ -32,6 +32,10 @@
     "react-dom": "^16.8.6",
     "tslib": "^1.9.3"
   },
+  "files": [
+    "dist",
+    "lib"
+  ],
   "fesk": {
     "typescript": true
   }

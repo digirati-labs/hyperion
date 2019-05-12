@@ -8,6 +8,14 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "iiif",
+    "resources",
+    "index.d.ts",
+    "index.js",
+    "reference.d.ts",
+    "utility.d.ts"
+  ],
   "devDependencies": {
     "tslib": "^1.9.3"
   }

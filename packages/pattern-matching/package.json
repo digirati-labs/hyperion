@@ -21,6 +21,10 @@
   "fesk": {
     "typescript": true
   },
+  "files": [
+    "dist",
+    "lib"
+  ],
   "devDependencies": {
     "@fesk/scripts": "^1.2.1",
     "typescript": "^3.4.5"
