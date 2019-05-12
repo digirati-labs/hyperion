@@ -1,5 +1,5 @@
 import { Manifest } from '@hyperion-framework/types';
-import { normalize } from '@hyperion-framework/vault/src/processing/normalize';
+import { normalize } from '@hyperion-framework/vault';
 
 describe('utility/normalize', () => {
   const manifest = (): Manifest => ({
@@ -45,6 +45,7 @@ describe('utility/normalize', () => {
     expect(result.entities).toMatchSnapshot();
 
     expect(result.mapping).toEqual({
+      'http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png': 'ContentResource',
       'http://myhomepage.com': 'ContentResource',
       'https://example.org/iiif/book1/annotation/p0001-image': 'Annotation',
       'https://example.org/iiif/book1/canvas/p1': 'Canvas',
