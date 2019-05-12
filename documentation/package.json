@@ -14,5 +14,13 @@
   "dependencies": {
     "@canvas-panel/viewer-element": "^0.2.0",
     "simplebar": "^4.0.0-alpha.9"
+  },
+  "fesk": {
+    "port": 5105,
+    "metalsmith": {
+      "docs": {
+        "liveServerPort": 35738
+      }
+    }
   }
 }
