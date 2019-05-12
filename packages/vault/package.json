@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/vault",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/umd/@hyperion-framework/vault.js",
   "module": "lib/index.js",
   "typings": "dist/@types/index.d.ts",
