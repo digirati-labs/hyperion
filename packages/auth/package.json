@@ -9,14 +9,13 @@
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle src/index.ts -o dist/hyperion-framework-auth.js",
-    "start": "microbundle watch"
+    "start": "echo \"No build yet for this package\"",
+    "build": "echo \"No build yet for this package\""
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "microbundle": "^0.9.0",
     "tslib": "^1.9.3"
   }
 }
