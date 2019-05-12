@@ -1,0 +1,173 @@
+---
+title: Thumbnail Viewer
+menu: Blocks
+---
+
+import { Playground, Props } from 'docz';
+import { ThumbnailViewer as Thumbs } from './ThumbnailViewer';
+
+# Thumbnail Viewer
+
+## Book view (with large cover)
+<Playground>
+  <Thumbs book-view large-cover style={{ width: 250, height: 800, border: '1px solid #000' }}>
+    <Thumbs.Thumbnail cover>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/200,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail selected>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/f327de6b-06ef-47ec-b98f-ee79c1685393/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/61ea4035-6dde-4a4a-9ed2-74bf36d32d4c/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/4ff70079-fac3-4259-814e-021f7dcf43b6/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/23a8a648-ad8a-4384-8f42-75c1aa5f87ac/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+  </Thumbs>
+</Playground>
+
+## Square view
+<Playground>
+  <Thumbs square style={{ width: 250, height: 800, border: '1px solid #000' }}>
+    <Thumbs.Thumbnail cover>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail selected>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/f327de6b-06ef-47ec-b98f-ee79c1685393/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/61ea4035-6dde-4a4a-9ed2-74bf36d32d4c/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/4ff70079-fac3-4259-814e-021f7dcf43b6/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/23a8a648-ad8a-4384-8f42-75c1aa5f87ac/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+  </Thumbs>
+</Playground>
+
+## Book view
+<Playground>
+  <Thumbs book-view style={{ width: 250, height: 800, border: '1px solid #000' }}>
+    <Thumbs.Thumbnail cover>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail selected>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/f327de6b-06ef-47ec-b98f-ee79c1685393/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/61ea4035-6dde-4a4a-9ed2-74bf36d32d4c/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/4ff70079-fac3-4259-814e-021f7dcf43b6/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/23a8a648-ad8a-4384-8f42-75c1aa5f87ac/full/90,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+  </Thumbs>
+</Playground>
+
+## Default view
+<Playground>
+  <Thumbs style={{ width: 250, height: 800, border: '1px solid #000' }}>
+    <Thumbs.Thumbnail cover>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/200,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail selected>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/f327de6b-06ef-47ec-b98f-ee79c1685393/full/200,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/61ea4035-6dde-4a4a-9ed2-74bf36d32d4c/full/200,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/4ff70079-fac3-4259-814e-021f7dcf43b6/full/200,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+    <Thumbs.Thumbnail>
+      <Thumbs.ThumbnailWrapper>
+        <Thumbs.ThumbnailImage 
+          src="https://dlcs.io/iiif-img/wellcome/1/23a8a648-ad8a-4384-8f42-75c1aa5f87ac/full/200,/0/default.jpg"
+        />
+      </Thumbs.ThumbnailWrapper>
+    </Thumbs.Thumbnail>
+  </Thumbs>
+</Playground>

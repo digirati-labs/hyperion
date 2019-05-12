@@ -1,0 +1,33 @@
+---
+title: Twitter feed
+menu: Blocks
+---
+
+import { Playground, Props } from 'docz';
+import { TwitterLogin as Twitter } from './TwitterLogin';
+
+# Twitter feed
+An integral part of the application, the twitter feed.
+
+## Simple example
+
+
+## Feed prior to twitter authentication
+In this example, the only tweet that can be parsed is the one contained in the URL of the tweet.
+
+<Playground>
+  <Twitter>
+    <Twitter.EmptyState>
+      See all the annotations
+      <Twitter.PrivacyText>
+        Logging in with twitter does <strong>not</strong> let this application post tweets on your behalf, once you've
+        created a tweet, you will be taken back to twitter to post it. Twitter requires users to be logged
+        into search the API for tweets. <strong>Searching for tweets is the only function of this application.</strong> In
+        addition, this application is completely open-source.
+     </Twitter.PrivacyText>
+     <Twitter.LoginButton>
+       Login with twitter
+     </Twitter.LoginButton>
+    </Twitter.EmptyState>
+  </Twitter>
+</Playground>

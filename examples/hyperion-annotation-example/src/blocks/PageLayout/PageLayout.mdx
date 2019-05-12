@@ -1,0 +1,351 @@
+---
+title: Page layout
+menu: Blocks
+---
+
+import { Playground, Props } from 'docz';
+import { PageLayout as Layout } from './PageLayout';
+import imageUrl from '../../../hyperion-icon.png';
+
+# Page Layout
+This is the main page layout, this is where most changes will be made in the 
+future to make a responsive version of this site. It's important that tablets
+and phones are able to view and hopefully contribute to these IIIF resources.
+
+<Playground>
+  <Layout style={{ height: 900 }}>
+    <Layout.Header />
+    <Layout.LeftPanel />
+    <Layout.RightPanel />
+    <Layout.Content />
+    <Layout.Footer />
+    <Layout.ActionPanel />
+  </Layout>
+</Playground>
+
+## Left panel hidden
+<Playground>
+  <Layout isLeftPanelHidden={true} style={{ height: 900 }}>
+    <Layout.Header />
+    <Layout.LeftPanel />
+    <Layout.RightPanel />
+    <Layout.Content />
+    <Layout.Footer />
+    <Layout.ActionPanel />
+  </Layout>
+</Playground>
+
+## Annotated example
+This highlights the regions and their names. Since this is using CSS grid, the
+ordering of the elements can be driven by accessibility to allow a more logical
+keyboard navigation experience.
+ 
+<Playground>
+  <Layout style={{ height: 900 }}>
+    <Layout.Content style={{ background: 'gray' }}>CONTENT</Layout.Content>
+    <Layout.Header style={{ background: 'teal' }}>HEADER</Layout.Header>
+    <Layout.RightPanel style={{ background: 'orange' }}>RIGHT</Layout.RightPanel>
+    <Layout.LeftPanel style={{ background: 'orange' }}>LEFT</Layout.LeftPanel>
+    <Layout.Footer style={{ background: 'teal' }}>FOOTER</Layout.Footer>
+    <Layout.ActionPanel style={{ background: 'limegreen' }}>ACTION</Layout.ActionPanel>
+  </Layout>
+</Playground>
+
+## Example with other blocks
+
+import { AppHeader as Header } from '../AppHeader/AppHeader'; 
+import { TwitterFeed as Twitter } from '../TwitterFeed/TwitterFeed'; 
+import { Compose } from '../Compose/Compose'; 
+
+<Playground>
+  <Layout isLeftPanelHidden={true} style={{ height: 900 }}>
+    <Layout.Header>
+      <Header>
+          <Header.Logo>
+            <img src={imageUrl} />
+          </Header.Logo>
+          <Header.Resource>
+            <Header.ResourceHeading>Wunder der Vererbung</Header.ResourceHeading>
+            <Header.ResourceLink target="_blank" href="https://wellcomelibrary.org/iiif/b18035723/manifest">
+              wellcomelibrary.org/iiif/b18035723/manifest
+            </Header.ResourceLink>
+          </Header.Resource>
+          <Header.Menu>
+            <Header.MenuItem isSelected={true}>Tweets</Header.MenuItem>
+            <Header.MenuItem>Metadata</Header.MenuItem>
+            <Header.MenuItem>Share</Header.MenuItem>
+          </Header.Menu>
+        </Header>
+    </Layout.Header>
+    <Layout.LeftPanel />
+    <Layout.RightPanel>
+      <Twitter>
+        <Twitter.Tweet isSelected={false}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+        
+        <Twitter.Tweet isSelected={false}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+            
+        <Twitter.Tweet isSelected={true}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+
+        <Twitter.Tweet isSelected={false}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+
+        <Twitter.Tweet isSelected={false}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+
+        <Twitter.Tweet isSelected={false}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+
+        <Twitter.Tweet isSelected={false}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+
+        <Twitter.Tweet isSelected={false}>
+          <Twitter.Author href="#">
+            <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+            <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+          </Twitter.Author>
+          <Twitter.Contents>
+            This is the body of some tweet.
+          </Twitter.Contents>
+          <Twitter.Link href="#">
+            view on twitter
+          </Twitter.Link>
+        </Twitter.Tweet>
+      </Twitter>
+    </Layout.RightPanel>
+    <Layout.Content>
+      <img 
+        src="https://dlcs.io/iiif-img/wellcome/1/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/400,/0/default.jpg"
+        style={{ margin: '0 auto', objectFit: 'contain', flex: '1 1 0px' }} 
+      />
+    </Layout.Content>
+    <Layout.Footer />
+    <Layout.ActionPanel>
+      <Compose>
+        <Compose.Title>Tweet about this image</Compose.Title>
+        <Compose.HelpText>
+          Compose a tweet and send it using your twitter account. Your tweet will 
+          contain a link back to this page and will highlight what you’ve drawn around 
+          for your followers to see.
+        </Compose.HelpText>
+        <Compose.BoxButton isActive={false}>
+          <Compose.BoxButtonIcon /> Draw a box
+        </Compose.BoxButton>
+        <Compose.TextArea>
+          Some comment about a tweet that will become a tweet.
+        </Compose.TextArea>
+        <Compose.Footer>
+          <Compose.Counter>
+            240 charaters remaining
+          </Compose.Counter>
+          <Compose.PostButton>post</Compose.PostButton>
+        </Compose.Footer>
+      </Compose>
+    </Layout.ActionPanel>
+  </Layout>
+</Playground>
+
+## Unauthenticated example
+ 
+import { TwitterLogin } from '../TwitterLogin/TwitterLogin'; 
+import { ThumbnailViewer as Thumbs } from '../ThumbnailViewer/ThumbnailViewer'; 
+import { useState } from 'react'; 
+
+<Playground>
+{() => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <Layout isLeftPanelHidden={isOpen} style={{ height: 900 }}>
+      <Layout.Header>
+        <Header>
+            <Header.Logo onClick={() => setIsOpen(!isOpen)}>
+              <img src={imageUrl} />
+            </Header.Logo>
+            <Header.Resource>
+              <Header.ResourceHeading>Wunder der Vererbung</Header.ResourceHeading>
+              <Header.ResourceLink target="_blank" href="https://wellcomelibrary.org/iiif/b18035723/manifest">
+                wellcomelibrary.org/iiif/b18035723/manifest
+              </Header.ResourceLink>
+            </Header.Resource>
+            <Header.Menu>
+              <Header.MenuItem isSelected={true}>Tweets</Header.MenuItem>
+              <Header.MenuItem>Metadata</Header.MenuItem>
+              <Header.MenuItem>Share</Header.MenuItem>
+            </Header.Menu>
+          </Header>
+      </Layout.Header>
+      <Layout.LeftPanel>
+        <Thumbs book-view large-cover>
+          <Thumbs.Thumbnail cover>
+            <Thumbs.ThumbnailWrapper>
+              <Thumbs.ThumbnailImage 
+                src="https://dlcs.io/iiif-img/wellcome/1/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/200,/0/default.jpg"
+              />
+            </Thumbs.ThumbnailWrapper>
+          </Thumbs.Thumbnail>
+          <Thumbs.Thumbnail selected>
+            <Thumbs.ThumbnailWrapper>
+              <Thumbs.ThumbnailImage 
+                src="https://dlcs.io/iiif-img/wellcome/1/f327de6b-06ef-47ec-b98f-ee79c1685393/full/90,/0/default.jpg"
+              />
+            </Thumbs.ThumbnailWrapper>
+          </Thumbs.Thumbnail>
+          <Thumbs.Thumbnail>
+            <Thumbs.ThumbnailWrapper>
+              <Thumbs.ThumbnailImage 
+                src="https://dlcs.io/iiif-img/wellcome/1/61ea4035-6dde-4a4a-9ed2-74bf36d32d4c/full/90,/0/default.jpg"
+              />
+            </Thumbs.ThumbnailWrapper>
+          </Thumbs.Thumbnail>
+          <Thumbs.Thumbnail>
+            <Thumbs.ThumbnailWrapper>
+              <Thumbs.ThumbnailImage 
+                src="https://dlcs.io/iiif-img/wellcome/1/4ff70079-fac3-4259-814e-021f7dcf43b6/full/90,/0/default.jpg"
+              />
+            </Thumbs.ThumbnailWrapper>
+          </Thumbs.Thumbnail>
+          <Thumbs.Thumbnail>
+            <Thumbs.ThumbnailWrapper>
+              <Thumbs.ThumbnailImage 
+                src="https://dlcs.io/iiif-img/wellcome/1/23a8a648-ad8a-4384-8f42-75c1aa5f87ac/full/90,/0/default.jpg"
+              />
+            </Thumbs.ThumbnailWrapper>
+          </Thumbs.Thumbnail>
+        </Thumbs>
+      </Layout.LeftPanel>
+      <Layout.RightPanel>
+        <Twitter>
+          <Twitter.Tweet isSelected={true}>
+            <Twitter.Author href="#">
+              <Twitter.AuthorName>Someone somewhere</Twitter.AuthorName>
+              <Twitter.AuthorHandle>someone</Twitter.AuthorHandle>
+            </Twitter.Author>
+            <Twitter.Contents>
+              This is the body of some tweet.
+            </Twitter.Contents>
+            <Twitter.Link href="#">
+              view on twitter
+            </Twitter.Link>
+          </Twitter.Tweet>
+        </Twitter>
+        <TwitterLogin>
+          <TwitterLogin.EmptyState>
+            See all the annotations.
+            <TwitterLogin.PrivacyText>
+              To see annotations, you must login with your twitter. Logging in with twitter does <strong>not </strong> let 
+              this application post tweets on your behalf, once you've created a tweet, you will be taken back to 
+              twitter to post it. Twitter requires users to be logged into search the API for tweets. 
+              <strong>Searching for tweets is the only function of this application.</strong> In addition, this 
+              application is completely open-source.
+           </TwitterLogin.PrivacyText>
+           <TwitterLogin.LoginButton>
+             Login with twitter
+           </TwitterLogin.LoginButton>
+          </TwitterLogin.EmptyState>
+        </TwitterLogin>
+      </Layout.RightPanel>
+      <Layout.Content>
+        <img 
+          src="https://dlcs.io/iiif-img/wellcome/1/ff2085d5-a9c7-412e-9dbe-dda87712228d/full/400,/0/default.jpg"
+          style={{ margin: '0 auto', objectFit: 'contain', flex: '1 1 0px' }} 
+        />
+      </Layout.Content>
+      <Layout.Footer />
+       <Layout.ActionPanel>
+        <Compose>
+          <Compose.Title>Tweet about this image</Compose.Title>
+          <Compose.HelpText>
+            Compose a tweet and send it using your twitter account. Your tweet will 
+            contain a link back to this page and will highlight what you’ve drawn around 
+            for your followers to see.
+          </Compose.HelpText>
+          <Compose.BoxButton isActive={false}>
+            <Compose.BoxButtonIcon /> Draw a box
+          </Compose.BoxButton>
+          <Compose.TextArea>
+            Some comment about a tweet that will become a tweet.
+          </Compose.TextArea>
+          <Compose.Footer>
+            <Compose.Counter>
+              240 charaters remaining
+            </Compose.Counter>
+            <Compose.PostButton>post</Compose.PostButton>
+          </Compose.Footer>
+        </Compose>
+      </Layout.ActionPanel>
+    </Layout>
+  )
+ }}
+</Playground>

@@ -1,0 +1,74 @@
+---
+title: App Header
+menu: Blocks
+---
+
+import { Playground, Props } from 'docz';
+import { AppHeader as Header } from './AppHeader';
+
+# App Header
+This is the main header for the application.
+
+
+## Full example
+<Playground>
+  <Header>
+    <Header.Logo>
+      <img src="https://via.placeholder.com/50x50" />
+    </Header.Logo>
+    <Header.Resource>
+      <Header.ResourceHeading>Wunder der Vererbung</Header.ResourceHeading>
+      <Header.ResourceLink target="_blank" href="https://wellcomelibrary.org/iiif/b18035723/manifest">
+        wellcomelibrary.org/iiif/b18035723/manifest
+      </Header.ResourceLink>
+    </Header.Resource>
+    <Header.Menu>
+      <Header.MenuItem isSelected={true}>Tweets</Header.MenuItem>
+      <Header.MenuItem>Metadata</Header.MenuItem>
+      <Header.MenuItem>Share</Header.MenuItem>
+    </Header.Menu>
+  </Header>
+</Playground>
+
+
+## Menu
+
+<Playground>
+  <Header.Menu>
+    <Header.MenuItem>Menu 1</Header.MenuItem>
+    <Header.MenuItem isSelected={true}>Menu 2</Header.MenuItem>
+    <Header.MenuItem>Menu 3</Header.MenuItem>
+    <Header.MenuItem>Menu 4</Header.MenuItem>
+    <Header.MenuItem>Menu 5</Header.MenuItem>
+  </Header.Menu>
+</Playground>
+
+## Resource
+The resource panel shows some basic information for the resource being viewed.
+
+<Playground>
+  <Header.Resource>
+    <Header.ResourceHeading>Wunder der Vererbung</Header.ResourceHeading>
+    <Header.ResourceLink target="_blank" href="https://wellcomelibrary.org/iiif/b18035723/manifest">
+      wellcomelibrary.org/iiif/b18035723/manifest
+    </Header.ResourceLink>
+  </Header.Resource>
+</Playground>
+
+## Layout
+The layout is split into 3 sections. The first is for the logo, second for identifying the current 
+resource and lastly the menu for switching between various data points for a resource.
+
+<Playground>
+  <Header style={{ border: '3px solid #000', boxshadow: 'none' }}>
+    <Header.Logo>
+      <div style={{ background: 'teal', height: '100%' }} />
+    </Header.Logo>
+    <Header.Resource>
+      <div style={{ background: 'lightblue', height: '100%' }} />
+    </Header.Resource>
+    <Header.Menu>
+      <div style={{ background: 'teal', height: '100%', flex: '1 1 0px' }} />
+    </Header.Menu>
+  </Header>
+</Playground>

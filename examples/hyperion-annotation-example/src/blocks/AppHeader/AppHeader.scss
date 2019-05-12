@@ -1,0 +1,67 @@
+.app-header {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 60px auto 400px;
+  grid-template-areas:
+    "logo resource menu";
+  max-width: 100%;
+  height: 60px;
+
+  &__logo {
+    margin: 10px;
+    grid-area: logo;
+    object-fit: scale-down;
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  &__resource {
+    align-content: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    &-heading {
+      font-size: 1.15em;
+      font-weight: bold;
+      margin-top: auto;
+    }
+    &-link {
+      font-size: .75em;
+      line-height: 1.125em;
+      margin-bottom: auto;
+      color: #7f7f7f;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__menu {
+    grid-area: menu;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 5px;
+    &-item {
+      flex: 1 1 0px;
+      padding: 0 1em;
+      font-size: .95em;
+      text-align: center;
+      height: 100%;
+      line-height: 60px;
+      vertical-align: center;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 0 transparent;
+      transition: box-shadow .4s;
+      &--isSelected {
+        font-weight: bold;
+        cursor: initial;
+        box-shadow: inset 0 -3px 0 0 #252A7C;
+      }
+    }
+  }
+}
