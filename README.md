@@ -17,7 +17,7 @@ This library can be the basis of other tools that want to work deeper with IIIF 
 This is the main library used to fetch, store and retrieve IIIF resources. It is not tied to a single framework and can be used with both JavaScript and Typescript.
 
 
-<div align="center"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/atlas.png" width="390" /></div>
+<div align="center"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/atlas-logo.png" width="390" /></div>
 
 Super-fast, abstract IIIF Viewer. Build a world and fill it with canvases. Lets users move, pan and zoom, or take your users on a smooth tour of your world.
 
