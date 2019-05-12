@@ -19,19 +19,16 @@ loadManifest(manifestId).then(res => {
           // Loop the annotations.
           const annotation = fromRef(annotationRef);
           // Map the body
-          annotation.body.map(
-            resource => {
-              // Loop the bodies of the annotations.
-              if (resource.id) {
-                const $image = document.createElement('img');
-                $image.src = resource.id;
-                $image.width = 100;
-                $canvasList.append($image);
-              }
+          annotation.body.map(resource => {
+            // Loop the bodies of the annotations.
+            if (resource.id) {
+              const $image = document.createElement('img');
+              $image.src = resource.id;
+              $image.width = 100;
+              $canvasList.append($image);
             }
-          );
+          });
         });
-
       });
     }
 
@@ -42,7 +39,6 @@ loadManifest(manifestId).then(res => {
   }
 });
 
-
 const $loadingState = document.getElementById('loading-state');
 subscribe(
   state => state.hyperion.requests[manifestId],
@@ -50,5 +46,5 @@ subscribe(
     if (res) {
       $loadingState.innerText = res.loadingState;
     }
-  },
+  }
 );
