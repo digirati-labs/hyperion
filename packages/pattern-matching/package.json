@@ -2,10 +2,15 @@
   "name": "@hyperion-framework/pattern-matching",
   "version": "0.1.0",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
+  "main": "dist/umd/@hyperion-framework/pattern-matching/index.js",
+  "module": "lib/index.js",
+  "typings": "dist/@types/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "start": "echo \"No build yet for this package\"",
-    "build": "echo \"No build yet for this package\""
+    "start": "fesk-start --cjs --noServer",
+    "build": "fesk-build --cjs --umd",
+    "build-types": "tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./",
+    "prepublish": "fesk-build --cjs --umd && tsc --emitDeclarationOnly --declaration --declarationDir ./dist/@types --sourceMap true -p ./"
   },
   "dependencies": {
     "@hyperion-framework/types": "^0.1.0"
@@ -13,7 +18,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "fesk": {
+    "typescript": true
+  },
   "devDependencies": {
-    "tslib": "^1.9.3"
+    "@fesk/scripts": "^1.2.1",
+    "typescript": "^3.4.5"
   }
 }
