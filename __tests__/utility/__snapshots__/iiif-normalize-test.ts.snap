@@ -6,11 +6,8 @@ Object {
     "https://example.org/iiif/book1/annotation/p0001-image": Object {
       "body": Array [
         Object {
-          "format": "image/png",
-          "height": 1800,
           "id": "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png",
-          "type": "Image",
-          "width": 1200,
+          "type": "ContentResource",
         },
       ],
       "id": "https://example.org/iiif/book1/annotation/p0001-image",
@@ -24,7 +21,7 @@ Object {
   "AnnotationCollection": Object {},
   "AnnotationPage": Object {
     "https://example.org/iiif/book1/page/p1/1": Object {
-      "behaviour": Array [],
+      "behavior": Array [],
       "homepage": null,
       "id": "https://example.org/iiif/book1/page/p1/1",
       "items": Array [
@@ -50,7 +47,7 @@ Object {
   "Canvas": Object {
     "https://example.org/iiif/book1/canvas/p1": Object {
       "annotations": Array [],
-      "behaviour": Array [],
+      "behavior": Array [],
       "duration": 0,
       "height": 1800,
       "homepage": null,
@@ -81,6 +78,13 @@ Object {
   },
   "Collection": Object {},
   "ContentResource": Object {
+    "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png": Object {
+      "format": "image/png",
+      "height": 1800,
+      "id": "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png",
+      "type": "Image",
+      "width": 1200,
+    },
     "http://myhomepage.com": Object {
       "id": "http://myhomepage.com",
       "type": "ContentResource",
@@ -93,7 +97,7 @@ Object {
         "http://iiif.io/api/presentation/{{ page.major }}/context.json",
       ],
       "annotations": Array [],
-      "behaviour": Array [],
+      "behavior": Array [],
       "homepage": Object {
         "id": "http://myhomepage.com",
         "type": "ContentResource",

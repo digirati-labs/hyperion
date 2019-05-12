@@ -4,6 +4,7 @@ export declare type ImageSize = { width: number; height: number };
 
 export declare type ImageTile = {
   width: number;
+  height?: number;
   scaleFactors: number[];
 };
 
@@ -20,7 +21,7 @@ export interface Service {
   '@context'?: string | string[];
   id: string;
   profile: ImageProfile | ImageProfile[];
-  protocol: string;
+  protocol?: string;
   width?: number | null;
   height?: number | null;
   sizes?: ImageSize[];

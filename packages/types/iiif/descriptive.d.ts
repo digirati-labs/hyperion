@@ -1,6 +1,6 @@
 import { Reference } from '../reference';
 import { OmitProperties } from '../utility';
-import {Canvas} from "..";
+import { Canvas, ContentResource } from '..';
 
 export declare type InternationalString = {
   [language: string]: string[];
@@ -19,9 +19,7 @@ export declare type DescriptiveProperties = {
   rights: string | null;
   navDate: string | null;
   language: string[];
-  // @todo Thumbnail
-  thumbnail: any;
-  // @todo Poster canvas
+  thumbnail: ContentResource[];
   posterCanvas: Canvas;
 };
 

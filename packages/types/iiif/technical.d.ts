@@ -13,7 +13,7 @@ export declare type ResourceType =
 
 export declare type ViewingDirection = 'left-to-right' | 'right-to-left' | 'top-to-bottom' | 'bottom-to-top';
 
-export declare type SpecificationBehaviours =
+export declare type Specificationbehaviors =
   | 'auto-advance'
   | 'continuous'
   | 'facing-pages'
@@ -40,7 +40,7 @@ export declare type TechnicalProperties = {
   width: number;
   duration: number;
   viewingDirection: ViewingDirection;
-  behaviour: SpecificationBehaviours[] | string[];
+  behavior: Specificationbehaviors[] | string[];
   timeMode: SpecificationTimeMode | string | null;
   motivation: string | null;
 };
