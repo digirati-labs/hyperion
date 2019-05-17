@@ -1,5 +1,5 @@
 jobs:
-- job: build-hyperion
+- job: HyperionBuild
   pool:
     vmImage: ubuntu-16.04
 
