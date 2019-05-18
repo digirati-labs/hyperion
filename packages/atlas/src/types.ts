@@ -5,3 +5,4 @@ export type Scaled = { scale: number };
 export type Projection = Position & SpacialSize;
 export type Viewer = Projection & Scaled;
 export type DisplayData = Readonly<SpacialSize & Scaled & { points: Float32Array }>;
+export type WorldTime = { start: number; end: number };

@@ -1,8 +1,7 @@
-import {TextualContent} from '../../src/spacial-content';
-import {DnaFactory} from '../../src';
+import { TextualContent } from '../../src/spacial-content';
+import { DnaFactory } from '../../src';
 
 describe('textual content', () => {
-
   test('it constructs', () => {
     const text = new TextualContent({
       id: 'http://example.org/content/c1',
@@ -13,5 +12,4 @@ describe('textual content', () => {
 
     expect(text.points).toEqual(DnaFactory.singleBox(300, 50));
   });
-
 });

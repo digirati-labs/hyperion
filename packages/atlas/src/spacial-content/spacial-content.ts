@@ -1,5 +1,5 @@
-import { DisplayData, Viewer } from '../types';
-import { Paint } from '../world-object';
+import { DisplayData } from '../types';
+import { Paint } from '../world-objects';
 
 export interface SpacialContent {
   readonly id: string;
@@ -13,6 +13,6 @@ export interface SpacialContent {
   points: Float32Array;
   readonly display: DisplayData;
 
-  getPointsAt(target: Viewer, aggregate?: Float32Array): Paint;
+  getPointsAt(target: Float32Array, aggregate?: Float32Array, scale?: number): Paint;
   transform(op: Float32Array): void;
 }

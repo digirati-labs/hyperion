@@ -1,5 +1,7 @@
 import { createSelector } from '../context/createSelector';
-import { annotationContext, canvasContext, VaultState } from '..';
+import { annotationContext } from '../resources/annotation';
+import { canvasContext } from '../resources/canvas';
+import { VaultState } from '../Vault';
 import { AnnotationNormalized, CanvasNormalized, IIIFExternalWebResource, Service } from '@hyperion-framework/types';
 
 export const STANFORD_IIIF_IMAGE_COMPLIANCE_0 = 'http://library.stanford.edu/iiif/image-api/compliance.html#level0';

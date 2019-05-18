@@ -4,11 +4,12 @@
     "rootDir": "src",
     "jsx": "react",
     "declaration": true,
-    "declarationDir": "./dist/@types"
+    "declarationDir": "./lib"
   },
   "exclude": [
     "node_modules",
     "dist",
+    "lib",
     "**/__tests__/*.test.ts",
     "__tests__"
   ]

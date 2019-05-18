@@ -1,9 +1,9 @@
 import { SpacialContent } from './spacial-content';
 import { compose, DnaFactory, translate } from '../dna';
 import { IIIFExternalWebResource, Service } from '@hyperion-framework/types';
-import { DisplayData, Viewer } from '../types';
-import { Paint } from '../world-object';
-import { isImageService } from '@hyperion-framework/vault';
+import { DisplayData } from '../types';
+import { Paint } from '../world-objects';
+import { isImageService } from '@hyperion-framework/vault/lib/selectors/getImageService';
 import { SingleImage } from './single-image';
 import { TiledImage } from './tiled-image';
 import { bestResourceAtRatio } from '../utils';
@@ -15,6 +15,8 @@ export class ImageService<T extends SpacialContent = SpacialContent> extends Abs
   points: Float32Array;
   images: T[];
   scaleFactors: number[];
+
+  aggregateBuffer = new Float32Array(9);
 
   constructor(data: { id: string; width: number; height: number; images: T[] }) {
     super();
@@ -98,23 +100,27 @@ export class ImageService<T extends SpacialContent = SpacialContent> extends Abs
 
     if (contentResource.id && contentResource!.width && contentResource!.height) {
       return [
-        SingleImage.fromImage(contentResource.id, { width: contentResource.width as number, height: contentResource.height as number }),
+        SingleImage.fromImage(contentResource.id, {
+          width: contentResource.width as number,
+          height: contentResource.height as number,
+        }),
       ];
     }
 
     return [];
   }
 
-  getPointsAt(target: Viewer, aggregate?: Float32Array): Paint {
-    const resource = bestResourceAtRatio(target.scale, this.images);
-    return resource.getPointsAt(
+  getPointsAt(target: Float32Array, aggregate?: Float32Array, scale?: number): Paint {
+    return bestResourceAtRatio(1 / (scale || 1), this.images).getPointsAt(
       target,
       aggregate
         ? compose(
             aggregate,
-            translate(this.x, this.y)
+            translate(this.x, this.y),
+            this.aggregateBuffer
           )
-        : translate(this.x, this.y)
+        : translate(this.x, this.y),
+      scale
     );
   }
 }

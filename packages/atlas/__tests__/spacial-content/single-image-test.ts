@@ -1,5 +1,5 @@
 import { SingleImage } from '../../src/spacial-content';
-import { compose, DnaFactory, scale, translate } from '../../src';
+import { compose, DnaFactory, scale, transform, translate } from '../../src';
 
 describe('SingleImage', () => {
   test('it can construct', () => {
@@ -32,9 +32,9 @@ describe('SingleImage', () => {
     expect(image.width).toEqual(100);
     expect(image.height).toEqual(200);
 
-    const paintable = image.getPointsAt({ x: 0, y: 0, width: 100, height: 200, scale: 1 });
+    const [, points] = image.getPointsAt(DnaFactory.projection({ x: 0, y: 0, width: 100, height: 200 }));
 
-    expect(paintable.points).toEqual(DnaFactory.singleBox(100, 200));
+    expect(points).toEqual(DnaFactory.singleBox(100, 200));
   });
 
   test('it will use a default scale', () => {
@@ -66,14 +66,15 @@ describe('SingleImage', () => {
       { width: 50, height: 100 }
     );
 
-    const paintable = image.getPointsAt(
-      { x: 0, y: 0, width: 100, height: 200, scale: 1 },
+    const [, points, t] = image.getPointsAt(
+      DnaFactory.projection({ x: 0, y: 0, width: 100, height: 200 }),
       compose(
         translate(100, 500),
         scale(4)
       )
     );
 
-    expect(paintable.points).toEqual(DnaFactory.singleBox(400, 800, 100, 500));
+    expect(points).toEqual(DnaFactory.singleBox(100, 200, 0, 0));
+    expect(transform(points, t as Float32Array)).toEqual(DnaFactory.singleBox(400, 800, 100, 500));
   });
 });

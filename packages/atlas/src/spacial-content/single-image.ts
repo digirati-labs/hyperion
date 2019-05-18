@@ -22,10 +22,6 @@ export class SingleImage extends AbstractContent implements SpacialContent {
     };
   }
 
-  getImageUrl() {
-    return this.id;
-  }
-
   static fromImage(uri: string, target: SpacialSize, display?: SpacialSize): SingleImage {
     const width = display ? display.width : target.width;
     const scale = target.width / width;
@@ -36,5 +32,9 @@ export class SingleImage extends AbstractContent implements SpacialContent {
       height: target.height,
       scale,
     });
+  }
+
+  getImageUrl() {
+    return this.id;
   }
 }

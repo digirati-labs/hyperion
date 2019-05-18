@@ -1,0 +1,24 @@
+{
+  "name": "vanilla-atlas",
+  "private": true,
+  "version": "0.2.1",
+  "dependencies": {
+    "@hyperion-framework/atlas": "^0.2.1",
+    "@hyperion-framework/vault": "^0.2.1"
+  },
+  "scripts": {
+    "build": "fesk-build",
+    "start": "fesk-start"
+  },
+  "devDependencies": {
+    "@fesk/scripts": "^1.2.1"
+  },
+  "fesk": {
+    "port": 5104,
+    "metalsmith": {
+      "index-page": {
+        "liveServerPort": 35736
+      }
+    }
+  }
+}

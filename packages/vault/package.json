@@ -3,14 +3,14 @@
   "version": "0.2.1",
   "main": "dist/umd/@hyperion-framework/vault.js",
   "module": "lib/index.js",
-  "typings": "dist/@types/index.d.ts",
+  "typings": "lib/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "scripts": {
     "start": "fesk-start --cjs --noServer",
-    "build": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
-    "build-types": "tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
-    "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types"
+    "build": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly",
+    "build-types": "tsc -p ./ --emitDeclarationOnly",
+    "prepublish": "NODE_ENV=production fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly"
   },
   "dependencies": {
     "@hyperion-framework/types": "^0.2.0",

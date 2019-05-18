@@ -1,4 +1,5 @@
 import { ImageService, SingleImage, TiledImage } from '../../src/spacial-content';
+import { DnaFactory, filterPoints } from '../../src';
 
 describe('ImageService', () => {
   describe('ImageService.fromContentResource', () => {
@@ -68,19 +69,21 @@ describe('ImageService', () => {
       expect((service[0] as ImageService<TiledImage>).images[3].points.length).toEqual(10);
       expect((service[0] as ImageService<TiledImage>).images[4].points.length).toEqual(5);
 
-      const layer = service[0].getPointsAt({ x: 0, y: 0, width: 400, height: 400, scale: 1 });
+      const [paintable, points] = service[0].getPointsAt(
+        DnaFactory.projection({ x: 0, y: 0, width: 500, height: 500 })
+      );
 
-      expect(layer.points.length).toEqual(400);
-      expect(layer.paintable).toStrictEqual((service[0] as ImageService<TiledImage>).images[0]);
-      expect(layer.points).toStrictEqual((service[0] as ImageService<TiledImage>).images[0].points);
-      expect((layer.paintable as TiledImage).getImageUrl(0)).toEqual(
+      expect(points.length).toEqual(400);
+      expect(paintable).toStrictEqual((service[0] as ImageService<TiledImage>).images[0]);
+      expect(filterPoints(points).length).toEqual(5 * 2 * 2);
+      expect((paintable as TiledImage).getImageUrl(0)).toEqual(
         'https://view.nls.uk/iiif/7443/74438562.5/0,0,256,256/256,256/0/default.jpg'
       );
 
-      const lastPointIndex = (layer.paintable.display.points.length - 5) / 5;
+      const lastPointIndex = (paintable.display.points.length - 5) / 5;
       const images = [];
       for (let i = 0; i < lastPointIndex; i++) {
-        images.push((layer.paintable as TiledImage).getImageUrl(i));
+        images.push((paintable as TiledImage).getImageUrl(i));
       }
       expect(images).toEqual([
         'https://view.nls.uk/iiif/7443/74438562.5/0,0,256,256/256,256/0/default.jpg',

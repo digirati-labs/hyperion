@@ -1,6 +1,6 @@
 import { SpacialContent } from './spacial-content';
-import { DisplayData, Viewer } from '../types';
-import { Paint } from '../world-object';
+import { DisplayData } from '../types';
+import { Paint } from '../world-objects';
 import { mutate } from '../dna';
 
 export abstract class AbstractContent implements SpacialContent {
@@ -22,8 +22,8 @@ export abstract class AbstractContent implements SpacialContent {
     return this.points[4] - this.points[2];
   }
 
-  getPointsAt(target: Viewer, aggregate?: Float32Array): Paint {
-    return new Paint(this, this.points, aggregate);
+  getPointsAt(target: Float32Array, aggregate?: Float32Array, scale?: number): Paint {
+    return [this, this.points, aggregate];
   }
 
   transform(op: Float32Array): void {

@@ -63,7 +63,7 @@ const ViewerCanvas = ({ setZoom, ...props }) => {
   );
 
   if (world) {
-    const points = world.getPointsAt({ width: 1000, height: 1000, x: 0, y: 0, scale: 1 });
+    const points = world.getPointsFromViewer({ width: 1000, height: 1000, x: 0, y: 0, scale: 1 });
     return (
       <div
         style={{ width: 1000, height: 1000, position: 'relative', border: '1px solid red' }}
