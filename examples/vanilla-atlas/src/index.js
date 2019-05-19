@@ -90,11 +90,12 @@ listen(canvas, 'mousedown touchstart').start(() => {
     .start(viewer);
 });
 listen(document, 'mouseup touchend').start(() => {
+  const padding = 200;
   inertia({
-    min: { x: 0, y: 0 },
+    min: { x: -padding, y: -padding },
     max: {
-      x: world.width - (runtime.target[3] - runtime.target[1]),
-      y: world.height - (runtime.target[4] - runtime.target[2]),
+      x: world.width - (runtime.target[3] - runtime.target[1]) + padding,
+      y: world.height - (runtime.target[4] - runtime.target[2]) + padding,
     },
     bounceStiffness: 120,
     bounceDamping: 15,
