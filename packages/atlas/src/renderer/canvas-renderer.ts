@@ -22,6 +22,7 @@ export class CanvasRenderer implements Renderer {
   imagesPending: number = 0;
   imagesLoaded: number = 0;
   frameIsRendering = false;
+  firstMeaningfulPaint = false;
   parallelTasks: number = 5; // @todo configuration.
   readonly configuration = {
     segmentRendering: true,
@@ -39,6 +40,10 @@ export class CanvasRenderer implements Renderer {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d', { alpha: false }) as CanvasRenderingContext2D;
     this.options = options || {};
+    // Testing fade in.
+    // @todo definitely make this config.
+    this.canvas.style.opacity = '0';
+    this.canvas.style.transition = 'opacity .3s';
   }
 
   createImage(url: string) {
@@ -149,6 +154,12 @@ export class CanvasRenderer implements Renderer {
         if (imageBuffer.indices.indexOf(index) === -1) {
           // we need to schedule a paint.
           this.schedulePaintToCanvas(imageBuffer, paint, index);
+        }
+
+        // If we've not prepared an initial "meaningful paint", then skip the
+        // rendering to avoid tiles loading in, breaking the illusion a bit!
+        if (!this.firstMeaningfulPaint) {
+          return;
         }
 
         // 3) Paint the current buffer onto the target, this probably
@@ -286,6 +297,15 @@ export class CanvasRenderer implements Renderer {
   }
 
   pendingUpdate(): boolean {
-    return this.imagesPending !== 0 || this.loadingQueue.length !== 0 || this.tasksRunning !== 0;
+    const ready = this.imagesPending === 0 && this.loadingQueue.length === 0 && this.tasksRunning === 0;
+    if (!this.firstMeaningfulPaint && ready) {
+      // Fade in the canvas?
+      this.canvas.style.opacity = '1';
+      // We've not rendered yet, can we render this frame?
+      this.firstMeaningfulPaint = ready;
+      // We need to return true here to ensure our update is done.
+      return true;
+    }
+    return !ready;
   }
 }

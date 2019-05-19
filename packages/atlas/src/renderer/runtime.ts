@@ -64,6 +64,8 @@ export class Runtime {
   lastTarget = new Float32Array(5);
   pendingUpdate = false;
 
+  firstRender = true;
+
   constructor(renderer: Renderer, world: World, target: Viewer) {
     this.renderer = renderer;
     this.world = world;
@@ -146,6 +148,7 @@ export class Runtime {
 
   render = (data: FrameData) => {
     if (
+      !this.firstRender &&
       // Check if there was a pending update from the renderer.
       !this.renderer.pendingUpdate() &&
       // Then check the points, the first will catch invalidation.
@@ -212,5 +215,9 @@ export class Runtime {
     this.renderer.afterFrame(this.world, data, this.target);
     // Finally at the end, we set up the frame we just rendered.
     this.lastTarget.set([this.target[0], this.target[1], this.target[2], this.target[3], this.target[4]]);
+    if (this.firstRender) {
+      // We've just finished our first render.
+      this.firstRender = false;
+    }
   };
 }

@@ -30,6 +30,7 @@ const viewport = { width: window.innerWidth / 2, height: window.innerHeight / 2,
 
 // Create a quick canvas for our viewer.
 const canvas = document.createElement('canvas');
+canvas.style.background = '#000';
 canvas.style.border = '1px solid #000';
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
