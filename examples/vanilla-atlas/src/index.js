@@ -86,7 +86,7 @@ listen(canvas, 'mousedown touchstart').start(() => {
     x: -x * runtime.scaleFactor,
     y: -y * runtime.scaleFactor,
   })
-    .pipe(v => ({ x: ~~(-v.x / runtime.scaleFactor), y: ~~(-v.y / runtime.scaleFactor) }))
+    .pipe(v => ({ x: -v.x / runtime.scaleFactor, y: -v.y / runtime.scaleFactor }))
     .start(viewer);
 });
 listen(document, 'mouseup touchend').start(() => {
@@ -98,8 +98,8 @@ listen(document, 'mouseup touchend').start(() => {
     },
     bounceStiffness: 120,
     bounceDamping: 15,
-    timeConstant: 300,
-    power: 0.18,
+    timeConstant: 240,
+    power: 0.1,
     velocity: viewer.getVelocity(),
     from: viewer.get(),
   }).start(viewer);

@@ -68,7 +68,7 @@ export class CanvasRenderer implements Renderer {
     if (paint instanceof SingleImage || paint instanceof TiledImage) {
       try {
         // Simple draw of the (hopefully cached) image.
-        this.ctx.drawImage(this.getImage(paint.getImageUrl(index)), x, y, width, height);
+        this.ctx.drawImage(this.getImage(paint.getImageUrl(index)), x, y, width + 0.5, height + 0.5);
       } catch (err) {
         // nothing to do here, likely that the image isn't loaded yet.
       }
