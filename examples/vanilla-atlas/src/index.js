@@ -1,5 +1,5 @@
 import { World, fromImage, Runtime, CanvasRenderer, DebugRenderer } from '@hyperion-framework/atlas';
-import { listen, value, pointer, tween, inertia } from 'popmotion';
+import { listen, value, pointer, tween, inertia, easing } from 'popmotion';
 import nls from './image-tiles/nls';
 import wunder from './image-tiles/wunder';
 
@@ -84,7 +84,8 @@ listen(document, 'mouseup touchend').start(() => {
 // own in or it will simply default to the middle of the viewport.
 // Note: the factor changes the size of the VIEWPORT on the canvas.
 // So smaller values will zoom in, and larger values will zoom out.
-function zoomTo(factor, origin) {
+let currentZoom;
+function zoomTo(factor, origin, stream = false) {
   if (factor < 1 && runtime.scaleFactor * factor >= 10) return;
   if (factor > 1 && runtime.scaleFactor * factor <= 1) return;
   // Save the before for the tween.
@@ -92,10 +93,14 @@ function zoomTo(factor, origin) {
   // set the new scale.
   runtime.setScale(factor, origin);
   // Need to update our observables, for pop-motion
-  tween({
+  if (currentZoom) {
+    currentZoom.stop();
+  }
+  currentZoom = tween({
     from: fromPos,
     to: runtime.getViewport(),
-    duration: 200,
+    duration: 300,
+    ease: stream ? easing.easeOut : easing.easeInOut,
   }).start(viewer);
 }
 
@@ -105,6 +110,40 @@ document.getElementById('zoom-out').addEventListener('click', () => zoomTo(1.25)
 // Simple zoom in control.
 document.getElementById('zoom-in').addEventListener('click', () => zoomTo(0.8));
 
+document.addEventListener('keydown', e => {
+  const duration = 300;
+  switch (e.code) {
+    case 'ArrowLeft':
+      tween({
+        from: { x: runtime.x, y: runtime.y },
+        to: { x: runtime.x - 50 / runtime.scaleFactor, y: runtime.y },
+        duration,
+      }).start(viewer);
+      break;
+    case 'ArrowRight':
+      tween({
+        from: { x: runtime.x, y: runtime.y },
+        to: { x: runtime.x + 50 / runtime.scaleFactor, y: runtime.y },
+        duration,
+      }).start(viewer);
+      break;
+    case 'ArrowUp':
+      tween({
+        from: { x: runtime.x, y: runtime.y },
+        to: { x: runtime.x, y: runtime.y -50 / runtime.scaleFactor },
+        duration,
+      }).start(viewer);
+      break;
+    case 'ArrowDown':
+      tween({
+        from: { x: runtime.x, y: runtime.y },
+        to: { x: runtime.x, y: runtime.y + 50 / runtime.scaleFactor },
+        duration,
+      }).start(viewer);
+      break;
+  }
+});
+
 // Next we will add a scrolling event to the scroll-wheel.
 canvas.addEventListener('wheel', e => {
   e.preventDefault();
@@ -112,7 +151,8 @@ canvas.addEventListener('wheel', e => {
     // Generating a zoom from the wheel delta
     1 + e.deltaY / 100,
     // Convert the cursor to an origin
-    runtime.viewerToWorld(e.pageX - canvasPos.x, e.pageY - canvasPos.y)
+    runtime.viewerToWorld(e.pageX - canvasPos.x, e.pageY - canvasPos.y),
+    true
   );
 });
 
