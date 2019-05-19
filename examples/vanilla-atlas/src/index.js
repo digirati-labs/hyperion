@@ -51,74 +51,145 @@ app.appendChild(canvas);
 const renderer = new CanvasRenderer(canvas);
 const runtime = new Runtime(renderer, world, viewport);
 
-// Some hacky user interactions, using popmotion. This is an observer, listening
-//  to the x and y co-ordinates and updating the views.
-const xy = value({ x: 0, y: 0 }, ({ x: x1, y: y1 }) => {
-  const x = x1 / runtime.scaleFactor;
-  const y = y1 / runtime.scaleFactor;
+// Some user interactions, using popmotion. This is an observer, listening
+//  to the x, y, height and width co-ordinates and updating the views.
+// This acts as a bridge to popmotion, allowing us to twean these values as
+// we see fit.
+const viewer = value(
+  {
+    x: runtime.target[1],
+    y: runtime.target[2],
+    width: runtime.target[3] - runtime.target[1],
+    height: runtime.target[4] - runtime.target[2],
+  },
+  data => {
+    if (data.width) {
+      runtime.target[3] = data.x + data.width;
+    } else {
+      runtime.target[3] = runtime.target[3] - runtime.target[1] + data.x;
+    }
+    if (data.height) {
+      runtime.target[4] = data.y + data.height;
+    } else {
+      runtime.target[4] = runtime.target[4] - runtime.target[2] + data.y;
+    }
+    runtime.target[1] = data.x;
+    runtime.target[2] = data.y;
+  }
+);
 
-  if (Math.abs(x - runtime.target[3] > 0.001)) return;
-
-  runtime.target[3] = runtime.target[3] - runtime.target[1] - x;
-  runtime.target[4] = runtime.target[4] - runtime.target[2] - y;
-  runtime.target[1] = -x;
-  runtime.target[2] = -y;
-});
-
-// This is buggy, but is an implementation of scrolling.
-// canvas.addEventListener('wheel', e => {
-//   e.preventDefault();
-//   mutate(runtime.target, scale(e.deltaY < 0 ? 0.99 : 1.01));
-//   mutate(runtime.target, translate(-(runtime.target[3] - runtime.target[1]) / 2, -(runtime.target[4] - runtime.target[2])/2));
-//
-//
-//   console.log('did I?', { x: runtime.target[1], y: runtime.target[2] });
-//   xy.update({ x: runtime.target[1], y: runtime.target[2] });
-// });
-
-// Popmotion drag start.
+// These two control the dragging, panning and zooming. The second has inertia
+// so it will slow down and bounce on the sides.
 listen(canvas, 'mousedown touchstart').start(() => {
-  pointer(xy.get())
-    .pipe(v => ({ x: v.x >> 0, y: v.y >> 0 }))
-    .start(xy);
+  const { x, y } = viewer.get();
+  pointer({
+    x: -x * runtime.scaleFactor,
+    y: -y * runtime.scaleFactor,
+  })
+    .pipe(v => ({ x: ~~(-v.x / runtime.scaleFactor), y: ~~(-v.y / runtime.scaleFactor) }))
+    .start(viewer);
 });
-
-// Simple zoom out control.
-document.getElementById('zoom-out').addEventListener('click', () => {
-  if (runtime.scaleFactor * 1.25 < 1) return;
-  mutate(runtime.target, scaleAtOrigin(1.25, runtime.target[1], runtime.target[2]));
-  // Need to update our observables, for pop-motion
-  xy.update({ x: runtime.target[1], y: runtime.target[2] });
-});
-
-// Simple zoom in control.
-document.getElementById('zoom-in').addEventListener('click', () => {
-  if (runtime.scaleFactor * 0.8 > 10) return;
-  mutate(runtime.target, scaleAtOrigin(0.8, runtime.target[1], runtime.target[2]));
-  // Need to update our observables, for pop-motion
-  xy.update({ x: runtime.target[1], y: runtime.target[2] });
-});
-
-// Popmotion velocity and inertia.
 listen(document, 'mouseup touchend').start(() => {
   inertia({
-    max: { x: 0, y: 0 },
-    min: {
-      x: -(world.width * runtime.scaleFactor - (runtime.target[3] - runtime.target[1]) * runtime.scaleFactor),
-      y: -(world.height * runtime.scaleFactor - (runtime.target[4] - runtime.target[2]) * runtime.scaleFactor),
+    min: { x: 0, y: 0 },
+    max: {
+      x: world.width - (runtime.target[3] - runtime.target[1]),
+      y: world.height - (runtime.target[4] - runtime.target[2]),
     },
-    bounceStiffness: 140,
+    bounceStiffness: 120,
     bounceDamping: 15,
-    timeConstant: 200,
-    power: 0.2,
-    velocity: xy.getVelocity(),
-    from: xy.get(),
-  })
-    .pipe(
-      // Simple optimisation to floor the float values of this transform.
-      v => ({ x: v.x >> 0, y: v.y >> 0 })
+    timeConstant: 300,
+    power: 0.18,
+    velocity: viewer.getVelocity(),
+    from: viewer.get(),
+  }).start(viewer);
+});
+
+// A generic zoom to function, with an optional origin parameter.
+// All of the points referenced are world points. You can pass your
+// own in or it will simply default to the middle of the viewport.
+// Note: the factor changes the size of the VIEWPORT on the canvas.
+// So smaller values will zoom in, and larger values will zoom out.
+function zoomTo(factor, origin) {
+  if (factor < 1 && runtime.scaleFactor * factor >= 10) return;
+  if (factor > 1 && runtime.scaleFactor * factor <= 1) return;
+
+  const fromPos = {
+    x: runtime.target[1],
+    y: runtime.target[2],
+    width: runtime.target[3] - runtime.target[1],
+    height: runtime.target[4] - runtime.target[2],
+  };
+  mutate(
+    runtime.target,
+    scaleAtOrigin(
+      factor,
+      origin ? origin.x : runtime.target[1] + (runtime.target[3] - runtime.target[1]) / 2,
+      origin ? origin.y : runtime.target[2] + (runtime.target[4] - runtime.target[2]) / 2
     )
-    .start(xy);
+  );
+  // Need to update our observables, for pop-motion
+  tween({
+    from: fromPos,
+    to: {
+      x: runtime.target[1],
+      y: runtime.target[2],
+      width: runtime.target[3] - runtime.target[1],
+      height: runtime.target[4] - runtime.target[2],
+    },
+    duration: 200,
+  }).start(viewer);
+}
+
+// Let's use that new zoom method, first we will hook up the UI buttons to zoom.
+// Simple zoom out control.
+document.getElementById('zoom-out').addEventListener('click', () => {
+  zoomTo(1.25);
+});
+// Simple zoom in control.
+document.getElementById('zoom-in').addEventListener('click', () => {
+  zoomTo(0.8);
+});
+
+// Next we will add a scrolling event to the scroll-wheel.
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  zoomTo(1 + e.deltaY / 100, {
+    x: Math.floor(runtime.target[1] + (e.pageX - canvasPos.x) / runtime.scaleFactor),
+    y: Math.floor(runtime.target[2] + (e.pageY - canvasPos.y) / runtime.scaleFactor),
+  });
+});
+
+// For clicking its a little trickier. We want to still allow panning. So this
+// little temporary variable will nuke the value when the mouse is down.
+const canvasPos = canvas.getBoundingClientRect();
+let click;
+canvas.addEventListener('mousedown', () => {
+  click = true;
+  setTimeout(() => {
+    click = false;
+  }, 500);
+});
+
+// Next we will add another zoom option, click to zoom. This time the origin will
+// be where our mouse is in relation to the world.
+canvas.addEventListener('click', ({ pageX, pageY }) => {
+  if (click) {
+    zoomTo(0.6, {
+      x: Math.floor(runtime.target[1] + (pageX - canvasPos.x) / runtime.scaleFactor),
+      y: Math.floor(runtime.target[2] + (pageY - canvasPos.y) / runtime.scaleFactor),
+    });
+  }
+});
+
+// On mouse move we will display the world co-ordinates over the mouse in the UI.
+canvas.addEventListener('mousemove', ({ pageX, pageY }) => {
+  // Here we stop a click if the mouse has moved (starting a drag).
+  click = false;
+  document.getElementById('x').innerText =
+    '' + Math.floor(runtime.target[1] + (pageX - canvasPos.x) / runtime.scaleFactor);
+  document.getElementById('y').innerText =
+    '' + Math.floor(runtime.target[2] + (pageY - canvasPos.y) / runtime.scaleFactor);
 });
 
 // Add a second renderer (debug the world)

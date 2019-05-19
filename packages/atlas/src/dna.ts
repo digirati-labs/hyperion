@@ -15,7 +15,8 @@ export const translate = (x: number, y: number) => new Float32Array([1, 0, x, 0,
 export const scale = (factor: number) => new Float32Array([factor, 0, 0, 0, factor, 0, 0, 0, 1]);
 export const scaleAtOrigin = (factor: number, x: number, y: number) =>
   compose(
-    translate(-x, -y),
+    // This is right.
+    translate((1 - factor) * x, (1 - factor) * y),
     scale(factor)
   );
 
