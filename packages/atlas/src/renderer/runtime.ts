@@ -1,10 +1,59 @@
-import { Viewer } from '../types';
+import { Projection, Viewer } from '../types';
 import { World } from '../world';
-import { DnaFactory, scale, transform } from '../dna';
+import { DnaFactory, mutate, scale, scaleAtOrigin, transform } from '../dna';
 import { Renderer } from './renderer';
 import sync, { FrameData, Process } from 'framesync';
 
 export class Runtime {
+  // Helper getters.
+  get x(): number {
+    return this.target[1];
+  }
+
+  set x(x: number) {
+    this.target[1] = x;
+  }
+
+  get y(): number {
+    return this.target[2];
+  }
+
+  set y(y: number) {
+    this.target[2] = y;
+  }
+
+  get x2(): number {
+    return this.target[3];
+  }
+
+  set x2(x2: number) {
+    this.target[3] = x2;
+  }
+
+  get y2(): number {
+    return this.target[4];
+  }
+
+  set y2(y2: number) {
+    this.target[4] = y2;
+  }
+
+  get width(): number {
+    return this.target[3] - this.target[1];
+  }
+
+  set width(width: number) {
+    this.target[3] = this.target[1] + width;
+  }
+
+  get height(): number {
+    return this.target[4] - this.target[2];
+  }
+
+  set height(height: number) {
+    this.target[4] = this.target[2] = height;
+  }
+
   renderer: Renderer;
   world: World;
   target: Float32Array;
@@ -22,6 +71,62 @@ export class Runtime {
     this.aggregate = scale(1);
     this.clock = sync.render(this.render, true);
     this.scaleFactor = target.scale;
+  }
+
+  getViewport(): Projection {
+    return {
+      x: this.target[1],
+      y: this.target[2],
+      width: this.target[3] - this.target[1],
+      height: this.target[4] - this.target[2],
+    };
+  }
+
+  setViewport = (data: { x: number; y: number; width?: number; height?: number }) => {
+    if (data.width) {
+      this.target[3] = data.x + data.width;
+    } else {
+      this.target[3] = this.target[3] - this.target[1] + data.x;
+    }
+    if (data.height) {
+      this.target[4] = data.y + data.height;
+    } else {
+      this.target[4] = this.target[4] - this.target[2] + data.y;
+    }
+    this.target[1] = data.x;
+    this.target[2] = data.y;
+  };
+
+  getMinViewportPosition(padding: number) {
+    return {
+      x: -padding,
+      y: -padding,
+    };
+  }
+
+  getMaxViewportPosition(padding: number) {
+    return {
+      x: this.world.width - (this.target[3] - this.target[1]) + padding,
+      y: this.world.height - (this.target[4] - this.target[2]) + padding,
+    };
+  }
+
+  viewerToWorld(x: number, y: number) {
+    return {
+      x: this.target[1] + x / this.scaleFactor,
+      y: this.target[2] + y / this.scaleFactor,
+    };
+  }
+
+  setScale(scaleFactor: number, origin?: { x: number; y: number }) {
+    mutate(
+      this.target,
+      scaleAtOrigin(
+        scaleFactor,
+        origin ? origin.x : this.target[1] + (this.target[3] - this.target[1]) / 2,
+        origin ? origin.y : this.target[2] + (this.target[4] - this.target[2]) / 2
+      )
+    );
   }
 
   syncTo(runtime: Runtime) {

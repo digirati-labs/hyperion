@@ -1,19 +1,7 @@
-import {
-  World,
-  fromImage,
-  WorldObject,
-  Runtime,
-  CanvasRenderer,
-  DebugRenderer,
-  mutate,
-  transform,
-  translate,
-  scale,
-} from '@hyperion-framework/atlas';
-import { listen, value, pointer, decay, tween, inertia } from 'popmotion';
+import { World, fromImage, Runtime, CanvasRenderer, DebugRenderer } from '@hyperion-framework/atlas';
+import { listen, value, pointer, tween, inertia } from 'popmotion';
 import nls from './image-tiles/nls';
 import wunder from './image-tiles/wunder';
-import { scaleAtOrigin } from '@hyperion-framework/atlas';
 
 const app = document.getElementById('app');
 const debug = document.getElementById('debug');
@@ -62,20 +50,8 @@ const viewer = value(
     width: runtime.target[3] - runtime.target[1],
     height: runtime.target[4] - runtime.target[2],
   },
-  data => {
-    if (data.width) {
-      runtime.target[3] = data.x + data.width;
-    } else {
-      runtime.target[3] = runtime.target[3] - runtime.target[1] + data.x;
-    }
-    if (data.height) {
-      runtime.target[4] = data.y + data.height;
-    } else {
-      runtime.target[4] = runtime.target[4] - runtime.target[2] + data.y;
-    }
-    runtime.target[1] = data.x;
-    runtime.target[2] = data.y;
-  }
+  // This takes in a {x, y, width, height} and updates the viewport.
+  runtime.setViewport
 );
 
 // These two control the dragging, panning and zooming. The second has inertia
@@ -92,11 +68,8 @@ listen(canvas, 'mousedown touchstart').start(() => {
 listen(document, 'mouseup touchend').start(() => {
   const padding = 200;
   inertia({
-    min: { x: -padding, y: -padding },
-    max: {
-      x: world.width - (runtime.target[3] - runtime.target[1]) + padding,
-      y: world.height - (runtime.target[4] - runtime.target[2]) + padding,
-    },
+    min: runtime.getMinViewportPosition(padding),
+    max: runtime.getMaxViewportPosition(padding),
     bounceStiffness: 120,
     bounceDamping: 15,
     timeConstant: 240,
@@ -114,51 +87,33 @@ listen(document, 'mouseup touchend').start(() => {
 function zoomTo(factor, origin) {
   if (factor < 1 && runtime.scaleFactor * factor >= 10) return;
   if (factor > 1 && runtime.scaleFactor * factor <= 1) return;
-
-  const fromPos = {
-    x: runtime.target[1],
-    y: runtime.target[2],
-    width: runtime.target[3] - runtime.target[1],
-    height: runtime.target[4] - runtime.target[2],
-  };
-  mutate(
-    runtime.target,
-    scaleAtOrigin(
-      factor,
-      origin ? origin.x : runtime.target[1] + (runtime.target[3] - runtime.target[1]) / 2,
-      origin ? origin.y : runtime.target[2] + (runtime.target[4] - runtime.target[2]) / 2
-    )
-  );
+  // Save the before for the tween.
+  const fromPos = runtime.getViewport();
+  // set the new scale.
+  runtime.setScale(factor, origin);
   // Need to update our observables, for pop-motion
   tween({
     from: fromPos,
-    to: {
-      x: runtime.target[1],
-      y: runtime.target[2],
-      width: runtime.target[3] - runtime.target[1],
-      height: runtime.target[4] - runtime.target[2],
-    },
+    to: runtime.getViewport(),
     duration: 200,
   }).start(viewer);
 }
 
 // Let's use that new zoom method, first we will hook up the UI buttons to zoom.
 // Simple zoom out control.
-document.getElementById('zoom-out').addEventListener('click', () => {
-  zoomTo(1.25);
-});
+document.getElementById('zoom-out').addEventListener('click', () => zoomTo(1.25));
 // Simple zoom in control.
-document.getElementById('zoom-in').addEventListener('click', () => {
-  zoomTo(0.8);
-});
+document.getElementById('zoom-in').addEventListener('click', () => zoomTo(0.8));
 
 // Next we will add a scrolling event to the scroll-wheel.
 canvas.addEventListener('wheel', e => {
   e.preventDefault();
-  zoomTo(1 + e.deltaY / 100, {
-    x: Math.floor(runtime.target[1] + (e.pageX - canvasPos.x) / runtime.scaleFactor),
-    y: Math.floor(runtime.target[2] + (e.pageY - canvasPos.y) / runtime.scaleFactor),
-  });
+  zoomTo(
+    // Generating a zoom from the wheel delta
+    1 + e.deltaY / 100,
+    // Convert the cursor to an origin
+    runtime.viewerToWorld(e.pageX - canvasPos.x, e.pageY - canvasPos.y)
+  );
 });
 
 // For clicking its a little trickier. We want to still allow panning. So this
@@ -176,10 +131,7 @@ canvas.addEventListener('mousedown', () => {
 // be where our mouse is in relation to the world.
 canvas.addEventListener('click', ({ pageX, pageY }) => {
   if (click) {
-    zoomTo(0.6, {
-      x: Math.floor(runtime.target[1] + (pageX - canvasPos.x) / runtime.scaleFactor),
-      y: Math.floor(runtime.target[2] + (pageY - canvasPos.y) / runtime.scaleFactor),
-    });
+    zoomTo(0.6, runtime.viewerToWorld(pageX - canvasPos.x, pageY - canvasPos.y));
   }
 });
 
@@ -187,10 +139,10 @@ canvas.addEventListener('click', ({ pageX, pageY }) => {
 canvas.addEventListener('mousemove', ({ pageX, pageY }) => {
   // Here we stop a click if the mouse has moved (starting a drag).
   click = false;
-  document.getElementById('x').innerText =
-    '' + Math.floor(runtime.target[1] + (pageX - canvasPos.x) / runtime.scaleFactor);
-  document.getElementById('y').innerText =
-    '' + Math.floor(runtime.target[2] + (pageY - canvasPos.y) / runtime.scaleFactor);
+  const { x, y } = runtime.viewerToWorld(pageX - canvasPos.x, pageY - canvasPos.y);
+
+  document.getElementById('x').innerText = '' + Math.floor(x);
+  document.getElementById('y').innerText = '' + Math.floor(y);
 });
 
 // Add a second renderer (debug the world)
