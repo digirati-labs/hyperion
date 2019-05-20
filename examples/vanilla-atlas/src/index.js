@@ -5,7 +5,7 @@ import { renderWorld } from './render-world';
 const vault = new Vault();
 
 vault
-  .loadManifest(location.hash.slice(1) || 'https://wellcomelibrary.org/iiif/b18035723/manifest')
+  .loadManifest(location.hash.slice(1) || 'https://view.nls.uk/manifest/9713/97134287/manifest.json')
   .catch(() => {
     if (location.hash) {
       location.hash = '';
