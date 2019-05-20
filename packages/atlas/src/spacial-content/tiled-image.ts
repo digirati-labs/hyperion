@@ -1,5 +1,5 @@
 import { SpacialContent } from './spacial-content';
-import { DnaFactory, hidePointsOutsideRegion, mutate, scale, transform } from '../dna';
+import { DnaFactory, filterPoints, hidePointsOutsideRegion, mutate, scale, transform } from '../dna';
 import { DisplayData } from '../types';
 import { Paint } from '../world-objects';
 import { Memoize } from 'typescript-memoize';
@@ -85,7 +85,8 @@ export class TiledImage implements SpacialContent {
   }
 
   getPointsAt(target: Float32Array, aggregate?: Float32Array, scaleFactor?: number): Paint {
-    return [this, hidePointsOutsideRegion(this.points, target), aggregate];
+    const points = hidePointsOutsideRegion(this.points, target);
+    return [this, points, aggregate];
   }
 
   transform(op: Float32Array): void {

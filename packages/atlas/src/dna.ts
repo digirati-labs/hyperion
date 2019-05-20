@@ -196,7 +196,7 @@ export const mutate = (points: Float32Array, transformation: Float32Array) => {
 
 export const transform = (points: Float32Array, transformation: Float32Array, buffer?: Float32Array): Float32Array => {
   const len = points.length;
-  const ret = buffer ? buffer.slice(0, len) : new Float32Array(len);
+  const ret = buffer && buffer.length >= len ? buffer.slice(0, len) : new Float32Array(len);
   for (let index = 0; index < len; index++) {
     ret[index] =
       index % 5 === 0

@@ -10,6 +10,8 @@ export class DebugRenderer implements Renderer {
   widthRatio: number = 1;
   target: Float32Array = new Float32Array(5);
 
+  firstRender = true;
+
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     this.context = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -23,8 +25,19 @@ export class DebugRenderer implements Renderer {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // We figure out the size of the debugger in relation to the world.
-    this.heightRatio = this.widthRatio = this.canvas.height / world.height;
-    this.canvas.width = world.width * this.widthRatio;
+    if (this.firstRender) {
+      this.widthRatio = this.canvas.width / world.width;
+      this.heightRatio = this.canvas.height / world.height;
+      if (this.widthRatio > this.heightRatio) {
+        this.widthRatio = this.heightRatio;
+        this.canvas.width = world.width * this.widthRatio;
+      } else {
+        this.heightRatio = this.widthRatio;
+        this.canvas.height = world.height * this.heightRatio;
+      }
+      this.firstRender = false;
+    }
+
     // If it needs to be used in other methods, it can be.
     this.target = target;
 
