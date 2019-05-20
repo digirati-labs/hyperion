@@ -1,6 +1,6 @@
 import { ViewingDirection } from '@hyperion-framework/types';
 import { Viewer } from './types';
-import { compose, DnaFactory, dnaLength, hidePointsOutsideRegion, scale, translate } from './dna';
+import { compose, DnaFactory, dnaLength, hidePointsOutsideRegion, invert, mutate, scale, translate } from './dna';
 import { AbstractWorldObject } from './world-objects/abstract-world-object';
 import { WorldObject } from './world-objects/world-object';
 import { AbstractObject } from './world-objects/abstract-object';
@@ -13,10 +13,11 @@ export class World {
   height: number;
   aspectRatio: number;
   viewingDirection: ViewingDirection;
+  aggregateBuffer = new Float32Array(9);
   // These should be the same size.
   private objects: AbstractWorldObject[] = [];
   private points: Float32Array;
-  aggregateBuffer = new Float32Array(9);
+  private subscriptions: Array<() => void> = [];
 
   constructor(
     width: number,
@@ -47,7 +48,7 @@ export class World {
       target.height = object.height;
     }
 
-    const { width, height, x, y } = target;
+    const { width, x, y } = target;
 
     const scaleFactor = width / object.width;
 
@@ -60,13 +61,36 @@ export class World {
     }
 
     // @todo integrity to ensure these remain.
-    this.points.set(DnaFactory.singleBox(width, height, x, y), this.objects.length * 5);
+    this.points.set(DnaFactory.singleBox(object.width, object.height, 0, 0), this.objects.length * 5);
     const worldObject = new WorldObject(object);
-    worldObject.atScale(scaleFactor);
-    worldObject.translate(x, y);
+    // worldObject.atScale(scaleFactor);
+    // worldObject.translate(x, y);
     this.objects.push(worldObject);
+    this.scaleWorldObject(this.objects.length - 1, scaleFactor);
+    this.translateWorldObject(this.objects.length - 1, x, y);
+
+    this.triggerRecalculateLayout();
 
     return worldObject;
+  }
+
+  scaleWorldObject(index: number, factor: number) {
+    mutate(
+      this.points.subarray(index * 5, index * 5 + 5),
+      this.objects[index].scale !== 1
+        ? compose(
+            invert(scale(this.objects[index].scale)),
+            scale(factor)
+          )
+        : scale(factor)
+    );
+    this.objects[index].atScale(factor);
+  }
+
+  translateWorldObject(index: number, x: number, y: number) {
+    mutate(this.points.subarray(index * 5, index * 5 + 5), translate(x, y));
+    this.objects[index].translate(x, y);
+    this.triggerRecalculateLayout();
   }
 
   resize(width: number, height: number) {
@@ -89,6 +113,15 @@ export class World {
   getPointsFromViewer(target: Viewer, aggregate?: Float32Array) {
     const targetPoints = DnaFactory.singleBox(target.width, target.height, target.x, target.y);
     return this.getPointsAt(targetPoints, aggregate, target.scale);
+  }
+
+  addLayoutSubscriber(subscription: () => void) {
+    const length = this.subscriptions.length;
+    this.subscriptions.push(subscription);
+
+    return () => {
+      this.subscriptions.splice(length, 1);
+    };
   }
 
   getPointsAt(target: Float32Array, aggregate?: Float32Array, scaleFactor: number = 1): Paint[] {
@@ -114,5 +147,12 @@ export class World {
       }
     }
     return layers;
+  }
+
+  triggerRecalculateLayout() {
+    const len = this.subscriptions.length;
+    for (let i = 0; i < len; i++) {
+      this.subscriptions[i]();
+    }
   }
 }

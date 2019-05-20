@@ -7,4 +7,6 @@ export interface AbstractWorldObject extends AbstractObject, RenderPipeline {
   y: number;
   scale: number;
   time: WorldTime[];
+  atScale(factor: number): void;
+  translate(x: number, y: number): void;
 }

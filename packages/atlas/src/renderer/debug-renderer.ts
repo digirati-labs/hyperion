@@ -23,8 +23,8 @@ export class DebugRenderer implements Renderer {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // We figure out the size of the debugger in relation to the world.
-    this.widthRatio = this.canvas.width / world.width;
-    this.heightRatio = this.canvas.height / world.height;
+    this.heightRatio = this.widthRatio = this.canvas.height / world.height;
+    this.canvas.width = world.width * this.widthRatio;
     // If it needs to be used in other methods, it can be.
     this.target = target;
 

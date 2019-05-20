@@ -55,6 +55,9 @@ export class CanvasRenderer implements Renderer {
     image.addEventListener('load', () => {
       this.imagesLoaded++;
     });
+    image.addEventListener('error', () => {
+      this.imagesLoaded++;
+    });
     image.src = url;
     return image;
   }
@@ -76,7 +79,7 @@ export class CanvasRenderer implements Renderer {
       // First we check if there is work to do.
       if (this.loadingQueue.length && this.tasksRunning < this.parallelTasks) {
         // Let's pop something off the loading queue.
-        const next = this.loadingQueue.shift();
+        const next = this.loadingQueue.pop();
         if (next) {
           // We will increment the task count
           this.tasksRunning++;
@@ -258,7 +261,7 @@ export class CanvasRenderer implements Renderer {
       // that have scaled up or scaled down versions of our buffer.
       if (fallbackBuffers.length) {
         // We will find the largest, this could be smarter to find the closest size.
-        const largestBuffer = Math.max(...fallbackBuffers.map(r => parseInt(r, 10)));
+        const largestBuffer = Math.min(...fallbackBuffers.map(r => parseInt(r, 10)));
         // We grab that buffer.
         const toPaint = this.imageBuffers[paint.id][`${largestBuffer}`];
         // And paint the whole thing on, this may have empty white spots where no image
