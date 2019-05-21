@@ -1,8 +1,4 @@
-import {
-  Runtime,
-  CanvasRenderer,
-  DebugRenderer,
-} from '@hyperion-framework/atlas';
+import { Runtime, CanvasRenderer, DebugRenderer } from '@hyperion-framework/atlas';
 import { listen, value, pointer, tween, inertia, easing } from 'popmotion';
 
 export function renderWorld(world, viewport) {
@@ -11,7 +7,7 @@ export function renderWorld(world, viewport) {
   canvas.style.background = '#000';
   canvas.style.border = '1px solid #000';
   canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.height = window.innerHeight - 50;
   document.getElementById('app').appendChild(canvas);
 
   // Create a renderer for our work, add it to a runtime.
@@ -65,11 +61,11 @@ export function renderWorld(world, viewport) {
   // So smaller values will zoom in, and larger values will zoom out.
   let currentZoom;
   function zoomTo(factor, origin, stream = false) {
-    if (factor < 1 && runtime.scaleFactor >= 10) {
-      return;
+    if (factor < 1 && runtime.scaleFactor / factor > 10) {
+      factor = runtime.scaleFactor / 10;
     }
-    if (factor >= 1 && runtime.scaleFactor <= 1) {
-      return;
+    if (factor >= 1 && runtime.scaleFactor / factor < 1) {
+      factor = runtime.scaleFactor;
     }
     // Save the before for the tween.
     const fromPos = runtime.getViewport();

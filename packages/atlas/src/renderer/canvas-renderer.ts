@@ -173,12 +173,12 @@ export class CanvasRenderer implements Renderer {
           imageBuffer.canvas,
           paint.display.points[index * 5 + 1],
           paint.display.points[index * 5 + 2],
-          paint.display.points[index * 5 + 3] - paint.display.points[index * 5 + 1],
-          paint.display.points[index * 5 + 4] - paint.display.points[index * 5 + 2],
+          paint.display.points[index * 5 + 3] - paint.display.points[index * 5 + 1] - 1,
+          paint.display.points[index * 5 + 4] - paint.display.points[index * 5 + 2] - 1,
           x,
           y,
-          width + 0.5,
-          height + 0.5
+          width + 0.8,
+          height + 0.8
         );
 
         // Simple draw of the (hopefully cached) image.
@@ -255,6 +255,7 @@ export class CanvasRenderer implements Renderer {
       const canvas = document.createElement('canvas');
       canvas.width = paint.display.width;
       canvas.height = paint.display.height;
+      // document.body.appendChild(canvas);
       // We'll add our canvas to the list of buffers, adding empty lists of image indices and loaded image indices.
       this.imageBuffers[paint.id][paint.display.scale] = { canvas, indices: [], loaded: [] };
       // Now we have a blank canvas, with nothing on it. We'll look to see if there are any existing buffers

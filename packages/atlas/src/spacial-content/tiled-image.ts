@@ -1,5 +1,5 @@
 import { SpacialContent } from './spacial-content';
-import { DnaFactory, filterPoints, hidePointsOutsideRegion, mutate, scale, transform } from '../dna';
+import { DnaFactory, hidePointsOutsideRegion, mutate, scale, transform } from '../dna';
 import { DisplayData } from '../types';
 import { Paint } from '../world-objects';
 import { Memoize } from 'typescript-memoize';

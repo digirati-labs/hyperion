@@ -1,4 +1,4 @@
-import { YogaBuilder, ImageService } from '@hyperion-framework/atlas';
+import { GridBuilder, ImageService } from '@hyperion-framework/atlas';
 import { Vault, getImageServiceFromAnnotation } from '@hyperion-framework/vault';
 import { renderWorld } from './render-world';
 
@@ -46,14 +46,21 @@ vault
     });
 
     Promise.all(promises).then(images => {
-      const builder = new YogaBuilder();
+      const builder = new GridBuilder();
 
       builder.setWidth(window.innerWidth);
       builder.setViewingDirection('left-to-right');
+      builder.setPadding(72);
+      builder.setSpacing(window.innerWidth * 0.04);
 
       builder.addContent(images);
 
       builder.recalculate();
+      //
+      // window.addEventListener('resize', () => {
+      //   builder.setWidth(window.innerWidth);
+      //   builder.recalculate();
+      // });
 
       const world = builder.getWorld();
 
