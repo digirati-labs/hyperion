@@ -1,5 +1,5 @@
 import { FrameData } from 'framesync';
-import { SingleImage, SpacialContent, SvgContent, TiledImage } from '../spacial-content';
+import { SingleImage, SpacialContent, TiledImage } from '../spacial-content';
 import { World } from '../world';
 import { Renderer } from './renderer';
 
@@ -128,18 +128,6 @@ export class CanvasRenderer implements Renderer {
   }
 
   paint(paint: SpacialContent, index: number, x: number, y: number, width: number, height: number): void {
-    if (paint instanceof SvgContent) {
-      try {
-        console.log(
-          paint.svg
-        );
-
-        this.ctx.drawImage(paint.svg as CanvasImageSource, x, y, width + 0.5, height + 0.5);
-      } catch (err) {
-        console.log(err);
-        // Nothing to catch.
-      }
-    }
     // Only supporting single and tiled images at the moment.
     if (paint instanceof SingleImage || paint instanceof TiledImage) {
       try {
@@ -306,7 +294,9 @@ export class CanvasRenderer implements Renderer {
     return this.imageCache[url];
   }
 
-  afterPaintLayer(paint: SpacialContent, transform: Float32Array): void {}
+  afterPaintLayer(paint: SpacialContent, transform: Float32Array): void {
+    // No-op
+  }
 
   prepareLayer(paint: SpacialContent): void {
     // create it if it does not exist.

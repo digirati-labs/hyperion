@@ -18,8 +18,7 @@
     "@types/yoga-layout": "^1.9.1",
     "framesync": "^4.0.2",
     "popmotion": "^8.6.8",
-    "typescript-memoize": "^1.0.0-alpha.3",
-    "yoga-layout": "^1.9.3"
+    "typescript-memoize": "^1.0.0-alpha.3"
   },
   "publishConfig": {
     "access": "public"
