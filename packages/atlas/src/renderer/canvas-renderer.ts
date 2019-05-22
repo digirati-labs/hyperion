@@ -1,5 +1,5 @@
 import { FrameData } from 'framesync';
-import { SingleImage, SpacialContent, TiledImage } from '../spacial-content';
+import { SingleImage, SpacialContent, SvgContent, TiledImage } from '../spacial-content';
 import { World } from '../world';
 import { Renderer } from './renderer';
 
@@ -39,6 +39,7 @@ export class CanvasRenderer implements Renderer {
   constructor(canvas: HTMLCanvasElement, options?: CanvasRendererOptions) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d', { alpha: false }) as CanvasRenderingContext2D;
+    this.ctx.imageSmoothingEnabled = true;
     this.options = options || {};
     // Testing fade in.
     // @todo definitely make this config.
@@ -127,6 +128,18 @@ export class CanvasRenderer implements Renderer {
   }
 
   paint(paint: SpacialContent, index: number, x: number, y: number, width: number, height: number): void {
+    if (paint instanceof SvgContent) {
+      try {
+        console.log(
+          paint.svg
+        );
+
+        this.ctx.drawImage(paint.svg as CanvasImageSource, x, y, width + 0.5, height + 0.5);
+      } catch (err) {
+        console.log(err);
+        // Nothing to catch.
+      }
+    }
     // Only supporting single and tiled images at the moment.
     if (paint instanceof SingleImage || paint instanceof TiledImage) {
       try {

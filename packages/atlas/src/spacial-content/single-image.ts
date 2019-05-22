@@ -22,6 +22,14 @@ export class SingleImage extends AbstractContent implements SpacialContent {
     };
   }
 
+  // This works, but should be improved.
+  // It should create a layered image similar to IIIF with different scale factors of the SVG.
+  // And implement its own get points function, to return the right layer.
+  // Would also be great if the ID field wasn't the entire SVG.
+  static fromSvg(svg: string, target: SpacialSize, display?: SpacialSize): SingleImage {
+    return SingleImage.fromImage('data:image/svg+xml;base64,' + btoa(svg), target, display);
+  }
+
   static fromImage(uri: string, target: SpacialSize, display?: SpacialSize): SingleImage {
     const width = display ? display.width : target.width;
     const scale = target.width / width;

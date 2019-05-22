@@ -8,3 +8,4 @@ export * from './renderer/renderer';
 export * from './renderer/runtime';
 export * from './renderer/debug-renderer';
 export * from './builder/grid-builder';
+export * from './controller';
