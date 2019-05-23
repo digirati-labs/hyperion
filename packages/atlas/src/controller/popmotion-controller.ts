@@ -102,6 +102,7 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
       .pipe((v: Position): Position => ({ x: -v.x / runtime.scaleFactor, y: -v.y / runtime.scaleFactor }))
       .start(viewer);
   });
+
   listen(document, 'mouseup touchend').start(() => {
     inertia({
       min: runtime.getMinViewportPosition(panPadding),

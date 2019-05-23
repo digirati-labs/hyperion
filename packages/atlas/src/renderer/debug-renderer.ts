@@ -10,10 +10,13 @@ export class DebugRenderer implements Renderer {
   widthRatio: number = 1;
   target: Float32Array = new Float32Array(5);
 
-  firstRender = true;
+  initialWidth: number;
+  initialHeight: number;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
+    this.initialWidth = canvas.width;
+    this.initialHeight = canvas.height;
     this.context = canvas.getContext('2d') as CanvasRenderingContext2D;
   }
 
@@ -25,18 +28,12 @@ export class DebugRenderer implements Renderer {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // We figure out the size of the debugger in relation to the world.
-    if (this.firstRender) {
-      this.widthRatio = this.canvas.width / world.width;
-      this.heightRatio = this.canvas.height / world.height;
-      if (this.widthRatio > this.heightRatio) {
-        this.widthRatio = this.heightRatio;
-        this.canvas.width = world.width * this.widthRatio;
-      } else {
-        this.heightRatio = this.widthRatio;
-        this.canvas.height = world.height * this.heightRatio;
-      }
-      this.firstRender = false;
-    }
+    const widthRatio = this.initialWidth / world.width;
+    const heightRatio = this.initialHeight / world.height;
+
+    const ratio = this.widthRatio > this.heightRatio ? widthRatio : heightRatio;
+    this.canvas.height = world.height * ratio;
+    this.canvas.width = world.width * ratio;
 
     // If it needs to be used in other methods, it can be.
     this.target = target;
@@ -51,12 +48,12 @@ export class DebugRenderer implements Renderer {
         // Descriptive drawing object, doesn't need to be fast.
         // We are not using all of these fields.
         const toDraw = {
-          x1: arr[k + 1] * this.widthRatio,
-          y1: arr[k + 2] * this.heightRatio,
-          x2: arr[k + 3] * this.widthRatio,
-          y2: arr[k + 4] * this.heightRatio,
-          width: (arr[k + 3] - arr[k + 1]) * this.widthRatio,
-          height: (arr[k + 4] - arr[k + 2]) * this.heightRatio,
+          x1: arr[k + 1] * ratio,
+          y1: arr[k + 2] * ratio,
+          x2: arr[k + 3] * ratio,
+          y2: arr[k + 4] * ratio,
+          width: (arr[k + 3] - arr[k + 1]) * ratio,
+          height: (arr[k + 4] - arr[k + 2]) * ratio,
         };
 
         // World items are red bordered boxes.
@@ -71,10 +68,10 @@ export class DebugRenderer implements Renderer {
       // This will be a green box.
       this.context.strokeStyle = 'green';
       this.context.strokeRect(
-        target[1] * this.widthRatio,
-        target[2] * this.heightRatio,
-        (target[3] - target[1]) * this.widthRatio,
-        (target[4] - target[2]) * this.heightRatio
+        target[1] * ratio,
+        target[2] * ratio,
+        (target[3] - target[1]) * ratio,
+        (target[4] - target[2]) * ratio
       );
     }
   }

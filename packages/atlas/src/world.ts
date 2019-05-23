@@ -1,6 +1,15 @@
 import { ViewingDirection } from '@hyperion-framework/types';
 import { Viewer } from './types';
-import { compose, DnaFactory, dnaLength, hidePointsOutsideRegion, invert, mutate, scale, translate } from './dna';
+import {
+  compose,
+  DnaFactory,
+  dnaLength,
+  hidePointsOutsideRegion,
+  mutate,
+  scale,
+  scaleAtOrigin,
+  translate,
+} from './dna';
 import { AbstractWorldObject } from './world-objects/abstract-world-object';
 import { WorldObject } from './world-objects/world-object';
 import { AbstractObject } from './world-objects/abstract-object';
@@ -17,7 +26,7 @@ export class World {
   // These should be the same size.
   private objects: AbstractWorldObject[] = [];
   private points: Float32Array;
-  private subscriptions: Array<() => void> = [];
+  private subscriptions: Array<(type: string, changes?: unknown) => void> = [];
 
   constructor(
     width: number,
@@ -69,7 +78,7 @@ export class World {
     this.scaleWorldObject(this.objects.length - 1, scaleFactor);
     this.translateWorldObject(this.objects.length - 1, x, y);
 
-    this.triggerRecalculateLayout();
+    this.triggerRepaint();
 
     return worldObject;
   }
@@ -77,20 +86,16 @@ export class World {
   scaleWorldObject(index: number, factor: number) {
     mutate(
       this.points.subarray(index * 5, index * 5 + 5),
-      this.objects[index].scale !== 1
-        ? compose(
-            invert(scale(this.objects[index].scale)),
-            scale(factor)
-          )
-        : scale(factor)
+      scaleAtOrigin(factor, this.points[index * 5 + 1], this.points[index * 5 + 2])
     );
     this.objects[index].atScale(factor);
+    this.triggerRepaint();
   }
 
   translateWorldObject(index: number, x: number, y: number) {
     mutate(this.points.subarray(index * 5, index * 5 + 5), translate(x, y));
     this.objects[index].translate(x, y);
-    this.triggerRecalculateLayout();
+    this.triggerRepaint();
   }
 
   resize(width: number, height: number) {
@@ -99,6 +104,8 @@ export class World {
 
     // @todo what happens when projections are out of bounds?
     // @todo what happens when objects are out of bounds?
+    this.triggerRepaint();
+
     return this;
   }
 
@@ -115,7 +122,7 @@ export class World {
     return this.getPointsAt(targetPoints, aggregate, target.scale);
   }
 
-  addLayoutSubscriber(subscription: () => void) {
+  addLayoutSubscriber(subscription: (type: string, data: unknown) => void) {
     const length = this.subscriptions.length;
     this.subscriptions.push(subscription);
 
@@ -149,10 +156,14 @@ export class World {
     return layers;
   }
 
-  triggerRecalculateLayout() {
+  trigger<T>(type: string, data?: T) {
     const len = this.subscriptions.length;
     for (let i = 0; i < len; i++) {
-      this.subscriptions[i]();
+      this.subscriptions[i](type, data);
     }
+  }
+
+  triggerRepaint() {
+    this.trigger('repaint');
   }
 }

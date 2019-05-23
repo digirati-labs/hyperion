@@ -43,10 +43,10 @@ imagesFromIIIF(vault, location.hash.slice(1) || 'https://view.nls.uk/manifest/97
 
     builder.recalculate();
 
-    // window.addEventListener('resize', () => {
-    //   builder.setWidth(window.innerWidth);
-    //   builder.recalculate();
-    // });
+    window.addEventListener('resize', () => {
+      builder.setWidth(window.innerWidth);
+      builder.recalculate();
+    });
 
     const world = builder.getWorld();
 

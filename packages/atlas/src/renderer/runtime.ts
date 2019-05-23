@@ -63,7 +63,6 @@ export class Runtime {
   transformBuffer = new Float32Array(500);
   lastTarget = new Float32Array(5);
   pendingUpdate = false;
-
   firstRender = true;
 
   constructor(renderer: Renderer, world: World, target: Viewer) {
@@ -73,10 +72,17 @@ export class Runtime {
     this.aggregate = scale(1);
     this.clock = sync.render(this.render, true);
     this.scaleFactor = target.scale;
-    this.world.addLayoutSubscriber(() => {
-      console.log('layout changed.');
-      this.pendingUpdate = true;
+    this.world.addLayoutSubscriber((type: string) => {
+      if (type === 'repaint') {
+        this.pendingUpdate = true;
+      }
     });
+  }
+
+  resize(fromWidth: number, toWidth: number, fromHeight: number, toHeight: number) {
+    this.scaleFactor = this.scaleFactor * (fromWidth / toWidth);
+    this.target[3] = this.target[1] + (this.target[3] - this.target[1]) / (fromWidth / toWidth);
+    this.target[4] = this.target[2] + (this.target[4] - this.target[2]) / (fromHeight / toHeight);
   }
 
   getViewport(): Projection {

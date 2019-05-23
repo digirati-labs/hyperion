@@ -1,7 +1,7 @@
 import { IIIFExternalWebResource } from '@hyperion-framework/types';
 import { ImageService } from '../spacial-content';
 import { WorldTime } from '../types';
-import { compose, getIntersection, invert, mutate, scale, transform, translate } from '../dna';
+import { compose, getIntersection, mutate, scale, scaleAtOrigin, transform, translate } from '../dna';
 import { Paint, Paintable } from './paint';
 import { AbstractWorldObject } from './abstract-world-object';
 import { AbstractObject } from './abstract-object';
@@ -76,16 +76,8 @@ export class WorldObject implements AbstractWorldObject {
   }
 
   atScale(factor: number) {
-    mutate(
-      this.points,
-      this.scale !== 1
-        ? compose(
-            invert(scale(this.scale)),
-            scale(factor)
-          )
-        : scale(factor)
-    );
-    this.scale = factor;
+    mutate(this.points, scaleAtOrigin(factor, this.x, this.y));
+    this.scale *= factor;
   }
 
   addLayers(paintables: Paintable[]) {

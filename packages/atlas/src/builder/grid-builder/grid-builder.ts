@@ -136,17 +136,18 @@ export class GridBuilder {
           if (!row[c]) {
             break;
           }
+          const worldPoints = this.world.getPoints();
           const currentIndex = row[c][0];
           const width = row[c][1];
           const height = row[c][2];
           const scale = row[c][3];
-          const prevX = this.content[currentIndex].x;
-          const prevY = this.content[currentIndex].y;
-          // const prevScale = this.content[currentIndex].scale;
           const x = this.padding + c * (this.spacing + width);
           const y = rowHeights + (rowHeight - height) / 2;
           const realIndex = this.reversed ? len - currentIndex : currentIndex;
-          this.world.scaleWorldObject(realIndex, scale);
+          const prevX = worldPoints[realIndex * 5 + 1];
+          const prevY = worldPoints[realIndex * 5 + 2];
+
+          this.world.scaleWorldObject(currentIndex, scale);
           if (prevX !== x || prevY !== y) {
             this.world.translateWorldObject(realIndex, x - prevX, y - prevY);
           }
@@ -156,7 +157,6 @@ export class GridBuilder {
       }
       this.height = rowHeights + this.padding;
       this.world.resize(this.width, this.height);
-      this.world.triggerRecalculateLayout();
       return;
     }
 

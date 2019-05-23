@@ -15,6 +15,12 @@ export function renderWorld(world, viewport) {
   const renderer = new CanvasRenderer(canvas);
   const runtime = controller(new Runtime(renderer, world, viewport));
 
+  window.addEventListener('resize', () => {
+    runtime.resize(canvas.width, window.innerWidth, canvas.height, window.innerHeight);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
   // Add a second renderer (debug the world)
   const debugRenderer = new DebugRenderer(debug);
   const secondRuntime = new Runtime(debugRenderer, world, viewport);
