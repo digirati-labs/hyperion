@@ -178,7 +178,7 @@ describe('World', () => {
     expect(tile1.x).toEqual(0);
     expect(tile1.y).toEqual(0);
     expect(tile1.width).toBeCloseTo(1338.33);
-    expect(tile1.height).toEqual(1000);
+    expect(tile1.height).toBeCloseTo(1000);
 
     // Tile 2.
     expect(tile2.id).toEqual('https://view.nls.uk/iiif/7443/74438562.5/');
@@ -191,7 +191,7 @@ describe('World', () => {
       //       [1, 0, 0, 1338.3297119140625, 1000, 1, 2600, 0, 3937.61376953125, 1000]
       DnaFactory.grid(1, 2)
         .addBox(0, 0, 1338.3297119140625, 1000)
-        .addBox(1438.3297119140625, 0, 1337.613769531, 1000)
+        .addBox(1438.3297119140625, 0, 1337.613769531, 1000.0000610351562)
         .build()
     );
   });
