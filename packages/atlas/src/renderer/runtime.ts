@@ -109,10 +109,10 @@ export class Runtime {
     this.target[2] = data.y;
   };
 
-  getMinViewportPosition(padding: number) {
+  getMinViewportPosition(padding: number, devicePixelRatio: number = 1) {
     return {
-      x: -padding,
-      y: -padding,
+      x: -padding * devicePixelRatio,
+      y: -padding * devicePixelRatio,
     };
   }
 

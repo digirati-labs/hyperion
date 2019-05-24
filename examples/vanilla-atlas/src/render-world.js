@@ -6,10 +6,14 @@ export function renderWorld(world, viewport) {
   canvas.style.background = '#000';
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth * (window.devicePixelRatio || 1);
+  canvas.height = window.innerHeight * (window.devicePixelRatio || 1);
+  canvas.style.transform = 'scale(0.5)';
+  canvas.style.transformOrigin = '0px 0px';
   document.getElementById('app').appendChild(canvas);
 
   // Could be composed.
-  const controller = popmotionController(canvas);
+  const controller = popmotionController(canvas, { devicePixelRatio: window.devicePixelRatio || 1 });
 
   // Create a renderer for our work, add it to a runtime.
   const renderer = new CanvasRenderer(canvas);

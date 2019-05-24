@@ -20,6 +20,7 @@ type PopmotionControllerConfig = {
   panPower?: number;
   nudgeDistance?: number;
   panPadding?: number;
+  devicePixelRatio?: number;
   enableWheel?: boolean;
   enableClickToZoom?: boolean;
 };
@@ -44,6 +45,7 @@ const defaultConfig: Required<PopmotionControllerConfig> = {
   panPower: 0.1,
   nudgeDistance: 100,
   panPadding: 100,
+  devicePixelRatio: 1,
   // Flags
   enableWheel: true,
   enableClickToZoom: true,
@@ -71,9 +73,10 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
     panPadding,
     enableWheel,
     enableClickToZoom,
+    devicePixelRatio,
   } = {
-    ...config,
     ...defaultConfig,
+    ...config,
   };
 
   // Some user interactions, using popmotion. This is an observer, listening
@@ -96,9 +99,10 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
   listen(canvas, 'mousedown touchstart').start(() => {
     const { x, y } = viewer.get() as Position;
     pointer({
-      x: -x * runtime.scaleFactor,
-      y: -y * runtime.scaleFactor,
+      x: -x * runtime.scaleFactor / devicePixelRatio,
+      y: -y * runtime.scaleFactor / devicePixelRatio,
     })
+      .pipe((v: Position): Position => ({ x: v.x * devicePixelRatio, y: v.y * devicePixelRatio }))
       .pipe((v: Position): Position => ({ x: -v.x / runtime.scaleFactor, y: -v.y / runtime.scaleFactor }))
       .start(viewer);
   });
@@ -123,8 +127,8 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
   // So smaller values will zoom in, and larger values will zoom out.
   let currentZoom: ColdSubscription | undefined;
   function zoomTo(factor: number, origin?: Position, stream: boolean = false) {
-    if (factor < 1 && runtime.scaleFactor / factor > 1 / minZoomFactor) {
-      factor = runtime.scaleFactor * minZoomFactor;
+    if (factor < 1 && runtime.scaleFactor / factor > (1 / minZoomFactor)* devicePixelRatio) {
+      factor = runtime.scaleFactor * (minZoomFactor / devicePixelRatio);
     }
     if (factor >= 1 && runtime.scaleFactor / factor < 1 / maxZoomFactor) {
       factor = runtime.scaleFactor;
@@ -194,9 +198,9 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
       e.preventDefault();
       zoomTo(
         // Generating a zoom from the wheel delta
-        1 + e.deltaY / zoomWheelConstant,
+        1 + (e.deltaY * devicePixelRatio) / zoomWheelConstant,
         // Convert the cursor to an origin
-        runtime.viewerToWorld(e.pageX - canvasPos.left, e.pageY - canvasPos.top),
+        runtime.viewerToWorld(e.pageX * devicePixelRatio - canvasPos.left, e.pageY * devicePixelRatio - canvasPos.top),
         true
       );
     });
@@ -219,7 +223,10 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
     // be where our mouse is in relation to the world.
     canvas.addEventListener('click', ({ pageX, pageY }) => {
       if (click) {
-        zoomTo(0.6, runtime.viewerToWorld(pageX - canvasPos.left, pageY - canvasPos.top));
+        zoomTo(
+          0.6,
+          runtime.viewerToWorld(pageX * devicePixelRatio - canvasPos.left, pageY * devicePixelRatio - canvasPos.top)
+        );
       }
     });
   }
@@ -229,7 +236,10 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
     canvas.addEventListener('mousemove', ({ pageX, pageY }) => {
       // Here we stop a click if the mouse has moved (starting a drag).
       click = false;
-      const { x, y } = runtime.viewerToWorld(pageX - canvasPos.left, pageY - canvasPos.top);
+      const { x, y } = runtime.viewerToWorld(
+        pageX * devicePixelRatio - canvasPos.left,
+        devicePixelRatio * pageY - canvasPos.top
+      );
 
       if (printX) {
         printX.innerText = '' + Math.floor(x);
