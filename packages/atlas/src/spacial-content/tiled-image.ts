@@ -12,6 +12,7 @@ export class TiledImage implements SpacialContent {
   points: Float32Array;
   width: number;
   height: number;
+  isDirty: boolean = false;
 
   get x(): number {
     return this.points[1];

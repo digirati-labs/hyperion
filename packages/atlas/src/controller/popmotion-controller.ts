@@ -34,7 +34,7 @@ const defaultConfig: Required<PopmotionControllerConfig> = {
   zoomOutFactor: 0.8,
   zoomInFactor: 1.25,
   maxZoomFactor: 1,
-  minZoomFactor: 0.1,
+  minZoomFactor: 0.05,
   zoomDuration: 300,
   zoomWheelConstant: 100,
   // Pan options.

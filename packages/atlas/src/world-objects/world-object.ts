@@ -29,6 +29,16 @@ export class WorldObject implements AbstractWorldObject {
     return this.points[4] - this.points[2];
   }
 
+  get isDirty(): boolean {
+    const len = this.layers.length;
+    for (let i = 0; i < len; i++) {
+      if (this.layers[len].isDirty) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   constructor(props: AbstractObject) {
     this.id = props.id;
     this.scale = 1;

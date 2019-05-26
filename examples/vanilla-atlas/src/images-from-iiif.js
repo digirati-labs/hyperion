@@ -1,5 +1,6 @@
 import { ImageService } from '@hyperion-framework/atlas';
 import { getImageServiceFromAnnotation } from '@hyperion-framework/vault';
+import { imageServiceLoader } from '@hyperion-framework/atlas/lib/image-api/image-service-loader';
 
 export function imagesFromIIIF(vault, url) {
   return vault
@@ -10,39 +11,41 @@ export function imagesFromIIIF(vault, url) {
         location.reload();
       }
     })
-    .then(manifestJson => {
+    .then(async manifestJson => {
       let promises = [];
-      manifestJson.items.map(canvasRef => {
-        const canvas = vault.fromRef(canvasRef);
-        canvas.items.forEach(annotationPageRef => {
-          const annotationPage = vault.fromRef(annotationPageRef);
+      const canvases = manifestJson.items.length;
 
-          annotationPage.items.forEach(annotationRef => {
-            const annotation = vault.fromRef(annotationRef);
+      for (let c = 0; c < canvases; c++) {
+        const canvas = vault.fromRef(manifestJson.items[c]);
+        const pageLength = canvas.items.length;
+        for (let k = 0; k < pageLength; k++) {
+          const annotationPage = vault.fromRef(canvas.items[k]);
+          const annotations = annotationPage.items.length;
+          for (let a = 0; a < annotations; a++) {
+            const annotation = vault.fromRef(annotationPage.items[a]);
             const imageService = getImageServiceFromAnnotation(vault.getState(), () => ({ annotation }), {});
-            const imageServiceUrl = imageService.id.endsWith('.info.json')
-              ? imageService.id
-              : `${imageService.id}/info.json`;
-            promises.push(
-              new Promise(resolve => {
-                vault.load(imageServiceUrl).then(serviceData => {
-                  const { service, ...resource } = vault.fromRef(annotation.body[0]);
-                  resolve({
-                    id: canvas.id,
-                    width: canvas.width,
-                    height: canvas.height,
-                    layers: ImageService.fromContentResource({
-                      ...resource,
-                      service: [serviceData],
-                    }),
-                  });
-                });
-              })
-            );
-          });
-        });
-      });
+            const service = await imageServiceLoader.loadService({
+              id: imageService.id,
+              width: canvas.width,
+              height: canvas.height,
+            });
 
-      return Promise.all(promises);
+            promises.push({
+              id: canvas.id,
+              width: canvas.width,
+              height: canvas.height,
+              layers: ImageService.fromContentResource({
+                id: service.id,
+                type: 'Image',
+                width: canvas.width,
+                height: canvas.height,
+                service: [service],
+              }),
+            });
+          }
+        }
+      }
+
+      return promises;
     });
 }

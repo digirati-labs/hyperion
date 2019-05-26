@@ -12,7 +12,7 @@ imagesFromIIIF(vault, location.hash.slice(1) || 'https://view.nls.uk/manifest/97
     builder.setWidth(window.innerWidth);
     builder.setViewingDirection('left-to-right');
     builder.setPadding(72);
-    builder.setSpacing(window.innerWidth * 0.04);
+    builder.setSpacing(40);
 
     builder.addContent([
       new WorldObject({

@@ -10,6 +10,8 @@ export interface SpacialContent {
   width: number;
   height: number;
 
+  isDirty: boolean;
+
   points: Float32Array;
   readonly display: DisplayData;
 

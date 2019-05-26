@@ -18,6 +18,29 @@ export class ImageService<T extends SpacialContent = SpacialContent> extends Abs
 
   aggregateBuffer = new Float32Array(9);
 
+  // isImageServiceDirty = false;
+
+  // set isDirty(value: boolean) {
+  //   this.isImageServiceDirty = value;
+  //   const len = this.images.length;
+  //   for (let i = 0; i < len; i++) {
+  //     this.images[i].isDirty = value;
+  //   }
+  // }
+  //
+  // get isDirty(): boolean {
+  //   if (this.isImageServiceDirty) {
+  //     return true;
+  //   }
+  //   const len = this.images.length;
+  //   for (let i = 0; i < len; i++) {
+  //     if (this.images[i].isDirty) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
+
   constructor(data: { id: string; width: number; height: number; images: T[] }) {
     super();
     this.id = data.id;

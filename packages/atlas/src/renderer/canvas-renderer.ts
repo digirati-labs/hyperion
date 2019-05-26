@@ -263,13 +263,15 @@ export class CanvasRenderer implements Renderer {
       // that have scaled up or scaled down versions of our buffer.
       if (fallbackBuffers.length) {
         // We will find the largest, this could be smarter to find the closest size.
-        const largestBuffer = Math.min(...fallbackBuffers.map(r => parseInt(r, 10)));
+        const largestBuffer = fallbackBuffers[(fallbackBuffers.length / 2 | 0)];
         // We grab that buffer.
         const toPaint = this.imageBuffers[paint.id][`${largestBuffer}`];
         // And paint the whole thing on, this may have empty white spots where no image
         // has been loaded in this buffer either. A more aggressive fallback could find these gaps
         // and fill them with other buffers, but that's overkill of the interactions typical in a viewer.
         const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+        // @todo need to render this better. The fallback should be drawn in the main render perhaps. Using a fallback
+        //      if the specific tile isn't loaded. This does not scale and performs terribly at deeper zooms.
         ctx.drawImage(toPaint.canvas, 0, 0, paint.display.width, paint.display.height);
       }
     }

@@ -8,6 +8,7 @@ export abstract class AbstractContent implements SpacialContent {
   readonly type: 'spacial-content' = 'spacial-content';
   abstract points: Float32Array;
   abstract readonly display: DisplayData;
+  isDirty: boolean = false;
 
   get x(): number {
     return this.points[1];
