@@ -3,6 +3,7 @@ export type FixedSizeImage = {
   type: 'fixed';
   width: number;
   height: number;
+  unsafe?: boolean;
 };
 
 export type FixedSizeImageService = {

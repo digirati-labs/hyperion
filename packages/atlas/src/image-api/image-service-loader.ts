@@ -34,7 +34,7 @@ export type ImageServer = {
   };
 };
 
-type ImageServiceRequest = {
+export type ImageServiceRequest = {
   id: string;
   width: number;
   height: number;
@@ -217,7 +217,12 @@ export class ImageServiceLoader {
   }
 
   canLoadSync(service: ImageServiceRequest | Service | string): boolean {
-    const server = this.knownImageServers[getImageServerFromId(typeof service === 'string' ? service : service.id)];
+    const serviceId = typeof service === 'string' ? service : service.id;
+    const canonical = canonicalServiceUrl(serviceId);
+    if (this.imageServices[canonical]) {
+      return true;
+    }
+    const server = this.knownImageServers[getImageServerFromId(serviceId)];
     return server && !server.malformed && server.verifications >= this.config.verificationsRequired;
   }
 
