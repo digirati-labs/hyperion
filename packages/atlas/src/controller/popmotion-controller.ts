@@ -99,8 +99,8 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
   listen(canvas, 'mousedown touchstart').start(() => {
     const { x, y } = viewer.get() as Position;
     pointer({
-      x: -x * runtime.scaleFactor / devicePixelRatio,
-      y: -y * runtime.scaleFactor / devicePixelRatio,
+      x: (-x * runtime.scaleFactor) / devicePixelRatio,
+      y: (-y * runtime.scaleFactor) / devicePixelRatio,
     })
       .pipe((v: Position): Position => ({ x: v.x * devicePixelRatio, y: v.y * devicePixelRatio }))
       .pipe((v: Position): Position => ({ x: -v.x / runtime.scaleFactor, y: -v.y / runtime.scaleFactor }))
@@ -127,7 +127,7 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
   // So smaller values will zoom in, and larger values will zoom out.
   let currentZoom: ColdSubscription | undefined;
   function zoomTo(factor: number, origin?: Position, stream: boolean = false) {
-    if (factor < 1 && runtime.scaleFactor / factor > (1 / minZoomFactor)* devicePixelRatio) {
+    if (factor < 1 && runtime.scaleFactor / factor > (1 / minZoomFactor) * devicePixelRatio) {
       factor = runtime.scaleFactor * (minZoomFactor / devicePixelRatio);
     }
     if (factor >= 1 && runtime.scaleFactor / factor < 1 / maxZoomFactor) {

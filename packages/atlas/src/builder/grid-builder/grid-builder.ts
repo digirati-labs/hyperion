@@ -56,12 +56,12 @@ export class GridBuilder {
   }
 
   setRows(rows?: number) {
-    this.autoHeight = true;
+    this.autoWidth = true;
     this.rows = rows;
   }
 
   setColumns(columns?: number) {
-    this.autoWidth = true;
+    this.autoHeight = true;
     this.columns = columns;
   }
 
