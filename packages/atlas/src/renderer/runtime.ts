@@ -196,6 +196,7 @@ export class Runtime {
       // The points before the transformation are just points relative to their parent (canvas?)
       // When we apply the transform, they become relative to the viewer. Both of these point
       // values are useful, but for rendering, we want the viewer-points.
+      // @todo add option in renderer to omit this transform, instead passing it as a param.
       const position = transformation ? transform(point, transformation, this.transformBuffer) : point;
       // For loop helps keep this fast, looping through all of the tiles that make up an image.
       // This could be a single point, where len is one.
@@ -229,5 +230,9 @@ export class Runtime {
     // We've just finished our first render.
     this.firstRender = false;
     this.pendingUpdate = false;
+    // @todo add a schedule task to check for dirty items.
+    // @todo support dirty-only render, which will only render items marked as dirty if all other checks are false.
+    // @todo could be getDirtyPointsAt() - this paint cycle won't actually clear the canvas first, in the canvas
+    //       renderer, instead just layering new content.
   };
 }

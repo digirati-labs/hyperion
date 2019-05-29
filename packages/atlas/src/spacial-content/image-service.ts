@@ -9,11 +9,11 @@ import { TiledImage } from './tiled-image';
 import { bestResourceAtRatio } from '../utils';
 import { AbstractContent } from './abstract-content';
 
-export class ImageService<T extends SpacialContent = SpacialContent> extends AbstractContent implements SpacialContent {
+export class ImageService extends AbstractContent implements SpacialContent {
   readonly id: string;
   readonly display: DisplayData;
   points: Float32Array;
-  images: T[];
+  images: SpacialContent[];
   scaleFactors: number[];
 
   aggregateBuffer = new Float32Array(9);
@@ -41,7 +41,7 @@ export class ImageService<T extends SpacialContent = SpacialContent> extends Abs
   //   return false;
   // }
 
-  constructor(data: { id: string; width: number; height: number; images: T[] }) {
+  constructor(data: { id: string; width: number; height: number; images: SpacialContent[] }) {
     super();
     this.id = data.id;
     this.points = DnaFactory.singleBox(data.width, data.height);
@@ -53,14 +53,14 @@ export class ImageService<T extends SpacialContent = SpacialContent> extends Abs
       scale: 1,
     };
 
-    this.images = data.images.sort((a: T, b: T) => b.display.width - a.display.width);
+    this.images = data.images.sort((a: SpacialContent, b: SpacialContent) => b.display.width - a.display.width);
     this.scaleFactors = this.images.map(singleImage => singleImage.display.scale);
   }
 
   static fromImageService(
     service: Service,
     target?: { width?: number; height?: number }
-  ): ImageService<SpacialContent> | SingleImage | null {
+  ): ImageService | SingleImage | null {
     const width = service.width || target!.width;
     const height = service.height || target!.height;
 
@@ -103,7 +103,7 @@ export class ImageService<T extends SpacialContent = SpacialContent> extends Abs
 
   static fromContentResource(
     contentResource: IIIFExternalWebResource | string
-  ): Array<ImageService<SpacialContent> | SingleImage> {
+  ): Array<ImageService | SingleImage> {
     if (typeof contentResource === 'string' || contentResource.type !== 'Image') {
       // @todo could do more?
       return [];
@@ -115,7 +115,7 @@ export class ImageService<T extends SpacialContent = SpacialContent> extends Abs
 
     const tiles = imageServices
       .map(service => ImageService.fromImageService(service, contentResource as IIIFExternalWebResource))
-      .filter(r => r !== null) as Array<ImageService<SpacialContent>>;
+      .filter(r => r !== null) as Array<ImageService>;
 
     if (tiles.length) {
       return tiles;

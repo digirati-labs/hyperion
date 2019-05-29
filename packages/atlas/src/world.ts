@@ -27,6 +27,7 @@ export class World {
   private objects: AbstractWorldObject[] = [];
   private points: Float32Array;
   private subscriptions: Array<(type: string, changes?: unknown) => void> = [];
+  isDirty: boolean = false;
 
   constructor(
     width: number,

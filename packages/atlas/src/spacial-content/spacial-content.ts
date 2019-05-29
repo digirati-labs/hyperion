@@ -11,10 +11,12 @@ export interface SpacialContent {
   height: number;
 
   isDirty: boolean;
+  isMarkedAsDirty(): boolean;
 
   points: Float32Array;
   readonly display: DisplayData;
 
   getPointsAt(target: Float32Array, aggregate?: Float32Array, scale?: number): Paint;
   transform(op: Float32Array): void;
+  loadFullResource?(): Promise<void>;
 }

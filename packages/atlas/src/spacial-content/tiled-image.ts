@@ -21,6 +21,10 @@ export class TiledImage implements SpacialContent {
     return this.points[2];
   }
 
+  isMarkedAsDirty(): boolean {
+    return this.isDirty;
+  }
+
   constructor(data: { url: string; scaleFactor: number; points: Float32Array; width: number; height: number }) {
     this.id = data.url;
     this.points = transform(data.points, scale(data.scaleFactor));
@@ -92,5 +96,6 @@ export class TiledImage implements SpacialContent {
 
   transform(op: Float32Array): void {
     mutate(this.points, op);
+    this.isDirty = true;
   }
 }
