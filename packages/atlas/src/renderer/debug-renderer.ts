@@ -1,4 +1,3 @@
-import { FrameData } from 'framesync';
 import { SpacialContent } from '../spacial-content';
 import { World } from '../world';
 import { Renderer } from './renderer';
@@ -20,7 +19,7 @@ export class DebugRenderer implements Renderer {
     this.context = canvas.getContext('2d') as CanvasRenderingContext2D;
   }
 
-  afterFrame(world: World, data: FrameData, target: Float32Array) {
+  afterFrame(world: World, delta: number, target: Float32Array) {
     // Everything in this debugger happens at the end of the render cycle.
     // This debugger is made to be hacked and changed as needed, so some
     // variables are set up as a convenience.
@@ -80,7 +79,7 @@ export class DebugRenderer implements Renderer {
     return 1;
   }
 
-  beforeFrame(world: World, data: FrameData) {
+  beforeFrame(world: World, delta: number) {
     // no op.
   }
 

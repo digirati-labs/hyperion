@@ -267,65 +267,50 @@ describe('image service loader', () => {
       ],
     };
     const image3 = {
-      "@context": "http://iiif.io/api/image/2/context.json",
-      "id": "https://iiif.bodleian.ox.ac.uk/iiif/image/d70fc265-3b81-4243-8297-d9b34a7062ca",
-      "protocol": "http://iiif.io/api/image",
-      "width": 6756,
-      "height": 8560,
-      "sizes": [
+      '@context': 'http://iiif.io/api/image/2/context.json',
+      id: 'https://iiif.bodleian.ox.ac.uk/iiif/image/d70fc265-3b81-4243-8297-d9b34a7062ca',
+      protocol: 'http://iiif.io/api/image',
+      width: 6756,
+      height: 8560,
+      sizes: [
         {
-          "width": 105,
-          "height": 133
+          width: 105,
+          height: 133,
         },
         {
-          "width": 211,
-          "height": 267
+          width: 211,
+          height: 267,
         },
         {
-          "width": 422,
-          "height": 535
-        }
+          width: 422,
+          height: 535,
+        },
       ],
-      "tiles": [
+      tiles: [
         {
-          "width": 256,
-          "height": 256,
-          "scaleFactors": [
-            1,
-            2,
-            4,
-            8,
-            16,
-            32,
-            64
-          ]
-        }
+          width: 256,
+          height: 256,
+          scaleFactors: [1, 2, 4, 8, 16, 32, 64],
+        },
       ],
-      "profile": [
-        "http://iiif.io/api/image/2/level1.json",
+      profile: [
+        'http://iiif.io/api/image/2/level1.json',
         {
-          "formats": [
-            "jpg"
+          formats: ['jpg'],
+          qualities: ['native', 'color', 'gray', 'bitonal'],
+          supports: [
+            'regionByPct',
+            'regionSquare',
+            'sizeByForcedWh',
+            'sizeByWh',
+            'sizeAboveFull',
+            'rotationBy90s',
+            'mirroring',
           ],
-          "qualities": [
-            "native",
-            "color",
-            "gray",
-            "bitonal"
-          ],
-          "supports": [
-            "regionByPct",
-            "regionSquare",
-            "sizeByForcedWh",
-            "sizeByWh",
-            "sizeAboveFull",
-            "rotationBy90s",
-            "mirroring"
-          ],
-          "maxWidth": 1000,
-          "maxHeight": 1000
-        }
-      ]
+          maxWidth: 1000,
+          maxHeight: 1000,
+        },
+      ],
     };
 
     test('it can predict image sizes', async () => {

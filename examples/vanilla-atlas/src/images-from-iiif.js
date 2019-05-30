@@ -1,6 +1,9 @@
 import { ImageService } from '@hyperion-framework/atlas';
-import { getImageServiceFromAnnotation } from '@hyperion-framework/vault';
+import { getImageServiceFromAnnotation, getThumbnailAtSize } from "@hyperion-framework/vault";
 import { imageServiceLoader } from '@hyperion-framework/atlas/lib/image-api/image-service-loader';
+import { CompositeResource } from "@hyperion-framework/atlas";
+import { fromImageService } from "@hyperion-framework/atlas/lib/factory/image-service";
+import { SingleImage } from "@hyperion-framework/atlas/lib/spacial-content/single-image";
 
 export function imagesFromIIIF(vault, url) {
   return vault
@@ -24,24 +27,54 @@ export function imagesFromIIIF(vault, url) {
           for (let a = 0; a < annotations; a++) {
             const annotation = vault.fromRef(annotationPage.items[a]);
             const imageService = getImageServiceFromAnnotation(vault.getState(), () => ({ annotation }), {});
-            const service = await imageServiceLoader.loadService({
-              id: imageService.id,
-              width: canvas.width,
-              height: canvas.height,
-            });
+            const thumbnail = getThumbnailAtSize(vault.getState(), () => ({ canvas, thumbnailSize: {} }), {});
+            console.log(thumbnail);
 
-            promises.push({
-              id: canvas.id,
-              width: canvas.width,
-              height: canvas.height,
-              layers: ImageService.fromContentResource({
-                id: service.id,
-                type: 'Image',
+            if (!thumbnail) {
+              promises.push({
+                id: imageService.id,
                 width: canvas.width,
                 height: canvas.height,
-                service: [service],
-              }),
-            });
+                layers: [
+                  new CompositeResource({
+                    id: imageService.id,
+                    width: canvas.width,
+                    height: canvas.height,
+                    images: await imageServiceLoader.loadService({
+                      id: imageService.id,
+                      width: canvas.width,
+                      height: canvas.height,
+                    }).then(service => [fromImageService(service)]),
+                  })
+                ],
+              })
+            } else {
+              promises.push({
+                id: imageService.id,
+                width: canvas.width,
+                height: canvas.height,
+                layers: [
+                  new CompositeResource({
+                    id: imageService.id,
+                    width: canvas.width,
+                    height: canvas.height,
+                    loadFullImages: () => imageServiceLoader.loadService({
+                      id: imageService.id,
+                      width: canvas.width,
+                      height: canvas.height,
+                    }).then(service => [fromImageService(service)]),
+                    images: [
+                      SingleImage.fromImage(
+                        thumbnail.uri,
+                        { width: canvas.width, height: canvas.height },
+                        { width: thumbnail.actualWidth, height: thumbnail.actualHeight },
+                        imageService.id
+                      ),
+                    ],
+                  })
+                ],
+              });
+            }
           }
         }
       }

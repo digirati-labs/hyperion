@@ -342,7 +342,6 @@ export function pickBestFromCandidates(
 
   const swapChoice = (candidate: FixedSizeImage, current: FixedSizeImage | null) => {
     if (isBestMatch(request, current, candidate)) {
-
       // If we prefer a fixed size, we'll push it onto the fallback. But a fixed size will be looked for
       // from all of the candidates.
       if (request.preferFixedSize && candidate.unsafe) {
@@ -411,7 +410,11 @@ export function pickBestFromCandidates(
   };
 }
 
-export function getImageFromTileSource(image: FixedSizeImageService, targetWidth: number, targetHeight?: number): FixedSizeImage {
+export function getImageFromTileSource(
+  image: FixedSizeImageService,
+  targetWidth: number,
+  targetHeight?: number
+): FixedSizeImage {
   const id = canonicalServiceUrl(image.id).slice(0, -10);
   const url = [
     id,
@@ -425,8 +428,8 @@ export function getImageFromTileSource(image: FixedSizeImageService, targetWidth
     id: url,
     type: 'fixed',
     width: targetWidth,
-    height: targetHeight || (image.height/image.width) * targetWidth,
-    unsafe: image.width > targetWidth
+    height: targetHeight || (image.height / image.width) * targetWidth,
+    unsafe: image.width > targetWidth,
   };
 }
 
@@ -443,7 +446,7 @@ export function getImageFromTileSource(image: FixedSizeImageService, targetWidth
  */
 export function getImageCandidates(
   unknownResource: ContentResource,
-  dereference = true,
+  dereference: boolean = true,
   loader: ImageServiceLoader = imageServiceLoader
 ): ImageCandidate[] {
   const candidates: ImageCandidate[] = [];

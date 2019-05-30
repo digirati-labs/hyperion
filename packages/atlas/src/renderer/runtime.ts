@@ -2,7 +2,6 @@ import { Projection, Viewer } from '../types';
 import { World } from '../world';
 import { DnaFactory, mutate, scale, scaleAtOrigin, transform } from '../dna';
 import { Renderer } from './renderer';
-import sync, { FrameData, Process } from 'framesync';
 
 export class Runtime {
   // Helper getters.
@@ -58,25 +57,27 @@ export class Runtime {
   world: World;
   target: Float32Array;
   aggregate: Float32Array;
-  clock: Process;
   scaleFactor: number;
   transformBuffer = new Float32Array(500);
   lastTarget = new Float32Array(5);
   pendingUpdate = false;
   firstRender = true;
+  lastTime: number;
+  stopId?: number;
 
   constructor(renderer: Renderer, world: World, target: Viewer) {
     this.renderer = renderer;
     this.world = world;
     this.target = DnaFactory.projection(target);
     this.aggregate = scale(1);
-    this.clock = sync.render(this.render, true);
     this.scaleFactor = target.scale;
     this.world.addLayoutSubscriber((type: string) => {
       if (type === 'repaint') {
         this.pendingUpdate = true;
       }
     });
+    this.lastTime = performance.now();
+    this.render(this.lastTime);
   }
 
   resize(fromWidth: number, toWidth: number, fromHeight: number, toHeight: number) {
@@ -156,7 +157,17 @@ export class Runtime {
     this.target.set([0, 0, 0, 0, 0]);
   }
 
-  render = (data: FrameData) => {
+  stop() {
+    if (typeof this.stopId !== 'undefined') {
+      window.cancelAnimationFrame(this.stopId);
+    }
+  }
+
+  render = (t: number) => {
+    const delta = t - this.lastTime;
+    this.lastTime = t;
+    // Set up our loop.
+    this.stopId = window.requestAnimationFrame(this.render);
     if (
       !this.firstRender &&
       !this.pendingUpdate &&
@@ -175,7 +186,7 @@ export class Runtime {
     }
 
     // Before everything kicks off, add a hook.
-    this.renderer.beforeFrame(this.world, data, this.target);
+    this.renderer.beforeFrame(this.world, delta, this.target);
     // Calculate a scale factor by passing in the height and width of the target.
     this.scaleFactor = this.renderer.getScale(this.target[3] - this.target[1], this.target[4] - this.target[2]);
     // Get the points to render based on this scale factor and the current x,y,w,h in the target buffer.
@@ -224,15 +235,21 @@ export class Runtime {
       this.renderer.afterPaintLayer(paint);
     }
     // A final hook after the entire frame is complete.
-    this.renderer.afterFrame(this.world, data, this.target);
+    this.renderer.afterFrame(this.world, delta, this.target);
     // Finally at the end, we set up the frame we just rendered.
     this.lastTarget.set([this.target[0], this.target[1], this.target[2], this.target[3], this.target[4]]);
     // We've just finished our first render.
     this.firstRender = false;
     this.pendingUpdate = false;
-    // @todo add a schedule task to check for dirty items.
-    // @todo support dirty-only render, which will only render items marked as dirty if all other checks are false.
-    // @todo could be getDirtyPointsAt() - this paint cycle won't actually clear the canvas first, in the canvas
-    //       renderer, instead just layering new content.
+    // @todo this could be improved, but will work for now.
+    const updates = this.world.getScheduledUpdates(this.target, this.scaleFactor);
+    const len = updates.length;
+    if (len > 0) {
+      for (let i = 0; i < len; i++) {
+        updates[i]().then(() => {
+          this.pendingUpdate = true;
+        });
+      }
+    }
   };
 }

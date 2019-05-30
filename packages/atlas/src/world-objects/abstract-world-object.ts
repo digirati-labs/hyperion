@@ -9,4 +9,5 @@ export interface AbstractWorldObject extends AbstractObject, RenderPipeline {
   time: WorldTime[];
   atScale(factor: number): void;
   translate(x: number, y: number): void;
+  getScheduledUpdates(target: Float32Array, scaleFactor: number): Array<() => Promise<void>>;
 }

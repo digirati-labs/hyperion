@@ -23,11 +23,11 @@ export class World {
   aspectRatio: number;
   viewingDirection: ViewingDirection;
   aggregateBuffer = new Float32Array(9);
+  isDirty: boolean = false;
   // These should be the same size.
   private objects: AbstractWorldObject[] = [];
   private points: Float32Array;
   private subscriptions: Array<(type: string, changes?: unknown) => void> = [];
-  isDirty: boolean = false;
 
   constructor(
     width: number,
@@ -132,6 +132,18 @@ export class World {
     };
   }
 
+  getScheduledUpdates(target: Float32Array, scaleFactor: number): Array<() => Promise<void>> {
+    const filteredPoints = hidePointsOutsideRegion(this.points, target);
+    const len = this.objects.length;
+    const list = [];
+    for (let index = 0; index < len; index++) {
+      if (filteredPoints[index * 5] !== 0) {
+        list.push(...this.objects[index].getScheduledUpdates(target, scaleFactor));
+      }
+    }
+    return list;
+  }
+
   getPointsAt(target: Float32Array, aggregate?: Float32Array, scaleFactor: number = 1): Paint[] {
     const filteredPoints = hidePointsOutsideRegion(this.points, target);
     const translation = compose(
@@ -148,7 +160,7 @@ export class World {
       : translation;
 
     const len = this.objects.length;
-    const layers = [];
+    const layers: Paint[] = [];
     for (let index = 0; index < len; index++) {
       if (filteredPoints[index * 5] !== 0) {
         layers.push(...this.objects[index].getAllPointsAt(target, transformer, scaleFactor));

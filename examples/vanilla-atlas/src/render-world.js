@@ -13,7 +13,11 @@ export function renderWorld(world, viewport) {
   document.getElementById('app').appendChild(canvas);
 
   // Could be composed.
-  const controller = popmotionController(canvas, { devicePixelRatio: /*window.devicePixelRatio ||*/ 1 });
+  const controller = popmotionController(canvas, {
+    devicePixelRatio: /*window.devicePixelRatio ||*/ 1,
+    zoomOut: document.getElementById('zoom-out'),
+    zoomIn: document.getElementById('zoom-in'),
+  });
 
   // Create a renderer for our work, add it to a runtime.
   const renderer = new CanvasRenderer(canvas);

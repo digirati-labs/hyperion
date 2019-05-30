@@ -12,17 +12,12 @@ export class TiledImage implements SpacialContent {
   points: Float32Array;
   width: number;
   height: number;
-  isDirty: boolean = false;
 
   get x(): number {
     return this.points[1];
   }
   get y(): number {
     return this.points[2];
-  }
-
-  isMarkedAsDirty(): boolean {
-    return this.isDirty;
   }
 
   constructor(data: { url: string; scaleFactor: number; points: Float32Array; width: number; height: number }) {
@@ -96,6 +91,9 @@ export class TiledImage implements SpacialContent {
 
   transform(op: Float32Array): void {
     mutate(this.points, op);
-    this.isDirty = true;
+  }
+
+  getScheduledUpdates(target: Float32Array, scaleFactor: number): Array<() => Promise<void>> | null {
+    return null;
   }
 }

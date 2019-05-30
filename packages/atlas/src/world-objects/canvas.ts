@@ -1,5 +1,5 @@
 import { CanvasNormalized, IIIFExternalWebResource } from '@hyperion-framework/types';
-import { ImageService } from '../spacial-content';
+import { fromContentResource } from '../factory/content-resource';
 import { WorldObject } from './world-object';
 
 export function fromCanvas(canvas: CanvasNormalized, resources: IIIFExternalWebResource[] = []): WorldObject {
@@ -7,8 +7,6 @@ export function fromCanvas(canvas: CanvasNormalized, resources: IIIFExternalWebR
     id: canvas.id,
     width: canvas.width,
     height: canvas.height,
-    layers: resources
-      .map(resource => ImageService.fromContentResource(resource))
-      .reduce((arr, next) => arr.concat(next), []),
+    layers: resources.map(resource => fromContentResource(resource)).reduce((arr, next) => arr.concat(next), []),
   });
 }

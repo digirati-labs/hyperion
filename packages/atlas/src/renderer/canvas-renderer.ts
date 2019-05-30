@@ -1,16 +1,16 @@
-import { FrameData } from 'framesync';
 import { SingleImage, SpacialContent, TiledImage } from '../spacial-content';
 import { World } from '../world';
 import { Renderer } from './renderer';
 
 export type CanvasRendererOptions = {
-  beforeFrame?: (data: FrameData) => void;
+  beforeFrame?: (delta: number) => void;
 };
 
 export type ImageBuffer = {
   canvas: HTMLCanvasElement;
   indices: number[];
   loaded: number[];
+  fallback?: ImageBuffer;
 };
 
 export class CanvasRenderer implements Renderer {
@@ -116,12 +116,12 @@ export class CanvasRenderer implements Renderer {
     return w < h ? h : w;
   }
 
-  beforeFrame(world: World, data: FrameData): void {
+  beforeFrame(world: World, delta: number): void {
     this.frameIsRendering = true;
     // User-facing hook for before frame, contains timing information for
     // animations that might be happening, such as pan/drag.
     if (this.options.beforeFrame) {
-      this.options.beforeFrame(data);
+      this.options.beforeFrame(delta);
     }
     // But we also need to clear the canvas.
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -235,7 +235,7 @@ export class CanvasRenderer implements Renderer {
     );
   }
 
-  getImageBuffer(paint: SpacialContent) {
+  getImageBuffer(paint: SpacialContent): ImageBuffer {
     // Okay, so an image buffer, in this instance, is an offscreen canvas that contains
     // the image, at the specific scale. So for each image in the world, there will be
     // a buffer for each size.
@@ -263,9 +263,10 @@ export class CanvasRenderer implements Renderer {
       // that have scaled up or scaled down versions of our buffer.
       if (fallbackBuffers.length) {
         // We will find the largest, this could be smarter to find the closest size.
-        const largestBuffer = fallbackBuffers[(fallbackBuffers.length / 2 | 0)];
+        const largestBuffer = fallbackBuffers[0];
         // We grab that buffer.
         const toPaint = this.imageBuffers[paint.id][`${largestBuffer}`];
+        this.imageBuffers[paint.id][paint.display.scale].fallback = toPaint;
         // And paint the whole thing on, this may have empty white spots where no image
         // has been loaded in this buffer either. A more aggressive fallback could find these gaps
         // and fill them with other buffers, but that's overkill of the interactions typical in a viewer.
@@ -275,7 +276,6 @@ export class CanvasRenderer implements Renderer {
         ctx.drawImage(toPaint.canvas, 0, 0, paint.display.width, paint.display.height);
       }
     }
-    // Return the buffer. We only create it once.
     return this.imageBuffers[paint.id][paint.display.scale];
   }
 

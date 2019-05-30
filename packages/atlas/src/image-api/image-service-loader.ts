@@ -13,7 +13,8 @@ import {
   canonicalServiceUrl,
   extractFixedSizeScales,
   fixedSizesFromScales,
-  getImageServerFromId, sampledTilesToTiles,
+  getImageServerFromId,
+  sampledTilesToTiles,
   sizesMatch,
 } from './utility';
 
@@ -72,10 +73,8 @@ export class ImageServiceLoader {
    * the request. Based on this it will make a template for predicting other image sources from this
    * server. You can optionally pass in other ids to verify that the prediction is accurate.
    *
-   * @param id
-   * @param verify
    */
-  async preload(id: string, verify?: string[]): Promise<void> {}
+  // async preload(id: string, verify?: string[]): Promise<void> {}
 
   setConfig(config: Partial<ImageServiceLoaderConfig>) {
     Object.assign(this.config, config);
@@ -91,7 +90,7 @@ export class ImageServiceLoader {
    * @param service
    * @param preLoaded Mark this as being pre-loaded (default: true)
    */
-  sample(service: Service, preLoaded = true) {
+  sample(service: Service, preLoaded: boolean = true) {
     const server = getImageServerFromId(service.id);
     const serviceUrl = canonicalServiceUrl(service.id);
     const existing = this.knownImageServers[server];
@@ -131,7 +130,7 @@ export class ImageServiceLoader {
    * @param server
    * @param forceVerify
    */
-  preLoad(server: ImageServer, forceVerify = true) {
+  preLoad(server: ImageServer, forceVerify: boolean = true) {
     this.knownImageServers[server.root] = server;
     if (forceVerify) {
       this.knownImageServers[server.root].malformed = false;
@@ -156,8 +155,7 @@ export class ImageServiceLoader {
     if (
       !imageServer ||
       !imageServer.result ||
-      (!force &&
-        (imageServer.malformed || imageServer.verifications < this.config.verificationsRequired))
+      (!force && (imageServer.malformed || imageServer.verifications < this.config.verificationsRequired))
     ) {
       return null;
     }
@@ -203,7 +201,7 @@ export class ImageServiceLoader {
       prediction.width === imageService.width &&
       prediction['@context'] === imageService['@context'] &&
       sizesMatch(prediction.sizes || [], imageService.sizes || []);
-      // @todo profiles match.
+    // @todo profiles match.
 
     if (isValid) {
       const serverId = getImageServerFromId(resource.id);
@@ -246,7 +244,7 @@ export class ImageServiceLoader {
    * @param serviceId
    * @param forceFresh
    */
-  async fetchService(serviceId: string, forceFresh = false): Promise<Service & { real: boolean }> {
+  async fetchService(serviceId: string, forceFresh: boolean = false): Promise<Service & { real: boolean }> {
     const serviceUrl = canonicalServiceUrl(serviceId);
 
     if (this.imageServices[serviceUrl] && (!forceFresh || this.imageServices[serviceUrl].real)) {
@@ -273,6 +271,9 @@ export class ImageServiceLoader {
    *
    * @param resource
    * @param forceFresh
+   *
+   * @todo make this batched, so only the maximum required can be done at once, to allow
+   *       for the prediction engine to kick in.
    */
   async loadService(resource: ImageServiceRequest, forceFresh: boolean = false): Promise<Service> {
     const imageServer = this.knownImageServers[getImageServerFromId(resource.id)];

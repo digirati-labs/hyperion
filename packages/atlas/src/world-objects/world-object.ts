@@ -29,16 +29,6 @@ export class WorldObject implements AbstractWorldObject {
     return this.points[4] - this.points[2];
   }
 
-  get isDirty(): boolean {
-    const len = this.layers.length;
-    for (let i = 0; i < len; i++) {
-      if (this.layers[len].isDirty) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   constructor(props: AbstractObject) {
     this.id = props.id;
     this.scale = 1;
@@ -54,10 +44,10 @@ export class WorldObject implements AbstractWorldObject {
       this.aggregateBuffer
     );
 
+    const inter = getIntersection(target, this.points, this.intersectionBuffer);
     const len = this.layers.length;
     const arr = [];
     for (let i = 0; i < len; i++) {
-      const inter = getIntersection(target, this.points, this.intersectionBuffer);
       arr[i] = this.layers[i].getPointsAt(
         // Crop intersection.
         transform(
@@ -100,5 +90,17 @@ export class WorldObject implements AbstractWorldObject {
 
   transform(op: Float32Array): void {
     mutate(this.points, op);
+  }
+
+  getScheduledUpdates(target: Float32Array, scaleFactor: number): Array<() => Promise<void>> {
+    const len = this.layers.length;
+    const list = [];
+    for (let i = 0; i < len; i++) {
+      const updates = this.layers[i].getScheduledUpdates(target, scaleFactor * this.scale);
+      if (updates) {
+        list.push(...updates);
+      }
+    }
+    return list;
   }
 }

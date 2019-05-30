@@ -1,4 +1,5 @@
 import { ColdSubscription, easing, inertia, listen, pointer, tween, value } from 'popmotion';
+import { scaleAtOrigin, transform } from '../dna';
 import { Runtime } from '../renderer/runtime';
 import { Projection, Position } from '../types';
 import { RuntimeController } from './controller';
@@ -115,8 +116,9 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
       bounceDamping: panBounceDamping,
       timeConstant: panTimeConstant,
       power: panPower,
-      velocity: viewer.getVelocity(),
+      restDelta: 0,
       from: viewer.get(),
+      velocity: viewer.getVelocity(),
     }).start(viewer);
   });
 
@@ -136,14 +138,26 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
     // Save the before for the tween.
     const fromPos = runtime.getViewport();
     // set the new scale.
-    runtime.setScale(factor, origin);
+    const newPoints = transform(
+      runtime.target,
+      scaleAtOrigin(
+        factor,
+        origin ? origin.x : runtime.target[1] + (runtime.target[3] - runtime.target[1]) / 2,
+        origin ? origin.y : runtime.target[2] + (runtime.target[4] - runtime.target[2]) / 2
+      )
+    );
     // Need to update our observables, for pop-motion
     if (currentZoom) {
       currentZoom.stop();
     }
     currentZoom = tween({
       from: fromPos,
-      to: runtime.getViewport(),
+      to: Object.create({
+        x: newPoints[1],
+        y: newPoints[2],
+        width: newPoints[3] - newPoints[1],
+        height: newPoints[4] - newPoints[2],
+      }),
       duration: zoomDuration,
       ease: stream ? easing.easeOut : easing.easeInOut,
     }).start(viewer);
@@ -193,6 +207,7 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
   });
 
   if (enableWheel) {
+
     // Next we will add a scrolling event to the scroll-wheel.
     canvas.addEventListener('wheel', e => {
       e.preventDefault();
