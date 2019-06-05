@@ -1,6 +1,6 @@
 import { emptyCanvas } from '@hyperion-framework/vault';
 import { fromCanvas } from '../src/world-objects';
-import { ImageService, SingleImage, TiledImage } from '../src/spacial-content';
+import { ImageService, SingleImage } from '../src/spacial-content';
 
 describe('World object', () => {
   test('Basic canvas', () => {
@@ -92,6 +92,6 @@ describe('World object', () => {
     expect(worldObject.layers.length).toEqual(2);
     expect((worldObject.layers[0] as SingleImage).points.length).toEqual(5);
     expect((worldObject.layers[1] as ImageService).points.length).toEqual(5);
-    expect((worldObject.layers[1] as ImageService<TiledImage>).images.length).toEqual(5);
+    expect((worldObject.layers[1] as ImageService).images.length).toEqual(5);
   });
 });
