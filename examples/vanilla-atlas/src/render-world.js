@@ -17,10 +17,12 @@ export function renderWorld(world, viewport) {
     devicePixelRatio: /*window.devicePixelRatio ||*/ 1,
     zoomOut: document.getElementById('zoom-out'),
     zoomIn: document.getElementById('zoom-in'),
+    // minZoomFactor: 1000,
+    maxZoomFactor: 1000,
   });
 
   // Create a renderer for our work, add it to a runtime.
-  const renderer = new CanvasRenderer(canvas);
+  const renderer = new CanvasRenderer(canvas, { debug: true });
   const runtime = controller(new Runtime(renderer, world, viewport));
 
   window.addEventListener('resize', () => {

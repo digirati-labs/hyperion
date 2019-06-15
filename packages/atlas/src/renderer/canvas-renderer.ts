@@ -1,9 +1,11 @@
 import { SingleImage, SpacialContent, TiledImage } from '../spacial-content';
 import { World } from '../world';
 import { Renderer } from './renderer';
+import Stats from 'stats.js';
 
 export type CanvasRendererOptions = {
   beforeFrame?: (delta: number) => void;
+  debug?: boolean;
 };
 
 export type ImageBuffer = {
@@ -35,6 +37,7 @@ export class CanvasRenderer implements Renderer {
   loadingQueue: Array<() => Promise<any>> = [];
   currentTask: Promise<any> = Promise.resolve();
   tasksRunning = 0;
+  stats?: Stats;
 
   constructor(canvas: HTMLCanvasElement, options?: CanvasRendererOptions) {
     this.canvas = canvas;
@@ -45,6 +48,14 @@ export class CanvasRenderer implements Renderer {
     // @todo definitely make this config.
     this.canvas.style.opacity = '0';
     this.canvas.style.transition = 'opacity .3s';
+
+    if (this.options.debug) {
+      this.stats = new Stats();
+      this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+      if (document && document.body) {
+        document.body.appendChild(this.stats.dom);
+      }
+    }
   }
 
   createImage(url: string) {
@@ -70,6 +81,10 @@ export class CanvasRenderer implements Renderer {
     this.imagesLoaded = 0;
     // Some off-screen work might need done, like loading new images in.
     this.doOffscreenWork();
+    // Stats
+    if (this.options.debug && this.stats) {
+      this.stats.end();
+    }
   }
 
   doOffscreenWork() {
@@ -117,6 +132,9 @@ export class CanvasRenderer implements Renderer {
   }
 
   beforeFrame(world: World, delta: number): void {
+    if (this.options.debug && this.stats) {
+      this.stats.begin();
+    }
     this.frameIsRendering = true;
     // User-facing hook for before frame, contains timing information for
     // animations that might be happening, such as pan/drag.
@@ -315,6 +333,11 @@ export class CanvasRenderer implements Renderer {
       // We need to return true here to ensure our update is done.
       return true;
     }
+
+    if (this.options.debug) {
+      return true;
+    }
+
     return !ready;
   }
 }

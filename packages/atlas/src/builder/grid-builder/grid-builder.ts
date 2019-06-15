@@ -94,8 +94,28 @@ export class GridBuilder {
     }
 
     const len = this.content.length;
-    const columns = this.columns ? this.columns : Math.ceil(len / (this.rows as number));
-    const rows = this.rows ? this.rows : Math.ceil(len / (this.columns as number));
+
+    const getColumns = () => {
+      if (this.autoWidth && this.rows) {
+        const rowsValue = len > this.rows ? this.rows : len;
+        return {
+          columns: Math.ceil(len / (rowsValue as number)),
+          rows: rowsValue,
+        };
+      }
+
+      if (this.autoHeight && this.columns) {
+        const columnsValue = len > this.columns ? this.columns : len;
+        return {
+          columns: columnsValue,
+          rows: Math.ceil(len / (columnsValue as number)),
+        };
+      }
+
+      throw new Error('Something went wrong.');
+    };
+
+    const { columns, rows } = getColumns();
     const contentWidth = this.autoWidth ? -1 : this.width - this.padding * 2;
     // const contentHeight = this.autoHeight ? -1 : this.height - this.padding / 2;
     const itemWidth = this.autoWidth ? -1 : (contentWidth - this.spacing * (columns - 1)) / columns;

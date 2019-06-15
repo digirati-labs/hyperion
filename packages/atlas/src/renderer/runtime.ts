@@ -111,16 +111,20 @@ export class Runtime {
   };
 
   getMinViewportPosition(padding: number, devicePixelRatio: number = 1) {
+    const deltaX = this.scaleFactor < 1 ? this.world.width / this.scaleFactor / 2 : padding;
+    const deltaY = this.scaleFactor < 1 ? this.world.height / this.scaleFactor / 2 : padding;
     return {
-      x: -padding * devicePixelRatio,
-      y: -padding * devicePixelRatio,
+      x: -deltaX,
+      y: -deltaY,
     };
   }
 
   getMaxViewportPosition(padding: number) {
+    const deltaX = this.scaleFactor < 1 ? this.world.width / this.scaleFactor / 2 : padding;
+    const deltaY = this.scaleFactor < 1 ? this.world.height / this.scaleFactor / 2 : padding;
     return {
-      x: this.world.width - (this.target[3] - this.target[1]) + padding,
-      y: this.world.height - (this.target[4] - this.target[2]) + padding,
+      x: this.world.width - (this.target[3] - this.target[1]) + deltaX,
+      y: this.world.height - (this.target[4] - this.target[2]) + deltaY,
     };
   }
 

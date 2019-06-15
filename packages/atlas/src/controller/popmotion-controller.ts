@@ -1,4 +1,5 @@
 import { ColdSubscription, easing, inertia, listen, pointer, tween, value } from 'popmotion';
+import { clamp } from '@popmotion/popcorn';
 import { scaleAtOrigin, transform } from '../dna';
 import { Runtime } from '../renderer/runtime';
 import { Projection, Position } from '../types';
@@ -14,6 +15,7 @@ type PopmotionControllerConfig = {
   maxZoomFactor?: number;
   minZoomFactor?: number;
   zoomDuration?: number;
+  zoomClamp?: number;
   zoomWheelConstant?: number;
   panBounceStiffness?: number;
   panBounceDamping?: number;
@@ -39,6 +41,7 @@ const defaultConfig: Required<PopmotionControllerConfig> = {
   minZoomFactor: 0.05,
   zoomDuration: 300,
   zoomWheelConstant: 100,
+  zoomClamp: 0.6,
   // Pan options.
   panBounceStiffness: 120,
   panBounceDamping: 15,
@@ -62,6 +65,7 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
     zoomInFactor,
     zoomDuration,
     zoomWheelConstant,
+    zoomClamp,
     printX,
     printY,
     maxZoomFactor,
@@ -97,7 +101,7 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
 
   // These two control the dragging, panning and zooming. The second has inertia
   // so it will slow down and bounce on the sides.
-  listen(canvas, 'mousedown touchstart').start(() => {
+  listen(canvas, 'mousedown touchstart').start((e: { touches: [] }) => {
     const { x, y } = viewer.get() as Position;
     pointer({
       x: (-x * runtime.scaleFactor) / devicePixelRatio,
@@ -207,19 +211,119 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
   });
 
   if (enableWheel) {
-
     // Next we will add a scrolling event to the scroll-wheel.
     canvas.addEventListener('wheel', e => {
       e.preventDefault();
+      const zoomFactor = 1 + (e.deltaY * devicePixelRatio) / zoomWheelConstant;
       zoomTo(
         // Generating a zoom from the wheel delta
-        1 + (e.deltaY * devicePixelRatio) / zoomWheelConstant,
+        clamp(1 - zoomClamp, 1 + zoomClamp, zoomFactor),
         // Convert the cursor to an origin
         runtime.viewerToWorld(e.pageX * devicePixelRatio - canvasPos.left, e.pageY * devicePixelRatio - canvasPos.top),
         true
       );
     });
   }
+
+  // The following lines are incomplete implementations of multi-touch zoom. This currently
+  // interferes with the panning and would need to be combined for touch inputs.
+
+  // const middlePoint = (points: Array<{ x: number; y: number }>) => {
+  //   if (points.length > 0) {
+  //     let xAcc = 0;
+  //     let yAcc = 0;
+  //
+  //     for (let i = 0; i < points.length; i++) {
+  //       xAcc += points[i].x;
+  //       yAcc += points[i].y;
+  //     }
+  //     return {
+  //       x: xAcc / points.length,
+  //       y: yAcc / points.length,
+  //     };
+  //   }
+  //   return {
+  //     x: 0,
+  //     y: 0,
+  //   };
+  // };
+
+  // let moveSub: ColdSubscription | undefined;
+  // listen(canvas, 'touchstart').start((er) => {
+  //   er.preventDefault();
+  //   moveSub = multitouch({ scale: runtime.scaleFactor, preventDefault: true }).start(
+  //     (e: { touches: Array<{ x: number; y: number }>; scale: number }) => {
+  //       if (e.touches.length !== 2) {
+  //         return;
+  //       }
+  //       const { x, y } = middlePoint(e.touches);
+  //
+  //       const scaleF = (1 / e.scale) * runtime.scaleFactor;
+  //       const origin =
+  //         // Convert the cursor to an origin
+  //         runtime.viewerToWorld(x - canvasPos.left, y - canvasPos.top);
+  //
+  //       if (zoomIn) {
+  //         zoomIn.innerText = `${origin.x}, ${origin.y}`;
+  //       }
+  //
+  //       // Save the before for the tween.
+  //       // const fromPos = runtime.getViewport();
+  //       // set the new scale.
+  //       const newPoints = transform(
+  //         runtime.target,
+  //         scaleAtOrigin(
+  //           scaleF,
+  //           origin && origin.x > 0 ? origin.x : runtime.target[1] + (runtime.target[3] - runtime.target[1]) / 2,
+  //           origin && origin.y > 0 ? origin.y : runtime.target[2] + (runtime.target[4] - runtime.target[2]) / 2
+  //         )
+  //       );
+  //
+  //       viewer.update({
+  //         x: newPoints[1],
+  //         y: newPoints[2],
+  //         width: newPoints[3] - newPoints[1],
+  //         height: newPoints[4] - newPoints[2],
+  //       });
+  //     }
+  //   );
+  // });
+  //
+  // listen(document, 'mouseup touchend').start(() => {
+  //   if (moveSub) {
+  //     moveSub.stop();
+  //   }
+  // });
+
+  // // let delta = 0;
+  // let kasd = 0;
+  // multitouch({ scale: runtime.scaleFactor }).start(e => {
+  //   if (e.touches.length === 2) {
+  //     kasd++;
+  //
+  //     if (zoomIn) {
+  //       zoomIn.innerText = `${e.scale}`;
+  //       zoomIn.style.fontSize = `11px`;
+  //     }
+  //     if (zoomOut) {
+  //       zoomOut.innerText = `${kasd}`;
+  //     }
+  //     // const {x, y} = middlePoint(e.touches);
+  //     // const zoomFactor = (e.scale - delta) / runtime.scaleFactor;
+  //     // delta = e.scale;
+  //     //
+  //     // // const zoomFactor = 1 / e.scale;
+  //     // // const clamped =
+  //     // //   zoomFactor < 1 - zoomClamp ? 1 - zoomClamp : zoomFactor > 1 + zoomClamp ? 1 + zoomClamp : zoomFactor;
+  //     // zoomTo(
+  //     //   // Generating a zoom from the wheel delta
+  //     //   zoomFactor,
+  //     //   // Convert the cursor to an origin
+  //     //   runtime.viewerToWorld(x - canvasPos.left, y - canvasPos.top),
+  //     //   true
+  //     // );
+  //   }
+  // });
 
   // Need this anyway to be in scope.
   let click = false;

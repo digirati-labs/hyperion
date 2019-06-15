@@ -69,10 +69,12 @@ export class QuadTree<T> {
 
   query(x: number, y: number, width: number, height: number): Array<QuadTreeNode<T>> {
     const results: Array<QuadTreeNode<T>> = [];
+    if (!this.intersects({ x, y, width, height })) {
+      return results;
+    }
+    // @todo if query contains this, return ALL children points and their children etc.
     if (this.nodes.length > 0) {
-      if (this.intersects({ x, y, width, height })) {
-        results.push(...this.nodes);
-      }
+      results.push(...this.nodes);
     }
     if (this.divided) {
       results.push(...this.nw!.query(x, y, width, height));
