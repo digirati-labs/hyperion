@@ -17,12 +17,13 @@ export function renderWorld(world, viewport) {
     devicePixelRatio: /*window.devicePixelRatio ||*/ 1,
     zoomOut: document.getElementById('zoom-out'),
     zoomIn: document.getElementById('zoom-in'),
+    reset: document.getElementById('reset'),
     // minZoomFactor: 1000,
     maxZoomFactor: 1000,
   });
 
   // Create a renderer for our work, add it to a runtime.
-  const renderer = new CanvasRenderer(canvas, { debug: true });
+  const renderer = new CanvasRenderer(canvas, { debug: false });
   const runtime = controller(new Runtime(renderer, world, viewport));
 
   window.addEventListener('resize', () => {
@@ -37,4 +38,6 @@ export function renderWorld(world, viewport) {
 
   // This will simply assign the same co-ordinates in memory.
   secondRuntime.syncTo(runtime);
+
+  return renderer;
 }

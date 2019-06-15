@@ -110,7 +110,34 @@ export class Runtime {
     this.target[2] = data.y;
   };
 
+  getBounds(padding: number) {
+    if (this.renderer.hasActiveZone()) {
+      const bounds = this.renderer.getViewportBounds(this.world, this.target, padding);
+      if (bounds) {
+        return bounds;
+      }
+    }
+
+    const deltaX = this.scaleFactor < 1 ? this.world.width / this.scaleFactor / 2 : padding;
+    const deltaY = this.scaleFactor < 1 ? this.world.height / this.scaleFactor / 2 : padding;
+    return {
+      x1: -deltaX,
+      y1: -deltaY,
+      x2: this.world.width - (this.target[3] - this.target[1]) + deltaX,
+      y2: this.world.height - (this.target[4] - this.target[2]) + deltaY,
+    };
+  }
+
   getMinViewportPosition(padding: number, devicePixelRatio: number = 1) {
+    if (this.renderer.hasActiveZone()) {
+      const bounds = this.renderer.getViewportBounds(this.world, this.target, padding);
+      if (bounds) {
+        return {
+          x: bounds.x1,
+          y: bounds.y1,
+        }
+      }
+    }
     const deltaX = this.scaleFactor < 1 ? this.world.width / this.scaleFactor / 2 : padding;
     const deltaY = this.scaleFactor < 1 ? this.world.height / this.scaleFactor / 2 : padding;
     return {
@@ -120,6 +147,15 @@ export class Runtime {
   }
 
   getMaxViewportPosition(padding: number) {
+    if (this.renderer.hasActiveZone()) {
+      const bounds = this.renderer.getViewportBounds(this.world, this.target, padding);
+      if (bounds) {
+        return {
+          x: bounds.x2,
+          y: bounds.y2,
+        }
+      }
+    }
     const deltaX = this.scaleFactor < 1 ? this.world.width / this.scaleFactor / 2 : padding;
     const deltaY = this.scaleFactor < 1 ? this.world.height / this.scaleFactor / 2 : padding;
     return {
@@ -194,7 +230,7 @@ export class Runtime {
     // Calculate a scale factor by passing in the height and width of the target.
     this.scaleFactor = this.renderer.getScale(this.target[3] - this.target[1], this.target[4] - this.target[2]);
     // Get the points to render based on this scale factor and the current x,y,w,h in the target buffer.
-    const points = this.world.getPointsAt(this.target, this.aggregate, this.scaleFactor);
+    const points = this.renderer.getPointsAt(this.world, this.target, this.aggregate, this.scaleFactor);
     const pointsLen = points.length;
     for (let p = 0; p < pointsLen; p++) {
       // each point is an array of [SpacialContent, Float32Array, Float32Array]

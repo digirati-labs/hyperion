@@ -1,8 +1,8 @@
-import { GridBuilder, SingleImage, WorldObject } from '@hyperion-framework/atlas';
+import { GridBuilder, Zone, SingleImage, WorldObject } from '@hyperion-framework/atlas';
 import { Vault } from '@hyperion-framework/vault';
 import { renderWorld } from './render-world';
 import { imagesFromIIIF } from './images-from-iiif';
-import { hyperionLogo } from "./images/hyperion-logo";
+// import { hyperionLogo } from "./images/hyperion-logo";
 
 const vault = new Vault();
 
@@ -43,9 +43,29 @@ imagesFromIIIF(vault, location.hash.slice(1) || 'https://view.nls.uk/manifest/97
 
     const world = builder.getWorld();
 
+    world.addZone(new Zone(world.getObjects().slice(0, 3)));
+    world.addZone(new Zone(world.getObjects().slice(1, 4)));
+    world.addZone(new Zone(world.getObjects().slice(2, 5)));
+
+    // console.log(world);
+
     // Create an initial viewport.
     const viewport = { width: window.innerWidth, height: window.innerHeight, x: 0, y: 0, scale: 1 };
 
-    renderWorld(world, viewport);
+    const renderer = renderWorld(world, viewport);
+
+    // renderer.selectZone(world.zones[0].id);
+    // setTimeout(() => {
+    //   renderer.selectZone(world.zones[1].id);
+    // }, 1000);
+    // setTimeout(() => {
+    //   renderer.selectZone(world.zones[2].id);
+    // }, 2000);
+    //
+    // setTimeout(() => {
+    //   renderer.deselectZone();
+    // }, 3000);
+
+    // console.log(renderer);
   }
 );

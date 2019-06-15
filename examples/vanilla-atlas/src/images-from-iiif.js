@@ -1,9 +1,9 @@
 import { ImageService } from '@hyperion-framework/atlas';
-import { getImageServiceFromAnnotation, getThumbnailAtSize } from "@hyperion-framework/vault";
+import { getImageServiceFromAnnotation, getThumbnailAtSize } from '@hyperion-framework/vault';
 import { imageServiceLoader } from '@hyperion-framework/atlas/lib/image-api/image-service-loader';
-import { CompositeResource } from "@hyperion-framework/atlas";
-import { fromImageService } from "@hyperion-framework/atlas/lib/factory/image-service";
-import { SingleImage } from "@hyperion-framework/atlas/lib/spacial-content/single-image";
+import { CompositeResource } from '@hyperion-framework/atlas';
+import { fromImageService } from '@hyperion-framework/atlas/lib/factory/image-service';
+import { SingleImage } from '@hyperion-framework/atlas/lib/spacial-content/single-image';
 
 export function imagesFromIIIF(vault, url) {
   return vault
@@ -28,7 +28,7 @@ export function imagesFromIIIF(vault, url) {
             const annotation = vault.fromRef(annotationPage.items[a]);
             const imageService = getImageServiceFromAnnotation(vault.getState(), () => ({ annotation }), {});
             const thumbnail = getThumbnailAtSize(vault.getState(), () => ({ canvas, thumbnailSize: {} }), {});
-            console.log(thumbnail);
+            // console.log(thumbnail);
 
             if (!thumbnail) {
               promises.push({
@@ -40,14 +40,16 @@ export function imagesFromIIIF(vault, url) {
                     id: imageService.id,
                     width: canvas.width,
                     height: canvas.height,
-                    images: await imageServiceLoader.loadService({
-                      id: imageService.id,
-                      width: canvas.width,
-                      height: canvas.height,
-                    }).then(service => [fromImageService(service)]),
-                  })
+                    images: await imageServiceLoader
+                      .loadService({
+                        id: imageService.id,
+                        width: canvas.width,
+                        height: canvas.height,
+                      })
+                      .then(service => [fromImageService(service)]),
+                  }),
                 ],
-              })
+              });
             } else {
               promises.push({
                 id: imageService.id,
@@ -58,11 +60,14 @@ export function imagesFromIIIF(vault, url) {
                     id: imageService.id,
                     width: canvas.width,
                     height: canvas.height,
-                    loadFullImages: () => imageServiceLoader.loadService({
-                      id: imageService.id,
-                      width: canvas.width,
-                      height: canvas.height,
-                    }).then(service => [fromImageService(service)]),
+                    loadFullImages: () =>
+                      imageServiceLoader
+                        .loadService({
+                          id: imageService.id,
+                          width: canvas.width,
+                          height: canvas.height,
+                        })
+                        .then(service => [fromImageService(service)]),
                     images: [
                       SingleImage.fromImage(
                         thumbnail.uri,
@@ -71,7 +76,7 @@ export function imagesFromIIIF(vault, url) {
                         imageService.id
                       ),
                     ],
-                  })
+                  }),
                 ],
               });
             }

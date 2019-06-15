@@ -8,6 +8,7 @@ import { RuntimeController } from './controller';
 type PopmotionControllerConfig = {
   zoomOut?: HTMLElement | null;
   zoomIn?: HTMLElement | null;
+  reset?: HTMLElement | null;
   printX?: HTMLElement | null;
   printY?: HTMLElement | null;
   zoomOutFactor?: number;
@@ -33,6 +34,7 @@ const defaultConfig: Required<PopmotionControllerConfig> = {
   zoomOut: null,
   zoomIn: null,
   printX: null,
+  reset: null,
   printY: null,
   // Zoom options
   zoomOutFactor: 0.8,
@@ -68,6 +70,7 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
     zoomClamp,
     printX,
     printY,
+    reset,
     maxZoomFactor,
     minZoomFactor,
     panBounceStiffness,
@@ -112,7 +115,7 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
       .start(viewer);
   });
 
-  listen(document, 'mouseup touchend').start(() => {
+  const constrainBounds = () => {
     inertia({
       min: runtime.getMinViewportPosition(panPadding),
       max: runtime.getMaxViewportPosition(panPadding),
@@ -124,7 +127,21 @@ export const popmotionController = (canvas: HTMLElement, config: PopmotionContro
       from: viewer.get(),
       velocity: viewer.getVelocity(),
     }).start(viewer);
-  });
+  };
+
+  if (reset) {
+    reset.addEventListener('click', () => {
+      // const bounds = runtime.getBounds(panPadding);
+      // viewer.update({
+      //   x: bounds.x1,
+      //   y: bounds.x2,
+      // });
+
+      constrainBounds();
+    });
+  }
+
+  listen(document, 'mouseup touchend').start(constrainBounds);
 
   // A generic zoom to function, with an optional origin parameter.
   // All of the points referenced are world points. You can pass your

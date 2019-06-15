@@ -1,6 +1,9 @@
 import { SpacialContent } from '../spacial-content';
 import { World } from '../world';
 import { Renderer } from './renderer';
+import {ZoneInterface} from "../world-objects/zone";
+import {Paint} from "../world-objects";
+import {PositionPair} from "../types";
 
 export class DebugRenderer implements Renderer {
   canvas: HTMLCanvasElement;
@@ -75,6 +78,14 @@ export class DebugRenderer implements Renderer {
     }
   }
 
+  getActiveZone(world: World): ZoneInterface | null {
+    return null;
+  }
+
+  getPointsAt(world: World, target: Float32Array, aggregate: Float32Array, scaleFactor: number): Paint[] {
+    return world.getPointsAt(target, aggregate, scaleFactor);
+  }
+
   getScale(width: number, height: number): number {
     return 1;
   }
@@ -102,5 +113,13 @@ export class DebugRenderer implements Renderer {
   pendingUpdate(): boolean {
     // change this to true if you want to render every frame.
     return false;
+  }
+
+  hasActiveZone(): boolean {
+    return false;
+  }
+
+  getViewportBounds(world: World, target: Float32Array, padding: number): PositionPair | null {
+    return null;
   }
 }

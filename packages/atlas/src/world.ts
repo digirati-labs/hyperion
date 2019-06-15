@@ -14,6 +14,7 @@ import { AbstractWorldObject } from './world-objects/abstract-world-object';
 import { WorldObject } from './world-objects/world-object';
 import { AbstractObject } from './world-objects/abstract-object';
 import { Paint } from './world-objects/paint';
+import { ZoneInterface } from './world-objects/zone';
 
 type WorldTarget = { x: number; y: number; width?: number; height?: number };
 
@@ -24,6 +25,7 @@ export class World {
   viewingDirection: ViewingDirection;
   aggregateBuffer = new Float32Array(9);
   isDirty: boolean = false;
+  zones: ZoneInterface[] = [];
   // These should be the same size.
   private objects: AbstractWorldObject[] = [];
   private points: Float32Array;
@@ -37,7 +39,7 @@ export class World {
   ) {
     this.width = width;
     this.height = height;
-    this.aspectRatio = width / height;
+    this.aspectRatio = Number.isNaN(width / height) ? 1 : width / height;
     this.viewingDirection = viewingDirection;
     this.points = new Float32Array(worldObjectCount * 5);
   }
@@ -45,6 +47,10 @@ export class World {
   asWorldObject(): AbstractWorldObject | null {
     // @todo.
     return null;
+  }
+
+  addZone(zone: ZoneInterface) {
+    this.zones.push(zone);
   }
 
   addObjectAt(object: AbstractObject, target: WorldTarget): AbstractWorldObject {
@@ -103,6 +109,8 @@ export class World {
     this.width = width;
     this.height = height;
 
+    this.aspectRatio = width / height;
+
     // @todo what happens when projections are out of bounds?
     // @todo what happens when objects are out of bounds?
     this.triggerRepaint();
@@ -144,7 +152,7 @@ export class World {
     return list;
   }
 
-  getPointsAt(target: Float32Array, aggregate?: Float32Array, scaleFactor: number = 1): Paint[] {
+  getPointsAt(target: Float32Array, aggregate?: Float32Array, scaleFactor: number = 1, zone: ZoneInterface | null = null): Paint[] {
     const filteredPoints = hidePointsOutsideRegion(this.points, target);
     const translation = compose(
       scale(scaleFactor),
@@ -163,6 +171,9 @@ export class World {
     const layers: Paint[] = [];
     for (let index = 0; index < len; index++) {
       if (filteredPoints[index * 5] !== 0) {
+        if (zone && zone.objects.indexOf(this.objects[index]) === -1) {
+          continue;
+        }
         layers.push(...this.objects[index].getAllPointsAt(target, transformer, scaleFactor));
       }
     }

@@ -2,6 +2,9 @@ import { SingleImage, SpacialContent, TiledImage } from '../spacial-content';
 import { World } from '../world';
 import { Renderer } from './renderer';
 import Stats from 'stats.js';
+import { ZoneInterface } from '../world-objects/zone';
+import { Paint } from '../world-objects';
+import {PositionPair} from "../types";
 
 export type CanvasRendererOptions = {
   beforeFrame?: (delta: number) => void;
@@ -21,11 +24,13 @@ export class CanvasRenderer implements Renderer {
   imageCache: { [url: string]: HTMLImageElement } = {};
   localCanvases: { [id: string]: HTMLCanvasElement } = {};
   options: CanvasRendererOptions;
+  hasPendingUpdate: boolean = false;
   imagesPending: number = 0;
   imagesLoaded: number = 0;
   frameIsRendering = false;
   firstMeaningfulPaint = false;
   parallelTasks: number = 5; // @todo configuration.
+  selectedZone?: string;
   readonly configuration = {
     segmentRendering: true,
   };
@@ -85,6 +90,16 @@ export class CanvasRenderer implements Renderer {
     if (this.options.debug && this.stats) {
       this.stats.end();
     }
+  }
+
+  selectZone(zone: string) {
+    this.selectedZone = zone;
+    this.hasPendingUpdate = true;
+  }
+
+  deselectZone() {
+    this.selectedZone = undefined;
+    this.hasPendingUpdate = true;
   }
 
   doOffscreenWork() {
@@ -323,6 +338,40 @@ export class CanvasRenderer implements Renderer {
     this.getImageBuffer(paint);
   }
 
+  getPointsAt(world: World, target: Float32Array, aggregate: Float32Array, scaleFactor: number): Paint[] {
+    return world.getPointsAt(target, aggregate, scaleFactor, this.selectedZone ? this.getActiveZone(world) : null);
+  }
+
+  getActiveZone(world: World): ZoneInterface | null {
+    const len = world.zones.length;
+    for (let i = 0; i < len; i++) {
+      if (world.zones[i].id === this.selectedZone) {
+        return world.zones[i];
+      }
+    }
+    return null;
+  }
+
+  hasActiveZone(): boolean {
+    return !!this.selectedZone;
+  }
+
+  getViewportBounds(world: World, target: Float32Array, padding: number): PositionPair | null {
+    const zone = this.getActiveZone(world);
+
+    if (zone) {
+      const xCon = (target[3] - target[1]) < zone.points[3] - zone.points[1];
+      const yCon = (target[4] - target[2]) < zone.points[4] - zone.points[2];
+      return {
+        x1: xCon ? zone.points[1] - padding : zone.points[1] + ((zone.points[3] - zone.points[1]) / 2) - ((target[3] - target[1]) / 2),
+        y1: yCon ? zone.points[2] - padding : zone.points[2] + ((zone.points[4] - zone.points[2]) / 2) - ((target[4] - target[2]) / 2),
+        x2: xCon ? zone.points[3] + padding : zone.points[1] + ((zone.points[3] - zone.points[1]) / 2) - ((target[3] - target[1]) / 2),
+        y2: yCon ? (zone.points[4]) + padding : zone.points[2] + ((zone.points[4] - zone.points[2]) / 2) - ((target[4] - target[2]) / 2),
+      }
+    }
+    return null;
+  }
+
   pendingUpdate(): boolean {
     const ready = this.imagesPending === 0 && this.loadingQueue.length === 0 && this.tasksRunning === 0;
     if (!this.firstMeaningfulPaint && ready) {
@@ -338,6 +387,6 @@ export class CanvasRenderer implements Renderer {
       return true;
     }
 
-    return !ready;
+    return !ready || this.hasPendingUpdate;
   }
 }
