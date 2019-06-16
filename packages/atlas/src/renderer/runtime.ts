@@ -80,12 +80,31 @@ export class Runtime {
     this.render(this.lastTime);
   }
 
+  /**
+   * Resize world
+   *
+   * This is generally called when the world is re-sized. This recalculates the current target accordingly. It needs to
+   * be improved, tested and planned.
+   *
+   * @param fromWidth
+   * @param toWidth
+   * @param fromHeight
+   * @param toHeight
+   */
   resize(fromWidth: number, toWidth: number, fromHeight: number, toHeight: number) {
     this.scaleFactor = this.scaleFactor * (fromWidth / toWidth);
     this.target[3] = this.target[1] + (this.target[3] - this.target[1]) / (fromWidth / toWidth);
     this.target[4] = this.target[2] + (this.target[4] - this.target[2]) / (fromHeight / toHeight);
   }
 
+  /**
+   * Get Viewport
+   *
+   * Returns a projection based on the current target.
+   *
+   * @todo rename to getProjection.
+   * @todo evaluate if we actually need this.
+   */
   getViewport(): Projection {
     return {
       x: this.target[1],
@@ -95,6 +114,14 @@ export class Runtime {
     };
   }
 
+  /**
+   * Set Viewport
+   *
+   * This is a helper for setting the viewport based on x, y, width and height, opposed to the x1, y1, x2, y2 native
+   * co-ordinates of the target.
+   *
+   * @param data
+   */
   setViewport = (data: { x: number; y: number; width?: number; height?: number }) => {
     if (data.width) {
       this.target[3] = data.x + data.width;
@@ -110,6 +137,15 @@ export class Runtime {
     this.target[2] = data.y;
   };
 
+  /**
+   * Get bounds
+   *
+   * Returns the minimum and maximum bounds. This absolutely needs improved. With the addition of zones this is becoming
+   * more of an issue. It has to take into account the current layout. There also needs to be a new method for creating
+   * a "home" view  that will fit the content to the view.
+   *
+   * @param padding
+   */
   getBounds(padding: number) {
     if (this.renderer.hasActiveZone()) {
       const bounds = this.renderer.getViewportBounds(this.world, this.target, padding);
@@ -128,6 +164,15 @@ export class Runtime {
     };
   }
 
+  /**
+   * Get minimum viewport position
+   *
+   * This needs to be removed, and replaced with the getBounds.
+   *
+   * @deprecated
+   * @param padding
+   * @param devicePixelRatio
+   */
   getMinViewportPosition(padding: number, devicePixelRatio: number = 1) {
     if (this.renderer.hasActiveZone()) {
       const bounds = this.renderer.getViewportBounds(this.world, this.target, padding);
@@ -146,6 +191,14 @@ export class Runtime {
     };
   }
 
+  /**
+   * Get maximum viewport position
+   *
+   * This also needs to be removed, and replaced with getBounds.
+   *
+   * @deprecated
+   * @param padding
+   */
   getMaxViewportPosition(padding: number) {
     if (this.renderer.hasActiveZone()) {
       const bounds = this.renderer.getViewportBounds(this.world, this.target, padding);
@@ -164,6 +217,14 @@ export class Runtime {
     };
   }
 
+  /**
+   * Converts units from the viewer to the world.
+   *
+   * Needs to be tested, as this will become more important with the event system.
+   *
+   * @param x
+   * @param y
+   */
   viewerToWorld(x: number, y: number) {
     return {
       x: this.target[1] + x / this.scaleFactor,
@@ -171,6 +232,14 @@ export class Runtime {
     };
   }
 
+  /**
+   * Set scale
+   *
+   * This will set the scale of the target, with an optional origin.
+   *
+   * @param scaleFactor
+   * @param origin
+   */
   setScale(scaleFactor: number, origin?: { x: number; y: number }) {
     mutate(
       this.target,
@@ -182,6 +251,14 @@ export class Runtime {
     );
   }
 
+  /**
+   * Sync runtime instances
+   *
+   * Allows a single controller to drive 2 runtime instances, or 2 controllers to both
+   * control each other.
+   *
+   * @param runtime
+   */
   syncTo(runtime: Runtime) {
     const oldTarget = this.target;
     this.target = runtime.target;
@@ -192,17 +269,39 @@ export class Runtime {
     };
   }
 
+  /**
+   * Invalidate
+   *
+   * Unused function, not sure what it does.
+   * @deprecated
+   */
   invalidate() {
     // The first 0 will ensure no valid target matches.
     this.target.set([0, 0, 0, 0, 0]);
   }
 
-  stop() {
+  /**
+   * Stop the runtime
+   *
+   * Stops the internal clock, where no more updates will occur. Returns a function to restart it.
+   */
+  stop(): () => void {
     if (typeof this.stopId !== 'undefined') {
       window.cancelAnimationFrame(this.stopId);
     }
+
+    return () => {
+      this.render(performance.now())
+    }
   }
 
+  /**
+   * Render
+   *
+   * The hottest path in the runtime, called every 16.7ms, if possible in the future be double-timed on 120hz monitors.
+   *
+   * @param t
+   */
   render = (t: number) => {
     const delta = t - this.lastTime;
     this.lastTime = t;

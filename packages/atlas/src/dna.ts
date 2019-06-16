@@ -20,9 +20,9 @@ export const scaleAtOrigin = (factor: number, x: number, y: number) =>
     scale(factor)
   );
 
-export const hidePointsOutsideRegion = (points: Float32Array, target: Float32Array): Float32Array => {
+export const hidePointsOutsideRegion = (points: Float32Array, target: Float32Array, buffer?: Float32Array): Float32Array => {
   const len = points.length;
-  const ret = new Float32Array(len);
+  const ret = buffer ? buffer : new Float32Array(len);
   for (let index = 0; index < len; index++) {
     ret[index] =
       index % 5 === 0

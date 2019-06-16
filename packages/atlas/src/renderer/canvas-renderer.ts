@@ -29,7 +29,7 @@ export class CanvasRenderer implements Renderer {
   imagesLoaded: number = 0;
   frameIsRendering = false;
   firstMeaningfulPaint = false;
-  parallelTasks: number = 5; // @todo configuration.
+  parallelTasks: number = 3; // @todo configuration.
   selectedZone?: string;
   readonly configuration = {
     segmentRendering: true,
@@ -102,6 +102,8 @@ export class CanvasRenderer implements Renderer {
     this.hasPendingUpdate = true;
   }
 
+  averageJobTime: number = 10;
+
   doOffscreenWork() {
     // This is our worker. It is called every 1ms (roughly) and will usually be
     // an async task that can run without blocking the frame. Because of
@@ -112,12 +114,14 @@ export class CanvasRenderer implements Renderer {
         // Let's pop something off the loading queue.
         const next = this.loadingQueue.pop();
         if (next) {
+          const startTime = performance.now();
           // We will increment the task count
           this.tasksRunning++;
           // And kick it off. We don't care if it succeeded or not.
           // A task that needs to retry should just add a new task.
           this.currentTask = next()
             .then(() => {
+              this.averageJobTime = (this.averageJobTime + performance.now() / startTime) / 2;
               this.tasksRunning--;
             })
             .catch(() => {
@@ -126,6 +130,8 @@ export class CanvasRenderer implements Renderer {
         }
       }
     };
+    // First call immediately.
+    worker();
     // Here's our clock for scheduling tasks, every 1ms it will try to call.
     const scheduled = setInterval(() => {
       // Here is the shut down, no more work to do.
@@ -135,7 +141,7 @@ export class CanvasRenderer implements Renderer {
       // And here's our working being called. Since JS is blocking, this will complete
       // before the next tick, so its possible that this could be more than 1ms.
       worker();
-    }, 1);
+    }, this.averageJobTime);
   }
 
   getScale(width: number, height: number): number {
@@ -227,6 +233,8 @@ export class CanvasRenderer implements Renderer {
   loadImage(url: string): Promise<HTMLImageElement> {
     return new Promise(resolve => {
       const image = document.createElement('img');
+      image.style.transform = 'translate3d(0,0,0)';
+      image.decoding = 'async';
       image.src = url;
       image.addEventListener('load', () => {
         resolve(image);

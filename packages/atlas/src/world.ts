@@ -26,6 +26,7 @@ export class World {
   aggregateBuffer = new Float32Array(9);
   isDirty: boolean = false;
   zones: ZoneInterface[] = [];
+  filteredPointsBuffer: Float32Array;
   // These should be the same size.
   private objects: AbstractWorldObject[] = [];
   private points: Float32Array;
@@ -42,6 +43,7 @@ export class World {
     this.aspectRatio = Number.isNaN(width / height) ? 1 : width / height;
     this.viewingDirection = viewingDirection;
     this.points = new Float32Array(worldObjectCount * 5);
+    this.filteredPointsBuffer = new Float32Array(worldObjectCount * 5);
   }
 
   asWorldObject(): AbstractWorldObject | null {
@@ -74,6 +76,7 @@ export class World {
       const newPoints = new Float32Array(this.points.length * 2);
       newPoints.set(points, 0);
       this.points = newPoints;
+      this.filteredPointsBuffer = new Float32Array(this.points.length * 2);
     }
 
     // @todo integrity to ensure these remain.
@@ -141,7 +144,7 @@ export class World {
   }
 
   getScheduledUpdates(target: Float32Array, scaleFactor: number): Array<() => Promise<void>> {
-    const filteredPoints = hidePointsOutsideRegion(this.points, target);
+    const filteredPoints = hidePointsOutsideRegion(this.points, target, this.filteredPointsBuffer);
     const len = this.objects.length;
     const list = [];
     for (let index = 0; index < len; index++) {
@@ -153,7 +156,7 @@ export class World {
   }
 
   getPointsAt(target: Float32Array, aggregate?: Float32Array, scaleFactor: number = 1, zone: ZoneInterface | null = null): Paint[] {
-    const filteredPoints = hidePointsOutsideRegion(this.points, target);
+    const filteredPoints = hidePointsOutsideRegion(this.points, target, this.filteredPointsBuffer);
     const translation = compose(
       scale(scaleFactor),
       translate(-target[1], -target[2])
