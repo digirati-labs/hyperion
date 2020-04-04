@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/react-vault",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "main": "dist/umd/@hyperion-framework/react-vault.js",
   "module": "lib/index.js",
   "typings": "dist/@types/index.d.ts",
@@ -16,7 +16,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@hyperion-framework/vault": "^0.3.2",
+    "@hyperion-framework/vault": "^0.3.3",
     "redux-react-hook": "^3.2.0"
   },
   "peerDependencies": {
