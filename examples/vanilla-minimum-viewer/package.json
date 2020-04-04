@@ -1,9 +1,9 @@
 {
   "name": "vanilla-minimum-viewer",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "dependencies": {
-    "@hyperion-framework/vault": "^0.3.0"
+    "@hyperion-framework/vault": "^0.3.1"
   },
   "scripts": {
     "build": "fesk-build",

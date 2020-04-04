@@ -1,12 +1,12 @@
 {
   "name": "react-context-example",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.3.1",
   "dependencies": {
     "@fesk/eslint-config-standard": "^1.2.0",
-    "@hyperion-framework/atlas": "^0.3.0",
-    "@hyperion-framework/react-vault": "^0.3.0",
-    "@hyperion-framework/vault": "^0.3.0",
+    "@hyperion-framework/atlas": "^0.3.1",
+    "@hyperion-framework/react-vault": "^0.3.1",
+    "@hyperion-framework/vault": "^0.3.1",
     "@reach/router": "^1.2.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
