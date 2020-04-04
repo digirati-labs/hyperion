@@ -1,5 +1,5 @@
 import {Vault} from '../../src';
-import {serialise, UNSET} from '../../src/processing/serialise';
+import {serialise, UNSET, UNWRAP} from '../../src/processing/serialise';
 
 const manifestTest = require('../../../../fixtures/2-to-3-converter/manifests/british-library-manifest.json');
 
@@ -30,12 +30,12 @@ describe('process/serialise', () => {
           return UNSET;
         }
         return [
-          ['@id', canvas.id]
+          [UNWRAP, canvas.label]
         ];
       }
     });
 
-    expect(result).toEqual({});
+    expect(result).toMatchSnapshot();
 
 
   })

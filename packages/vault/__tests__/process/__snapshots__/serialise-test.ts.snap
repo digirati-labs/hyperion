@@ -1,0 +1,2327 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`process/serialise it works 1`] = `
+Object {
+  "@id": "https://api.bl.uk/metadata/iiif/ark:/81055/vdc_00000004216E/manifest.json",
+  "sequences": Array [
+    Object {
+      "canvases": Array [
+        Object {
+          "@none": Array [
+            "1",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "2",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "3",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "4",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "5",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "6",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "7",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "8",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "9",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "10",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "11",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "12",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "13",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "14",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "15",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "16",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "17",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "18",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "19",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "20",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "21",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "22",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "23",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "24",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "25",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "26",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "27",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "28",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "29",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "30",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "31",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "32",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "33",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "34",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "35",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "36",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "37",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "38",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "39",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "40",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "41",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "42",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "43",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "44",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "45",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "46",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "47",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "48",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "49",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "50",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "51",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "52",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "53",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "54",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "55",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "56",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "57",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "58",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "59",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "60",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "61",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "62",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "63",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "64",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "65",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "66",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "67",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "68",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "69",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "70",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "71",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "72",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "73",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "74",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "75",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "76",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "77",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "78",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "79",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "80",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "81",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "82",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "83",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "84",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "85",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "86",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "87",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "88",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "89",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "90",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "91",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "92",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "93",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "94",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "95",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "96",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "97",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "98",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "99",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "100",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "101",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "102",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "103",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "104",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "105",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "106",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "107",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "108",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "109",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "110",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "111",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "112",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "113",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "114",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "115",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "116",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "117",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "118",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "119",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "120",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "121",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "122",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "123",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "124",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "125",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "126",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "127",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "128",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "129",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "130",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "131",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "132",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "133",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "134",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "135",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "136",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "137",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "138",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "139",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "140",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "141",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "142",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "143",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "144",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "145",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "146",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "147",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "148",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "149",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "150",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "151",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "152",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "153",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "154",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "155",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "156",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "157",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "158",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "159",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "160",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "161",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "162",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "163",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "164",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "165",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "166",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "167",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "168",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "169",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "170",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "171",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "172",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "173",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "174",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "175",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "176",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "177",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "178",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "179",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "180",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "181",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "182",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "183",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "184",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "185",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "186",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "187",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "188",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "189",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "190",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "191",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "192",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "193",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "194",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "195",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "196",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "197",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "198",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "199",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "200",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "201",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "202",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "203",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "204",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "205",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "206",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "207",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "208",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "209",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "210",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "211",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "212",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "213",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "214",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "215",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "216",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "217",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "218",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "219",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "220",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "221",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "222",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "223",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "224",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "225",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "226",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "227",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "228",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "229",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "230",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "231",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "232",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "233",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "234",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "235",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "236",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "237",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "238",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "239",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "240",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "241",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "242",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "243",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "244",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "245",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "246",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "247",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "248",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "249",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "250",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "251",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "252",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "253",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "254",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "255",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "256",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "257",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "258",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "259",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "260",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "261",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "262",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "263",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "264",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "265",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "266",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "267",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "268",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "269",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "270",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "271",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "272",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "273",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "274",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "275",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "276",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "277",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "278",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "279",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "280",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "281",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "282",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "283",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "284",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "285",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "286",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "287",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "288",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "289",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "290",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "291",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "292",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "293",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "294",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "295",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "296",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "297",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "298",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "299",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "300",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "301",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "302",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "303",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "304",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "305",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "306",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "307",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "308",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "309",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "310",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "311",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "312",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "313",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "314",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "315",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "316",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "317",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "318",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "319",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "320",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "321",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "322",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "323",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "324",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "325",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "326",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "327",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "328",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "329",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "330",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "331",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "332",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "333",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "334",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "335",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "336",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "337",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "338",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "339",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "340",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "341",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "342",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "343",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "344",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "345",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "346",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "347",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "348",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "349",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "350",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "351",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "352",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "353",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "354",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "355",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "356",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "357",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "358",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "359",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "360",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "361",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "362",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "363",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "364",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "365",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "366",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "367",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "368",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "369",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "370",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "371",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "372",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "373",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "374",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "375",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "376",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "377",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "378",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "379",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "380",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "381",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "382",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "383",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "384",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "385",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "386",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "387",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "388",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "389",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "390",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "391",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "392",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "393",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "394",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "395",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "396",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "397",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "398",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "399",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "400",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "401",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "402",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "403",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "404",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "405",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "406",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "407",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "408",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "409",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "410",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "411",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "412",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "413",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "414",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "415",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "416",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "417",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "418",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "419",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "420",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "421",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "422",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "423",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "424",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "425",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "426",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "427",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "428",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "429",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "430",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "431",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "432",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "433",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "434",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "435",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "436",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "437",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "438",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "439",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "440",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "441",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "442",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "443",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "444",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "445",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "446",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "447",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "448",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "449",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "450",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "451",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "452",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "453",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "454",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "455",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "456",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "457",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "458",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "459",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "460",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "461",
+          ],
+        },
+        Object {
+          "@none": Array [
+            "462",
+          ],
+        },
+      ],
+      "id": "https://api.bl.uk/metadata/iiif/ark:/81055/vdc_00000004216E/manifest.json/sequence0",
+    },
+  ],
+  "test": Object {
+    "testing": true,
+  },
+}
+`;
