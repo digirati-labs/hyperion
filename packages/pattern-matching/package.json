@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/pattern-matching",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "main": "dist/umd/@hyperion-framework/pattern-matching.js",
   "module": "lib/index.js",
@@ -13,7 +13,7 @@
     "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types"
   },
   "dependencies": {
-    "@hyperion-framework/types": "^0.2.0"
+    "@hyperion-framework/types": "^0.3.0"
   },
   "publishConfig": {
     "access": "public"
