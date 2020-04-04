@@ -24,8 +24,8 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "@fesk/babel-config": "^1.2.0",
-    "@fesk/scripts": "^1.2.1",
+    "@fesk/babel-config": "1.4.0-pr.a95f698d",
+    "@fesk/scripts": "1.4.0-pr.3eaea9db",
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
     "react": "^16.8.6",

@@ -10,7 +10,7 @@
     "watch": "fesk-watch"
   },
   "devDependencies": {
-    "@fesk/scripts": "^1.2.1"
+    "@fesk/scripts": "1.4.0-pr.3eaea9db"
   },
   "dependencies": {
     "@canvas-panel/viewer-element": "^0.2.0",

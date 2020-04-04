@@ -19,8 +19,8 @@
     "docz:build": "docz build"
   },
   "devDependencies": {
-    "@fesk/scripts": "^1.2.1",
-    "@fesk/webpack-config": "1.2.0",
+    "@fesk/scripts": "1.4.0-pr.3eaea9db",
+    "@fesk/webpack-config": "1.4.0-pr.a95f698d",
     "docz": "1.0.4"
   },
   "resolutions": {

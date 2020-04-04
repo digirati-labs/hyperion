@@ -17,7 +17,7 @@
     "build": "fesk-build"
   },
   "devDependencies": {
-    "@fesk/scripts": "^1.2.1"
+    "@fesk/scripts": "1.4.0-pr.3eaea9db"
   },
   "fesk": {
     "port": 5101,

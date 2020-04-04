@@ -22,8 +22,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@fesk/scripts": "^1.2.1",
-    "tslib": "^1.9.3"
+    "@fesk/scripts": "1.4.0-pr.3eaea9db",
+    "tslib": "^1.11.1"
   },
   "files": [
     "dist",
