@@ -1,4 +1,4 @@
-import { createStore as createReduxStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { createStore as createReduxStore, applyMiddleware, combineReducers, compose, Store } from 'redux';
 import { Epic } from 'redux-observable';
 import reducers from './reducers';
 import epics from './epics';
@@ -11,7 +11,7 @@ export function createStore(
   extraMiddleware: any[] = [],
   customEpics: Epic[] = [],
   defaultState: any = {}
-) {
+): Store {
   const { ajax } = require('rxjs/ajax');
   const { combineEpics, createEpicMiddleware } = require('redux-observable');
 
@@ -31,5 +31,5 @@ export function createStore(
 
   epicMiddleware.run(rootEpic);
 
-  return store;
+  return store as any;
 }

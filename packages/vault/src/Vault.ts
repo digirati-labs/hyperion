@@ -2,13 +2,13 @@ import { Entities, Mapping, NormalizedEntity } from './processing/normalize';
 import { createStore } from './redux/createStore';
 import { Store } from 'redux';
 import { Epic } from 'redux-observable';
-import Mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 import { AllActions, requestOfflineResource, requestResource, RequestState } from './redux/entities';
 import { ActionType } from 'typesafe-actions';
 import { CollectionNormalized, ManifestNormalized, Reference } from '@hyperion-framework/types';
 import { TraversableEntityTypes } from './processing/traverse';
 import { CtxFunction } from './context/createContext';
-import {serialise, SerialiseConfig} from './processing/serialise';
+import { serialise, SerialiseConfig } from './processing/serialise';
 
 export type VaultOptions = {
   reducers: {};
@@ -28,7 +28,7 @@ export type VaultState = {
 export class Vault<S extends VaultState = VaultState> {
   private readonly options: VaultOptions;
   private readonly store: Store;
-  private readonly emitter: Mitt.Emitter;
+  private readonly emitter: Emitter;
 
   constructor(options?: Partial<VaultOptions>, store?: Store) {
     this.options = Object.assign(options || {}, {
@@ -37,13 +37,15 @@ export class Vault<S extends VaultState = VaultState> {
       middleware: [],
       defaultState: {},
     });
-    this.store = store || createStore(
-      this.options.reducers,
-      [...this.options.middleware, this.middleware],
-      this.options.epics,
-      this.options.defaultState
-    );
-    this.emitter = new Mitt();
+    this.store =
+      store ||
+      createStore(
+        this.options.reducers,
+        [...this.options.middleware, this.middleware],
+        this.options.epics,
+        this.options.defaultState
+      );
+    this.emitter = mitt();
   }
 
   middleware = (store: Store) => (next: (action: AllActions) => S) => (action: AllActions): S => {
@@ -119,12 +121,12 @@ export class Vault<S extends VaultState = VaultState> {
       this.store.dispatch(
         json
           ? requestOfflineResource({
-            id: resource,
-            entity: json,
-          })
+              id: resource,
+              entity: json,
+            })
           : requestResource({
-            id: resource,
-          })
+              id: resource,
+            })
       );
     });
   }

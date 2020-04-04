@@ -3,7 +3,7 @@ import { createStore } from '../../src/redux/createStore';
 import { defaultEntities, emptyManifest, importEntities, manifestContext } from '../../src';
 
 describe('context/observe-context', () => {
-  test('it can handle changes to the state and context', done => {
+  test('it can handle changes to the state and context', async () => {
     const store = createStore();
 
     const { subscribe, updateContext } = observeContext({
@@ -35,19 +35,20 @@ describe('context/observe-context', () => {
       })
     );
 
-    let times = 0;
-    const expected = [{ en: ['manifest label'] }, { en: ['manifest label 2'] }];
+    return new Promise(done => {
+      let times = 0;
+      const expected = [{ en: ['manifest label'] }, { en: ['manifest label 2'] }];
 
-    subscribe((state, context) => {
-      expect(context.manifest.label).toEqual(expected[times]);
-      times++;
-      if (times === 1) {
-        updateContext('http://example.org/manifest-2.json');
-      }
-      if (times >= expected.length) {
-        done();
-      }
+      subscribe((state, context) => {
+        expect(context.manifest.label).toEqual(expected[times]);
+        times++;
+        if (times === 1) {
+          updateContext('http://example.org/manifest-2.json');
+        }
+        if (times >= expected.length) {
+          done();
+        }
+      });
     });
   });
-
 });

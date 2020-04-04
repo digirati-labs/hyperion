@@ -1,6 +1,6 @@
 // Create an abstract space, e.g. 1000x1000
 import { ViewingDirection } from '@hyperion-framework/types';
-import Mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 
 export type AbstractObject = { id: string; height: number; width: number; layers: Paintable[] };
 
@@ -27,7 +27,7 @@ export type PaintTarget = { width: number; height: number; x?: number; y?: numbe
 export type Projection = { x1: number; y1: number; x2: number; y2: number };
 
 // Add a viewport that the projection will projected onto.
-export type Viewport = { height: number; width: number; };
+export type Viewport = { height: number; width: number };
 
 // A tile definition. e.g 1, 100x100
 export type TileDefinition = { scale: number; width: number; height: number };
@@ -62,149 +62,6 @@ export type ImageServiceSurface = {
 
 export const CELL_LENGTH = 5;
 
-export class PaintableImage implements Paintable, InteractivePaintable {
-  id: string;
-  type: string = 'image';
-  group: string = '';
-  points: Int16Array = new Int16Array(CELL_LENGTH);
-  displayPoints: Int16Array = new Int16Array(CELL_LENGTH);
-  displayScale = 1;
-
-  constructor(url: string, { x = 0, y = 0, width, height }: PaintTarget) {
-    this.id = url;
-
-    this.points.set([1, x, y, x + width, y + height]);
-    this.displayPoints.set([1, 0, 0, width, height]);
-  }
-
-  translate(x: number, y: number) {
-    this.points = translate(x, y)(this.points);
-  }
-
-  hide() {
-    this.points.set([0], 0);
-  }
-
-  show() {
-    this.points.set([1], 0);
-  }
-}
-
-export class PaintableTileSource implements Paintable, InteractivePaintable {
-  id: string;
-  type: string = 'tile-source';
-  group: string = '';
-  points: Int16Array;
-  displayPoints: Int16Array;
-  displayScale: number;
-
-  constructor(imageServiceId: string, tile: TileDefinition, { x = 0, y = 0, width, height }: PaintTarget) {
-    this.id = `${imageServiceId}--${tile.scale}`;
-    this.group = imageServiceId;
-    this.displayScale = tile.scale;
-    this.displayPoints = scale(tile.scale)(createMatrix({ canvas: { width, height }, tile }));
-    this.points = new Int16Array(this.displayPoints);
-    this.translate(x, y);
-  }
-
-  // @todo maybe this should move out?
-  static fromImageService(tileSource: ImageService, target: PaintTarget): Paintable[] {
-    const resources: Paintable[] = [];
-
-    // @todo add static images from sizes property.
-    // if (tileSource.sizes) {
-    //   for (const size of tileSource.sizes) {
-    //     resources.push(
-    //       new PaintableImage()
-    //     );
-    //   }
-    // }
-
-    return (tileSource.tiles || []).reduce((acc, tile) => {
-      return (tile.scaleFactors || []).reduce((innerAcc, scale) => {
-        innerAcc.push(
-          new PaintableTileSource(
-            tileSource.id,
-            {
-              height: tile.height || tile.width || 256,
-              width: tile.width || tile.height || 256,
-              scale,
-            },
-            target
-          )
-        );
-        return innerAcc;
-      }, acc);
-    }, resources);
-  }
-
-  translate(x: number, y: number): void {
-    this.points = x && y ? translate(x, y)(this.points) : this.points;
-  }
-
-  hide(): void {
-    this.points = this.points.map((v, index) => (index % CELL_LENGTH === 0 ? 0 : v));
-  }
-
-  show(): void {
-    this.points = this.points.map((v, index) => (index % CELL_LENGTH === 0 ? 1 : v));
-  }
-}
-
-export type Paintables = PaintableTileSource | PaintableImage;
-
-export class MatrixViewer {
-  emitter: Mitt.Emitter;
-  views: { [name: string]: Viewport };
-  world: World;
-  projection: Projection;
-  control: boolean = false;
-
-  constructor(world: World) {
-    this.world = world;
-    this.emitter = new Mitt();
-    this.views = {};
-
-    // by default project the whole world.s
-    this.projection = { x1: 0, y1: 0, x2: world.width, y2: world.height };
-  }
-
-  addView(name: string, viewport: Viewport) {
-    this.views[name] = viewport;
-    this.emitter.emit('viewport-added', viewport);
-  }
-
-  removeView(name: string): Viewport {
-    const toRemove = this.views[name];
-    delete this.views[name];
-    this.emitter.emit('viewport-removed', toRemove);
-    return toRemove;
-  }
-
-  getView(name: string) {
-    const scaleFactor = Math.max(this.world.width / this.views[name].width, this.world.height / this.views[name].height);
-
-    const tX = this.views[name].width - (this.world.width / scaleFactor);
-    const tY = this.views[name].height - (this.world.height / scaleFactor);
-
-    return this.world.getRenderables(v => translate(tX / 2, tY / 2)(scale(1 / scaleFactor)(v)));
-  }
-
-  setControl(value: boolean) {
-    this.control = value;
-    this.emitter.emit('control-change', value);
-  }
-
-  translate(x: number, y: number) {
-    this.projection.x1 = this.projection.x1 + x;
-    this.projection.y1 = this.projection.y1 + y;
-    this.projection.x2 = this.projection.x2 + x;
-    this.projection.y2 = this.projection.y2 + y;
-
-    this.emitter.emit('translate', this.projection);
-  }
-}
-
 // Typed renderables to be returned, inferred using `type`
 // Helper methods:
 // - get image URL
@@ -214,6 +71,40 @@ export class MatrixViewer {
 // Have most of this encapsulated in a viewer class.
 // How to handle user input?
 // Streams?
+
+// Cheat sheet for mod 5 (v, x1, y1, x2, y2).
+// Column  | mod | check
+// visible | 0   | n % 5 == 0
+// x1      | 1   | n % 5 === 1
+// y1      | 2   | n % 5 === 2
+// x2      | 3   | n % 5 === 3
+// y2      | 4   | n % 5 === 4
+// x1 + x2 | -   | n % 5 % 2 === 1
+// y1 + y2 | -   | n % 5 && n % 5 % 2 === 0
+export const mapX = (func: (v: number) => number): PointsTransform => points =>
+  points.map((v, index) => ((index % 5) % 2 === 1 ? func(v) : v));
+export const mapY = (func: (v: number) => number): PointsTransform => points =>
+  points.map((v, index) => (index % 5 && (index % 5) % 2 === 0 ? func(v) : v));
+
+export const scale = (factor: number): PointsTransform => (points: Int16Array) => points.map(v => v * factor);
+export const translateX = (x: number): PointsTransform => mapX(v => v + x);
+export const translateY = (y: number): PointsTransform => mapY(v => v + y);
+export const translate = (x: number, y: number): PointsTransform => (points: Int16Array) =>
+  translateX(x)(translateY(y)(points));
+export const scaleAtOrigin = (factor: number, x: number, y: number): PointsTransform => (points: Int16Array) =>
+  translate(x * factor, y * factor)(scale(factor)(points));
+export const projectionFilter = (projection: Projection): PointsTransform => (points: Int16Array) =>
+  points.map((v, index, arr) =>
+    index % 5 === 0
+      ? /* x1 */ arr[index + 1] <= projection.x2 && // x1 left - x2 right
+        /* x2 */ arr[index + 3] >= projection.x1 && // x2 right - x1 left
+        /* y1 */ arr[index + 2] <= projection.y2 && // y1 top - y2 bottom
+        /* y2 */ arr[index + 4] >= projection.y1 // y2 bottom - y1 top
+        ? 1
+        : 0
+      : v
+  );
+export const nullTransform: PointsTransform = points => points;
 
 // For this new image matrix, it will be an array of
 export const createMatrix = ({ canvas, tile }: { canvas: { width: number; height: number }; tile: TileDefinition }) => {
@@ -253,40 +144,6 @@ export const createMatrix = ({ canvas, tile }: { canvas: { width: number; height
 
   return points;
 };
-
-// Cheat sheet for mod 5 (v, x1, y1, x2, y2).
-// Column  | mod | check
-// visible | 0   | n % 5 == 0
-// x1      | 1   | n % 5 === 1
-// y1      | 2   | n % 5 === 2
-// x2      | 3   | n % 5 === 3
-// y2      | 4   | n % 5 === 4
-// x1 + x2 | -   | n % 5 % 2 === 1
-// y1 + y2 | -   | n % 5 && n % 5 % 2 === 0
-export const mapX = (func: (v: number) => number): PointsTransform => points =>
-  points.map((v, index) => ((index % 5) % 2 === 1 ? func(v) : v));
-export const mapY = (func: (v: number) => number): PointsTransform => points =>
-  points.map((v, index) => (index % 5 && (index % 5) % 2 === 0 ? func(v) : v));
-
-export const scale = (factor: number): PointsTransform => (points: Int16Array) => points.map(v => v * factor);
-export const translateX = (x: number): PointsTransform => mapX(v => v + x);
-export const translateY = (y: number): PointsTransform => mapY(v => v + y);
-export const translate = (x: number, y: number): PointsTransform => (points: Int16Array) =>
-  translateX(x)(translateY(y)(points));
-export const scaleAtOrigin = (factor: number, x: number, y: number): PointsTransform => (points: Int16Array) =>
-  translate(x * factor, y * factor)(scale(factor)(points));
-export const projectionFilter = (projection: Projection): PointsTransform => (points: Int16Array) =>
-  points.map((v, index, arr) =>
-    index % 5 === 0
-      ? /* x1 */ arr[index + 1] <= projection.x2 && // x1 left - x2 right
-        /* x2 */ arr[index + 3] >= projection.x1 && // x2 right - x1 left
-        /* y1 */ arr[index + 2] <= projection.y2 && // y1 top - y2 bottom
-        /* y2 */ arr[index + 4] >= projection.y1 // y2 bottom - y1 top
-        ? 1
-        : 0
-      : v
-  );
-export const nullTransform: PointsTransform = points => points;
 
 type PointsTransform = (points: Int16Array) => Int16Array;
 
@@ -422,5 +279,151 @@ export class World {
       }
     }
     return paints;
+  }
+}
+
+export class PaintableImage implements Paintable, InteractivePaintable {
+  id: string;
+  type = 'image';
+  group = '';
+  points: Int16Array = new Int16Array(CELL_LENGTH);
+  displayPoints: Int16Array = new Int16Array(CELL_LENGTH);
+  displayScale = 1;
+
+  constructor(url: string, { x = 0, y = 0, width, height }: PaintTarget) {
+    this.id = url;
+
+    this.points.set([1, x, y, x + width, y + height]);
+    this.displayPoints.set([1, 0, 0, width, height]);
+  }
+
+  translate(x: number, y: number) {
+    this.points = translate(x, y)(this.points);
+  }
+
+  hide() {
+    this.points.set([0], 0);
+  }
+
+  show() {
+    this.points.set([1], 0);
+  }
+}
+
+export class PaintableTileSource implements Paintable, InteractivePaintable {
+  id: string;
+  type = 'tile-source';
+  group = '';
+  points: Int16Array;
+  displayPoints: Int16Array;
+  displayScale: number;
+
+  constructor(imageServiceId: string, tile: TileDefinition, { x = 0, y = 0, width, height }: PaintTarget) {
+    this.id = `${imageServiceId}--${tile.scale}`;
+    this.group = imageServiceId;
+    this.displayScale = tile.scale;
+    this.displayPoints = scale(tile.scale)(createMatrix({ canvas: { width, height }, tile }));
+    this.points = new Int16Array(this.displayPoints);
+    this.translate(x, y);
+  }
+
+  // @todo maybe this should move out?
+  static fromImageService(tileSource: ImageService, target: PaintTarget): Paintable[] {
+    const resources: Paintable[] = [];
+
+    // @todo add static images from sizes property.
+    // if (tileSource.sizes) {
+    //   for (const size of tileSource.sizes) {
+    //     resources.push(
+    //       new PaintableImage()
+    //     );
+    //   }
+    // }
+
+    return (tileSource.tiles || []).reduce((acc, tile) => {
+      return (tile.scaleFactors || []).reduce((innerAcc, scale) => {
+        innerAcc.push(
+          new PaintableTileSource(
+            tileSource.id,
+            {
+              height: tile.height || tile.width || 256,
+              width: tile.width || tile.height || 256,
+              scale,
+            },
+            target
+          )
+        );
+        return innerAcc;
+      }, acc);
+    }, resources);
+  }
+
+  translate(x: number, y: number): void {
+    this.points = x && y ? translate(x, y)(this.points) : this.points;
+  }
+
+  hide(): void {
+    this.points = this.points.map((v, index) => (index % CELL_LENGTH === 0 ? 0 : v));
+  }
+
+  show(): void {
+    this.points = this.points.map((v, index) => (index % CELL_LENGTH === 0 ? 1 : v));
+  }
+}
+
+export type Paintables = PaintableTileSource | PaintableImage;
+
+export class MatrixViewer {
+  emitter: Emitter;
+  views: { [name: string]: Viewport };
+  world: World;
+  projection: Projection;
+  control = false;
+
+  constructor(world: World) {
+    this.world = world;
+    this.emitter = mitt();
+    this.views = {};
+
+    // by default project the whole world.s
+    this.projection = { x1: 0, y1: 0, x2: world.width, y2: world.height };
+  }
+
+  addView(name: string, viewport: Viewport) {
+    this.views[name] = viewport;
+    this.emitter.emit('viewport-added', viewport);
+  }
+
+  removeView(name: string): Viewport {
+    const toRemove = this.views[name];
+    delete this.views[name];
+    this.emitter.emit('viewport-removed', toRemove);
+    return toRemove;
+  }
+
+  getView(name: string) {
+    const scaleFactor = Math.max(
+      this.world.width / this.views[name].width,
+      this.world.height / this.views[name].height
+    );
+
+    const tX = this.views[name].width - this.world.width / scaleFactor;
+    const tY = this.views[name].height - this.world.height / scaleFactor;
+
+    return this.world.getRenderables(v => translate(tX / 2, tY / 2)(scale(1 / scaleFactor)(v)));
+  }
+
+  setControl(value: boolean) {
+    this.control = value;
+    this.emitter.emit('control-change', value);
+  }
+
+  translate(x: number, y: number) {
+    this.projection.x1 = this.projection.x1 + x;
+    this.projection.y1 = this.projection.y1 + y;
+    this.projection.x2 = this.projection.x2 + x;
+    this.projection.y2 = this.projection.y2 + y;
+
+    this.emitter.emit('translate', this.projection);
   }
 }
