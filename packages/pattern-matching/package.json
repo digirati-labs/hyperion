@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/pattern-matching",
-  "version": "0.3.0",
+  "version": "0.3.7",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "main": "dist/umd/@hyperion-framework/pattern-matching.js",
   "module": "lib/index.js",
