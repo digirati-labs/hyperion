@@ -17,9 +17,9 @@ import { TraversableEntityTypes } from './processing/traverse';
 export function globalVault(options?: VaultOptions) {
   const gv: Vault | null = global
     ? (global as any).__hyperionVault__
-    : window
-    ? typeof window !== 'undefined' && window.__hyperionVault__
-    : null;
+    : typeof window !== 'undefined' && window.__hyperionVault__
+      ? window.__hyperionVault__
+      : null;
 
   if (gv) {
     return gv;
