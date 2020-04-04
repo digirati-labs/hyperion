@@ -26,7 +26,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "traceResolution": true,
+    "traceResolution": false,
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
