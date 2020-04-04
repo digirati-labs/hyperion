@@ -67,8 +67,8 @@ export class Vault<S extends VaultState = VaultState> {
   }
 
   select<R, C>(
-    selector: (state: S, context: CtxFunction<S, {}, C>, util: {}) => R,
-    context?: CtxFunction<S, {}, C> | undefined
+    selector: (state: S, context: CtxFunction<S, C>, util: any) => R,
+    context?: CtxFunction<S, C> | undefined
   ): R {
     return selector(this.getState(), context ? context : () => ({} as C), {});
   }

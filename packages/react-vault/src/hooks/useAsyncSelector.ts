@@ -3,10 +3,10 @@ import { ReactContext } from '../context/Context';
 import { CtxFunction, VaultState, StateSelector } from '@hyperion-framework/vault';
 import { useVault } from './useVault';
 
-export function useAsyncSelector<S extends VaultState, U, C, R>(selector: StateSelector<S, U, C, R>, deps: any[] = []) {
-  const contextCreator = useContext(ReactContext) as CtxFunction<S, U, C>;
-  const [isLoaded, setIsLoaded] = useState();
-  const [value, setCurrentValue] = useState();
+export function useAsyncSelector<S extends VaultState, U, C, R>(selector: StateSelector<S, C, R>, deps: any[] = []) {
+  const contextCreator = useContext(ReactContext) as CtxFunction<S, C>;
+  const [isLoaded, setIsLoaded] = useState<boolean>();
+  const [value, setCurrentValue] = useState<R>();
   const ref = useRef(Symbol('none'));
   const vault = useVault();
 

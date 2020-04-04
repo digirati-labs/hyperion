@@ -25,9 +25,8 @@ import {
 import { CanvasNormalized, ManifestNormalized } from '@hyperion-framework/types';
 import {ReactContext} from "../context/Context";
 
-type ValidThumbnailContext<S extends VaultState, U> = CtxFunction<
+type ValidThumbnailContext<S extends VaultState> = CtxFunction<
   S,
-  U,
   {
     thumbnailSize?: thumbnailSizeConfig;
     manifest?: ManifestNormalized;
@@ -38,7 +37,7 @@ type ValidThumbnailContext<S extends VaultState, U> = CtxFunction<
 >;
 
 export function useThumbnail(config?: Partial<thumbnailSizeConfig>) {
-  const context = useContext(ReactContext) as ValidThumbnailContext<VaultState, {}>;
+  const context = useContext(ReactContext) as ValidThumbnailContext<VaultState>;
   const vault = useVault();
   const state = vault.getState() as VaultState;
   const rawCtx = context(state, {});
@@ -69,7 +68,6 @@ export function useThumbnail(config?: Partial<thumbnailSizeConfig>) {
       state,
       (() => ctx) as CtxFunction<
         VaultState,
-        {},
         {
           thumbnailSize: thumbnailSizeConfig;
           canvas: CanvasNormalized;
@@ -85,7 +83,6 @@ export function useThumbnail(config?: Partial<thumbnailSizeConfig>) {
       state,
       (() => ctx) as CtxFunction<
         VaultState,
-        {},
         {
           thumbnailSize: thumbnailSizeConfig;
           canvas: CanvasNormalized;
@@ -100,7 +97,6 @@ export function useThumbnail(config?: Partial<thumbnailSizeConfig>) {
       state,
       (() => ctx) as CtxFunction<
         VaultState,
-        {},
         {
           thumbnailSize: thumbnailSizeConfig;
           manifest: ManifestNormalized;

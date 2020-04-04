@@ -3,7 +3,7 @@ import { OmitProperties } from '../utility';
 import { Canvas, ContentResource } from '..';
 
 export declare type InternationalString = {
-  [language: string]: string[];
+  [language: string]: string[] | undefined;
 };
 
 export declare type MetadataItem = {

@@ -57,7 +57,7 @@ beforeAll(async () => {
  *   - Thumbnail + service on manifest
  *   - Very rich 2.0 level 2 image service on canvas
  */
-describe('selectors/getThumbnailAtSize', () => {
+describe.skip('selectors/getThumbnailAtSize', () => {
   describe('Wellcome: first canvas', () => {
     test.each`
       width  | height  | scale

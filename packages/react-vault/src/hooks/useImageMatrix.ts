@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ImageService, PaintableTileSource, World } from '@hyperion-framework/vault';
 
 export const useImageMatrix = () => {
-  const [world, setWorld] = useState();
+  const [world, setWorld] = useState<World>();
   const imageService = useImageService();
   const canvas = useCanvas();
 
@@ -18,9 +18,9 @@ export const useImageMatrix = () => {
         setWorld(world);
       }
 
-      return () => { setWorld(null); }
+      return () => { setWorld(undefined); }
     },
-    [canvas, imageService] 
+    [canvas, imageService]
   );
 
   return world;

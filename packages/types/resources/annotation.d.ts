@@ -283,6 +283,8 @@ export declare type Agent = {
   email?: string;
   email_sha1?: string;
   homepage?: string | string[];
+  // ?
+  'schema:softwareVersion'?: any;
 };
 
 export declare type AnnotationW3C = OtherProperties & {
