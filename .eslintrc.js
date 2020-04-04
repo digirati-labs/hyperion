@@ -11,6 +11,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-ignore': 1,
     '@typescript-eslint/no-var-requires': 0,
+    'require-yield': 0,
   },
   settings: {
     'import/ignore': [

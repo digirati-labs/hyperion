@@ -16,6 +16,11 @@
   },
   "devDependencies": {
     "@fesk/module-release": "^0.0.3",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-json-format": "^2.0.1",
     "@fesk/eslint-config-standard": "1.4.0-pr.b6dc2fa3",
     "@typescript-eslint/eslint-plugin": "^2.4.0",
     "@typescript-eslint/parser": "^2.4.0",
