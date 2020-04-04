@@ -9,10 +9,9 @@ import { getImageService, getImageServiceFromAnnotation } from '@hyperion-framew
 export const useImageService = (): Service | null => {
   const context = useContext(ReactContext) as CtxFunction<
     VaultState,
-    {},
     { canvas?: CanvasNormalized; annotation: AnnotationNormalized } & { [key: string]: any }
   >;
-  const [currentImageService, setCurrentImageService] = useState();
+  const [currentImageService, setCurrentImageService] = useState<Service | null>(null);
   const [isFullyLoaded, setIsFullLoaded] = useState<boolean>(false);
 
   // @todo new context effect hook.

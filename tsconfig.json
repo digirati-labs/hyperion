@@ -29,6 +29,7 @@
     "traceResolution": true,
     "strict": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "pretty": true,
     "removeComments": true,
     "sourceMap": true,

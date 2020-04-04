@@ -3,14 +3,14 @@ import { emptyContext, combineContext, CtxFunction, VaultState } from '@hyperion
 
 export const ReactContext = React.createContext<unknown>(emptyContext);
 
-export function Context<S extends VaultState, U, C1, C2>({
+export function Context<S extends VaultState, C1, C2>({
   children,
   context,
 }: {
   children: React.ReactNode;
-  context: CtxFunction<S, U, C1>;
+  context: CtxFunction<S, C1>;
 }) {
-  const parentContext = useContext(ReactContext as ReactCtx<CtxFunction<S, U, C2>>);
+  const parentContext = useContext(ReactContext as ReactCtx<CtxFunction<S, C2>>);
 
   const vaultContext = useMemo(() => (parentContext ? combineContext(parentContext, context) : context), [
     context,

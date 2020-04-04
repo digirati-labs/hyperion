@@ -17,7 +17,7 @@ import {
   Service,
   Range,
   ServiceNormalized,
-  AnnotationNormalized,
+  AnnotationNormalized, AnnotationCollectionNormalized,
 } from '@hyperion-framework/types';
 import { emptyCollection } from '../resources/collection';
 import { emptyManifest } from '../resources/manifest';
@@ -31,6 +31,7 @@ export type NormalizedEntity =
   | ManifestNormalized
   | CanvasNormalized
   | AnnotationPageNormalized
+  | AnnotationCollectionNormalized
   | AnnotationCollection
   | AnnotationNormalized
   | ContentResource

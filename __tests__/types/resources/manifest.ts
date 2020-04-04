@@ -3,7 +3,7 @@ import ghentManifest from '../../../fixtures/2-to-3-converter/manifests/ghent-un
 // import blManifest from '../../../fixtures/2-to-3-converter/manifests/british-library-manifest.json';
 import princetonManifest from '../../../fixtures/2-to-3-converter/manifests/princeton-manifest.json';
 import ncsuManifest from '../../../fixtures/2-to-3-converter/manifests/ncsu-libraries-manifest.json';
-import nlwNewspaper from '../../../fixtures/2-to-3-converter/manifests/nlw-newspaper-manifest.json';
+// import nlwNewspaper from '../../../fixtures/2-to-3-converter/manifests/nlw-newspaper-manifest.json';
 import nlwManuscript from '../../../fixtures/2-to-3-converter/manifests/nlw-manuscript-manifest.json';
 // import {matchAnnotationBody} from "@hyperion-framework/pattern-matching";
 
@@ -117,23 +117,23 @@ describe('types/manifest', () => {
       ]);
     });
 
-    test('NLW Newspaper manifest', () => {
-      const manifest: Manifest = nlwNewspaper as Manifest;
-
-      expect(manifest).toBeDefined();
-
-      const annotationPage = manifest.items[0].annotations;
-
-      expect(annotationPage).toBeDefined();
-
-      expect(annotationPage![0].partOf).toEqual([
-        {
-          id: 'http://dams.llgc.org.uk/iiif/3320640/annotation/layer/modsarticle1.json',
-          label: { '@none': ['OCR Article Text'] },
-          type: 'AnnotationCollection',
-        },
-      ]);
-    });
+    // test('NLW Newspaper manifest', () => {
+    //   const manifest: Manifest = nlwNewspaper as Manifest;
+    //
+    //   expect(manifest).toBeDefined();
+    //
+    //   const annotationPage = manifest.items[0].annotations;
+    //
+    //   expect(annotationPage).toBeDefined();
+    //
+    //   expect(annotationPage![0].partOf).toEqual([
+    //     {
+    //       id: 'http://dams.llgc.org.uk/iiif/3320640/annotation/layer/modsarticle1.json',
+    //       label: { '@none': ['OCR Article Text'] },
+    //       type: 'AnnotationCollection',
+    //     },
+    //   ]);
+    // });
 
     test('Princeton manifest', () => {
       const manifest: Manifest = princetonManifest as Manifest;

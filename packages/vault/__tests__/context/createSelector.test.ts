@@ -22,22 +22,24 @@ describe('create selector', () => {
       creator: (langKey: string) => langKey,
     });
 
+    const _ = (map: any, lang: string): string => (map[lang] || []).join('');
+
     // Add a big 'ol selector for some fields that use the language
     const descriptiveFields = createSelector({
       context: [manifestContext, currentLanguage],
       selector: (state, ctx) => {
         const manifest = ctx.manifest;
         return {
-          label: manifest.label ? manifest.label[ctx.language].join('') : null,
-          summary: manifest.summary ? manifest.summary[ctx.language].join('') : null,
+          label: manifest.label ? _(manifest.label, ctx.language) : null,
+          summary: manifest.summary ? _(manifest.summary,ctx.language) : null,
           metadata: manifest.metadata.map(({ label, value }) => ({
-            label: label[ctx.language].join(''),
-            value: value[ctx.language].join(''),
+            label: _(label, ctx.language),
+            value: _(value, ctx.language),
           })),
           requiredStatement: manifest.requiredStatement
             ? {
-                label: manifest.requiredStatement.label[ctx.language].join(''),
-                value: manifest.requiredStatement.value[ctx.language].join(''),
+                label: _(manifest.requiredStatement.label, ctx.language),
+                value: _(manifest.requiredStatement.value, ctx.language),
               }
             : null,
         };

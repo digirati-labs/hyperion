@@ -11,8 +11,6 @@ jobs:
         node_version: 11.x
       node_10_x:
         node_version: 10.x
-      node_8_x:
-        node_version: 8.x
     maxParallel: 5
 
   steps:

@@ -2,9 +2,9 @@ import { createContextReturn } from './createContext';
 import { VaultState } from '../Vault';
 import { Store } from 'redux';
 
-export type Subscription<S, N extends string, R, U> = (state: S, context: { [name in N]: R }, utility: U) => void;
+export type Subscription<S, N extends string, R> = (state: S, context: { [name in N]: R }, utility: any) => void;
 
-export function observeContext<S extends VaultState, N extends string, T, C, R, U>({
+export function observeContext<S extends VaultState, N extends string, T, C, R>({
   store,
   context,
   initialValue,
@@ -13,10 +13,10 @@ export function observeContext<S extends VaultState, N extends string, T, C, R, 
   store: Store;
   context: createContextReturn<N, T, C, R>;
   initialValue: T;
-  utility: U;
+  utility: any;
 }): {
-  subscribe: (subscription: Subscription<S, N, R, U>) => () => void;
-  unsubscribe: (subscription: Subscription<S, N, R, U>) => void;
+  subscribe: (subscription: Subscription<S, N, R>) => () => void;
+  unsubscribe: (subscription: Subscription<S, N, R>) => void;
   updateContext: (value: T) => void;
   unsubscribeAll: () => void;
 } {
@@ -24,7 +24,7 @@ export function observeContext<S extends VaultState, N extends string, T, C, R, 
   const initialContext = initialContextCreator(store.getState(), utility);
 
   const state: {
-    subscriptions: Array<Subscription<S, N, R, U>>;
+    subscriptions: Array<Subscription<S, N, R>>;
     currentCreator: any;
     current: { [name in N]: R };
     hasStopped: boolean;
@@ -43,11 +43,11 @@ export function observeContext<S extends VaultState, N extends string, T, C, R, 
     }
   });
 
-  const executePhaseShift = (subscription: Subscription<any, N, R, U>, storeState: S, context: { [name in N]: R }) => {
+  const executePhaseShift = (subscription: Subscription<any, N, R>, storeState: S, context: { [name in N]: R }) => {
     subscription(storeState, context, utility);
   };
 
-  const subscribe = (subscription: Subscription<S, N, R, U>): (() => void) => {
+  const subscribe = (subscription: Subscription<S, N, R>): (() => void) => {
     if (state.hasStopped) {
       // Could in future re-activate the subscription.
       throw new Error('All subscriptions have been stopped.');
@@ -58,7 +58,7 @@ export function observeContext<S extends VaultState, N extends string, T, C, R, 
     return () => unsubscribe(subscription);
   };
 
-  const unsubscribe = (subscription: Subscription<S, N, R, U>): void => {
+  const unsubscribe = (subscription: Subscription<S, N, R>): void => {
     const index = state.subscriptions.indexOf(subscription);
     if (index !== -1) {
       state.subscriptions.splice(index, 1);

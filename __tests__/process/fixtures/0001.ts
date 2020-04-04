@@ -1,4 +1,4 @@
-import json from './0001.json';
+const json = require('./0001.json');
 import {Manifest} from "@hyperion-framework/types";
 
 describe('process/fixtures/0001', () => {

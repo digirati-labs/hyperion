@@ -5,7 +5,7 @@ export type createContextArgs<N extends string, T, C, R> = {
   // Called once on creation (an identity)
   creator: (arg: T) => C;
   // Called each time when passed to selectors.
-  resolve?: <S extends VaultState, U>(ref: C, state: S, util: U) => R;
+  resolve?: <S extends VaultState>(ref: C, state: S, util: any) => R;
 };
 
 export type createContextReturn<N extends string, T, C, R> = (arg: T) => CustomContext<N, R>;
@@ -17,9 +17,9 @@ export function createContext<N extends string, T, C, R = C>({
 }: createContextArgs<N, T, C, R>): createContextReturn<N, T, C, R> {
   return (arg: T) => {
     const ref: C = creator(arg);
-    return <S extends VaultState, U>(state: S, util: U) => {
+    return <S extends VaultState>(state: S, util: any) => {
       return {
-        [name]: resolve ? resolve<S, U>(ref, state, util) : ref,
+        [name]: resolve ? resolve<S>(ref, state, util) : ref,
       } as { [r in N]: R };
     };
   };
@@ -34,4 +34,4 @@ export function emptyContext() {
 
 export type CustomContext<N extends string, R> = <S extends VaultState, U>(state: S, util: U) => { [name in N]: R };
 
-export type CtxFunction<S extends VaultState, U, C> = (state: S, util: U) => C;
+export type CtxFunction<S extends VaultState, C> = (state: S, util: any) => C;

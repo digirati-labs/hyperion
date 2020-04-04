@@ -87,8 +87,8 @@ describe('context/combine-selector', () => {
         const manifest = ctx.manifest;
         return {
           metadata: manifest.metadata.map(({ label, value }) => ({
-            label: label[ctx.language].join(''),
-            value: value[ctx.language].join(''),
+            label: (label[ctx.language] || []).join(''),
+            value: (value[ctx.language] || []).join(''),
           })),
         };
       },
