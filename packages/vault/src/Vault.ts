@@ -8,6 +8,7 @@ import { ActionType } from 'typesafe-actions';
 import { CollectionNormalized, ManifestNormalized, Reference } from '@hyperion-framework/types';
 import { TraversableEntityTypes } from './processing/traverse';
 import { CtxFunction } from './context/createContext';
+import {serialise, SerialiseConfig} from './processing/serialise';
 
 export type VaultOptions = {
   reducers: {};
@@ -51,6 +52,10 @@ export class Vault<S extends VaultState = VaultState> {
     this.emitter.emit(`after:${action.type}`, { action, state: store.getState() });
     return state;
   };
+
+  serialise<Return>(entity: Reference<TraversableEntityTypes>, config: SerialiseConfig<S>) {
+    return serialise<Return, S>(this, entity, config);
+  }
 
   fromRef<T extends NormalizedEntity, R = T>(
     reference: Reference<TraversableEntityTypes>,

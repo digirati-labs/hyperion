@@ -11,29 +11,29 @@ import {
   Selector
 } from '@hyperion-framework/types';
 import {EntityReference, NormalizedEntity} from './normalize';
-import { Vault } from '../Vault';
+import {Vault, VaultState} from '../Vault';
 
 export const UNSET = '__$HF_UNSET$__';
 export const UNWRAP = '__$HF_UNWRAP$__';
 
 export type Field = any[];
 
-export type Serialiser<Type extends NormalizedEntity> = (entity: Type, vault: Vault) => Generator<EntityReference | EntityReference[], typeof UNSET | Field[], any>;
+export type Serialiser<Type extends NormalizedEntity, S extends VaultState = VaultState> = (entity: Type, vault: Vault<S>) => Generator<EntityReference | EntityReference[], typeof UNSET | Field[], any>;
 
-export type SerialiseConfig = {
-  Collection?: Serialiser<CollectionNormalized>,
-  Manifest?: Serialiser<ManifestNormalized>,
-  Canvas?: Serialiser<CanvasNormalized>,
-  AnnotationPage?: Serialiser<AnnotationPageNormalized>,
-  AnnotationCollection?: Serialiser<AnnotationCollectionNormalized>,
-  Annotation?: Serialiser<AnnotationNormalized>,
-  ContentResource?: Serialiser<ContentResource>,
-  Range?: Serialiser<RangeNormalized>,
-  Service?: Serialiser<ServiceNormalized>,
-  Selector?: Serialiser<Selector>,
+export type SerialiseConfig<S extends VaultState = VaultState> = {
+  Collection?: Serialiser<CollectionNormalized, S>,
+  Manifest?: Serialiser<ManifestNormalized, S>,
+  Canvas?: Serialiser<CanvasNormalized, S>,
+  AnnotationPage?: Serialiser<AnnotationPageNormalized, S>,
+  AnnotationCollection?: Serialiser<AnnotationCollectionNormalized, S>,
+  Annotation?: Serialiser<AnnotationNormalized, S>,
+  ContentResource?: Serialiser<ContentResource, S>,
+  Range?: Serialiser<RangeNormalized, S>,
+  Service?: Serialiser<ServiceNormalized, S>,
+  Selector?: Serialiser<Selector, S>,
 };
 
-function fieldsToObject<T>(fields: Field[] | [string]): T {
+export function serialisedFieldsToObject<T>(fields: Field[] | [string]): T {
   const object: any = {};
 
   for (const [key, value] of fields) {
@@ -48,7 +48,7 @@ function fieldsToObject<T>(fields: Field[] | [string]): T {
   return object as T;
 }
 
-export function serialise(vault: Vault, subject: EntityReference, config: SerialiseConfig) {
+export function serialise<Return, S extends VaultState>(vault: Vault<S>, subject: EntityReference, config: SerialiseConfig<S>): Return {
   if (!subject.type || !subject.id) {
     throw new Error('Unknown entity');
   }
@@ -85,8 +85,8 @@ export function serialise(vault: Vault, subject: EntityReference, config: Serial
       return UNSET;
     }
 
-    return fieldsToObject(current.value);
+    return serialisedFieldsToObject(current.value);
   }
 
-  return flatten(subject);
+  return flatten(subject) as Return;
 }
