@@ -6,19 +6,28 @@ export declare type ImageTile = {
   width: number;
   height?: number;
   scaleFactors: number[];
+  maxWidth?: number;
+  maxHeight?: number;
 };
 
 // @todo add in IIIF-Vocabulary
 export declare type ImageProfile =
   | string
   | {
-      formats: string[];
-      qualities: string[];
-      supports: string[];
+      '@context'?: 'http://iiif.io/api/image/2/context.json',
+      '@type'?: 'iiif:ImageProfile',
+      type?: 'ImageProfile',
+      formats?: string[];
+      qualities?: string[];
+      supports?: string[];
+      maxArea?: number;
+      maxHeight?: number;
+      maxWidth?: number;
     };
 
 export interface Service {
   '@context'?: string | string[];
+  '@id'?: string;
   id: string;
   profile: ImageProfile | ImageProfile[];
   protocol?: string;
@@ -28,4 +37,4 @@ export interface Service {
   tiles?: ImageTile[];
 }
 
-export declare type ServiceNormalized = Required<OmitProperties<Service, '@context'>>;
+export declare type ServiceNormalized = Required<OmitProperties<Service, '@context' | '@id'>>;
