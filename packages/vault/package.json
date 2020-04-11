@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/vault",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "main": "dist/umd/@hyperion-framework/vault.js",
   "module": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -13,7 +13,7 @@
     "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./lib"
   },
   "dependencies": {
-    "@hyperion-framework/types": "^0.3.0",
+    "@hyperion-framework/types": "^0.3.8",
     "axios": "^0.18.0",
     "deepmerge": "^3.1.0",
     "hash-string": "^1.0.0",
