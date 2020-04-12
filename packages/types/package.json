@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/types",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "source": "lib/index.ts",
   "types": "lib/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",

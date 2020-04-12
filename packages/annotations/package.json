@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/annotations",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "main": "dist/hyperion-framework-annotations.js",
   "umd:main": "dist/hyperion-framework-annotations.umd.js",
   "module": "dist/hyperion-framework-annotations.mjs",
@@ -19,6 +19,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@hyperion-framework/types": "^0.3.8"
+    "@hyperion-framework/types": "^0.3.9"
   }
 }
