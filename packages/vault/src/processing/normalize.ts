@@ -14,7 +14,6 @@ import {
   ManifestNormalized,
   RangeNormalized,
   Selector,
-  Service,
   Range,
   ServiceNormalized,
   AnnotationNormalized,
@@ -25,7 +24,6 @@ import { emptyManifest } from '../resources/manifest';
 import { emptyCanvas } from '../resources/canvas';
 import { emptyAnnotationPage } from '../resources/annotationPage';
 import { emptyRange } from '../resources/range';
-import { emptyService } from '../resources/service';
 
 export type NormalizedEntity =
   | CollectionNormalized
@@ -110,7 +108,7 @@ function mapToEntities(entities: Entities) {
       const resource = getResource(r, type);
       if (resource && resource.id && type) {
         storeType[resource.id] = storeType[resource.id]
-          ? Object.assign({}, storeType[resource.id], resource)
+          ? (Object.assign({}, storeType[resource.id], resource) as any)
           : Object.assign({}, resource);
         return { id: resource.id, type: type } as T;
       }
@@ -139,14 +137,14 @@ function recordTypeInMapping(mapping: Mapping) {
 function hash(object: any): string {
   const text = JSON.stringify(object);
 
-  let hash = 5381,
+  let numHash = 5381,
     index = text.length;
 
   while (index) {
-    hash = (hash * 33) ^ text.charCodeAt(--index);
+    numHash = (numHash * 33) ^ text.charCodeAt(--index);
   }
 
-  const num = hash >>> 0;
+  const num = numHash >>> 0;
 
   const hexString = num.toString(16);
   if (hexString.length % 2) {
@@ -221,16 +219,19 @@ export function convertPresentation2<T extends any>(entity: T): T | Manifest | C
     // Definitely presentation 3
     const type = entity['@type'] || entity.type;
     if (type === 'Manifest' || type === 'sc:Manifest') {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
       return upgrade.processResource(entity, true);
       // convert manifest.
     }
     if (type === 'Collection' || type === 'sc:Collection') {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
       return upgrade.processResource(entity, true);
     }
     // Image service.
     if (entity.profile) {
+      // eslint-disable-next-line @typescript-eslint/camelcase
       const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
       return upgrade.processResource(entity, true);
     }

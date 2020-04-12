@@ -257,7 +257,7 @@ export class Traverse {
 
   traverseAnnotationPage(annotationPageJson: AnnotationPage): AnnotationPage {
     return this.traverseType<AnnotationPage>(
-      this.traverseDescriptive(this.traverseLinking(this.traverseAnnotationPageItems(annotationPageJson))),
+      this.traverseDescriptive(this.traverseLinking(this.traverseAnnotationPageItems(annotationPageJson) as any)),
       this.traversals.annotationPage
     );
   }
@@ -267,12 +267,12 @@ export class Traverse {
   traverseAnnotationBody(annotation: Annotation): Annotation {
     if (Array.isArray(annotation.body)) {
       annotation.body = annotation.body.map(
-        (annotationBody: ContentResource): ContentResource => {
+        (annotationBody: any): ContentResource => {
           return this.traverseContentResource(annotationBody);
         }
       );
     } else if (annotation.body) {
-      annotation.body = this.traverseContentResource(annotation.body);
+      annotation.body = this.traverseContentResource(annotation.body as ContentResource);
     }
 
     return annotation;

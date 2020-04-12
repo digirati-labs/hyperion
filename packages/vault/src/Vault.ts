@@ -6,7 +6,6 @@ import mitt, { Emitter } from 'mitt';
 import { AllActions, requestOfflineResource, requestResource, RequestState } from './redux/entities';
 import { ActionType } from 'typesafe-actions';
 import {
-  AnnotationCollectionNormalized,
   AnnotationNormalized,
   AnnotationPageNormalized,
   CanvasNormalized,
@@ -21,7 +20,14 @@ import { TraversableEntityTypes } from './processing/traverse';
 import { CtxFunction } from './context/createContext';
 import { serialise, SerialiseConfig } from './processing/serialise';
 import { getFixedSizeFromImage, ImageServiceLoader } from '@atlas-viewer/iiif-image-api';
-import { ImageCandidateRequest } from '@atlas-viewer/iiif-image-api/lib/types';
+import {
+  FixedSizeImage,
+  FixedSizeImageService,
+  ImageCandidate,
+  ImageCandidateRequest,
+  UnknownSizeImage,
+  VariableSizeImage,
+} from '@atlas-viewer/iiif-image-api/lib/types';
 
 export type VaultOptions = {
   reducers: {};
@@ -114,7 +120,7 @@ export class Vault<S extends VaultState = VaultState> {
     return this.load<CollectionNormalized>(id, json);
   }
 
-  getThumbnail(
+  async getThumbnail(
     input:
       | Reference<CollectionItemSchemas>
       | Reference<'Collection'>
@@ -131,10 +137,14 @@ export class Vault<S extends VaultState = VaultState> {
       | ContentResource,
     request: ImageCandidateRequest,
     dereference?: boolean
-  ) {
+  ): Promise<{
+    best: null | undefined | FixedSizeImage | FixedSizeImageService | VariableSizeImage | UnknownSizeImage;
+    fallback: Array<ImageCandidate>;
+    log: string[];
+  }> {
     if (typeof input === 'string') {
       // Best shot we have.
-      return getFixedSizeFromImage(input);
+      return { best: getFixedSizeFromImage(input), fallback: [], log: [] };
     }
 
     // Run through from ref, just in case.
@@ -147,7 +157,7 @@ export class Vault<S extends VaultState = VaultState> {
       | ContentResource = this.fromRef(input as any);
 
     if (typeof fullInput === 'string') {
-      return getFixedSizeFromImage(fullInput);
+      return { best: getFixedSizeFromImage(fullInput), fallback: [], log: [] };
     }
 
     switch (fullInput.type) {
@@ -156,7 +166,7 @@ export class Vault<S extends VaultState = VaultState> {
         const contentResources = fullInput.body;
         // @todo this could be configuration.
         const firstContentResources = this.fromRef<ContentResource>(contentResources[0]);
-        return this.imageService.getThumbnailFromResource(firstContentResources, request, dereference);
+        return await this.imageService.getThumbnailFromResource(firstContentResources, request, dereference);
       }
 
       case 'Canvas': {
@@ -212,10 +222,10 @@ export class Vault<S extends VaultState = VaultState> {
       case 'AnnotationCollection':
       case 'CanvasReference':
       case 'ContentResource':
-        return undefined;
+        return { best: undefined, fallback: [], log: [] };
     }
 
-    return undefined;
+    return { best: undefined, fallback: [], log: [] };
   }
 
   load<T>(resource: string, json?: unknown): Promise<T> {
