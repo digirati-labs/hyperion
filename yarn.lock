@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@atlas-viewer/iiif-image-api@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.0.3.tgz#5ca9b658600cd3b9b21ca387383ffb6052dbd2d6"
+  integrity sha512-autEIqe7tnh9TKfX9XcWAL77GCs2OApBBLdWEH0Peovpn/RxwFOaXeEzzUGFSG2Q6gekeY5Cynk8koE10eeZZA==
+  dependencies:
+    "@hyperion-framework/types" "^0.3.8"
+
 "@babel/cli@^7.4.3":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.4.3.tgz#353048551306ff42e5855b788b6ccd9477289774"

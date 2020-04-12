@@ -17,7 +17,8 @@ import {
   Service,
   Range,
   ServiceNormalized,
-  AnnotationNormalized, AnnotationCollectionNormalized,
+  AnnotationNormalized,
+  AnnotationCollectionNormalized,
 } from '@hyperion-framework/types';
 import { emptyCollection } from '../resources/collection';
 import { emptyManifest } from '../resources/manifest';
@@ -210,11 +211,11 @@ function ensureArrayOnAnnotation(annotation: Annotation): Annotation {
 
 export function convertPresentation2<T extends any>(entity: T): T | Manifest | Collection {
   if (
-    entity &&
-    (entity['@context'] === 'http://iiif.io/api/presentation/2/context.json' ||
-      entity['@context'].indexOf('http://iiif.io/api/presentation/2/context.json') !== -1 ||
-      // Yale context.
-      entity['@context'] === 'http://www.shared-canvas.org/ns/context.json') ||
+    (entity &&
+      (entity['@context'] === 'http://iiif.io/api/presentation/2/context.json' ||
+        entity['@context'].indexOf('http://iiif.io/api/presentation/2/context.json') !== -1 ||
+        // Yale context.
+        entity['@context'] === 'http://www.shared-canvas.org/ns/context.json')) ||
     entity['@context'] === 'http://iiif.io/api/image/2/context.json'
   ) {
     // Definitely presentation 3
@@ -287,11 +288,14 @@ export function normalize(unknownEntity: unknown) {
       addToMapping<Range>('Range'),
       addToEntities<Range>('Range'),
     ],
-    service: [
-      ensureDefaultFields<Service, ServiceNormalized>(emptyService),
-      addToMapping<Service>('Service'),
-      addToEntities<Service>('Service'),
-    ],
+    // Remove this, content resources are NOT usually processed by this library.
+    // They need to be available in full when they get passed down the chain.
+    // There may be a better way to preserve annotations and content resources.
+    // service: [
+    //   ensureDefaultFields<Service, ServiceNormalized>(emptyService),
+    //   addToMapping<Service>('Service'),
+    //   addToEntities<Service>('Service'),
+    // ],
   });
   const resource = traversal.traverseUnknown(entity) as EntityReference;
 

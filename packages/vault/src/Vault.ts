@@ -5,10 +5,23 @@ import { Epic } from 'redux-observable';
 import mitt, { Emitter } from 'mitt';
 import { AllActions, requestOfflineResource, requestResource, RequestState } from './redux/entities';
 import { ActionType } from 'typesafe-actions';
-import { CollectionNormalized, ManifestNormalized, Reference } from '@hyperion-framework/types';
+import {
+  AnnotationCollectionNormalized,
+  AnnotationNormalized,
+  AnnotationPageNormalized,
+  CanvasNormalized,
+  ChoiceBody,
+  CollectionItemSchemas,
+  CollectionNormalized,
+  ContentResource,
+  ManifestNormalized,
+  Reference,
+} from '@hyperion-framework/types';
 import { TraversableEntityTypes } from './processing/traverse';
 import { CtxFunction } from './context/createContext';
 import { serialise, SerialiseConfig } from './processing/serialise';
+import { getFixedSizeFromImage, ImageServiceLoader } from '@atlas-viewer/iiif-image-api';
+import { ImageCandidateRequest } from '@atlas-viewer/iiif-image-api/lib/types';
 
 export type VaultOptions = {
   reducers: {};
@@ -29,6 +42,7 @@ export class Vault<S extends VaultState = VaultState> {
   private readonly options: VaultOptions;
   private readonly store: Store;
   private readonly emitter: Emitter;
+  private readonly imageService: ImageServiceLoader;
 
   constructor(options?: Partial<VaultOptions>, store?: Store) {
     this.options = Object.assign(options || {}, {
@@ -46,6 +60,7 @@ export class Vault<S extends VaultState = VaultState> {
         this.options.defaultState
       );
     this.emitter = mitt();
+    this.imageService = new ImageServiceLoader();
   }
 
   middleware = (store: Store) => (next: (action: AllActions) => S) => (action: AllActions): S => {
@@ -64,7 +79,10 @@ export class Vault<S extends VaultState = VaultState> {
     selector?: <C>(state: S, ctx: C) => R
   ): R | T {
     const state = this.getState();
-    const resource = state.hyperion.entities[reference.type][reference.id] as T;
+    const resource =
+      state.hyperion.entities[reference.type] && state.hyperion.entities[reference.type][reference.id]
+        ? (state.hyperion.entities[reference.type][reference.id] as T)
+        : reference;
 
     if (!selector) {
       return resource as T;
@@ -94,6 +112,110 @@ export class Vault<S extends VaultState = VaultState> {
 
   loadCollection(id: string, json?: unknown): Promise<CollectionNormalized> {
     return this.load<CollectionNormalized>(id, json);
+  }
+
+  getThumbnail(
+    input:
+      | Reference<CollectionItemSchemas>
+      | Reference<'Collection'>
+      | Reference<'Manifest'>
+      | Reference<'Canvas'>
+      | Reference<'Annotation'>
+      | Reference<'AnnotationPage'>
+      | Reference<'ContentResource'>
+      | CollectionNormalized
+      | ManifestNormalized
+      | CanvasNormalized
+      | AnnotationNormalized
+      | AnnotationPageNormalized
+      | ContentResource,
+    request: ImageCandidateRequest,
+    dereference?: boolean
+  ) {
+    if (typeof input === 'string') {
+      // Best shot we have.
+      return getFixedSizeFromImage(input);
+    }
+
+    // Run through from ref, just in case.
+    const fullInput:
+      | ManifestNormalized
+      | CollectionNormalized
+      | CanvasNormalized
+      | AnnotationNormalized
+      | AnnotationPageNormalized
+      | ContentResource = this.fromRef(input as any);
+
+    if (typeof fullInput === 'string') {
+      return getFixedSizeFromImage(fullInput);
+    }
+
+    switch (fullInput.type) {
+      case 'Annotation': {
+        // Grab the body.
+        const contentResources = fullInput.body;
+        // @todo this could be configuration.
+        const firstContentResources = this.fromRef<ContentResource>(contentResources[0]);
+        return this.imageService.getThumbnailFromResource(firstContentResources, request, dereference);
+      }
+
+      case 'Canvas': {
+        const canvas = fullInput as CanvasNormalized;
+        // check for thumbnail resource first?
+        if (canvas.thumbnail && canvas.thumbnail.length) {
+          const thumbnail = this.fromRef<ContentResource>(canvas.thumbnail[0]);
+          const potentialThumbanils = this.getThumbnail(thumbnail, request, dereference);
+          if (potentialThumbanils) {
+            return potentialThumbanils;
+          }
+        }
+
+        return this.getThumbnail(canvas.items[0], request, dereference);
+      }
+
+      // Unsupported for now.
+      case 'AnnotationPage': {
+        const annotationPage = fullInput as AnnotationPageNormalized;
+        return this.getThumbnail(annotationPage.items[0], request, dereference);
+      }
+
+      case 'Choice': {
+        const choice: ChoiceBody = fullInput as any;
+        // @todo this could also be configuration, just choosing the first choice.
+        return this.getThumbnail(choice.items[0], request, dereference);
+      }
+      case 'Collection': {
+        // This one is tricky, as the manifests may not have been loaded. But we will give it a shot.
+        const collection = fullInput as CollectionNormalized;
+        const firstManifest = collection.items[0];
+        return this.getThumbnail(firstManifest, request, dereference);
+      }
+
+      case 'Manifest': {
+        const manifest = fullInput as ManifestNormalized;
+        const firstCanvas = manifest.items[0];
+        return this.getThumbnail(firstCanvas, request, dereference);
+      }
+
+      case 'SpecificResource':
+      case 'Image':
+      case 'Dataset':
+      case 'Sound':
+      case 'Text':
+      case 'TextualBody':
+      case 'Video':
+        return this.imageService.getThumbnailFromResource(fullInput, request, dereference);
+
+      // Seems unlikely these would appear, but it would be an error..
+      case 'Service': // @todo could do something with this.
+      case 'Range':
+      case 'AnnotationCollection':
+      case 'CanvasReference':
+      case 'ContentResource':
+        return undefined;
+    }
+
+    return undefined;
   }
 
   load<T>(resource: string, json?: unknown): Promise<T> {

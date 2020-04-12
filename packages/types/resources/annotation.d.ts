@@ -91,7 +91,7 @@ export declare type ExternalWebResource = ResourceBaseProperties & {
 };
 export declare type EmbeddedResource = ResourceBaseProperties & {
   id?: string;
-  type: 'TextualBody' | string;
+  type: 'TextualBody';
   purpose?: string | string[];
   value?: string;
   language?: string | string[];
@@ -100,7 +100,7 @@ export declare type EmbeddedResource = ResourceBaseProperties & {
 
 export declare type SpecificResource = ResourceBaseProperties & {
   id?: string;
-  type?: 'SpecificResource' | string;
+  type?: 'SpecificResource';
   state?: State | State[];
   purpose?: AnyMotivation | AnyMotivation[];
   source?: LinkedResource; // @todo change to specific resource.
