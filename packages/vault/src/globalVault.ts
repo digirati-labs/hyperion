@@ -18,8 +18,8 @@ export function globalVault(options?: VaultOptions) {
   const gv: Vault | null = global
     ? (global as any).__hyperionVault__
     : typeof window !== 'undefined' && window.__hyperionVault__
-      ? window.__hyperionVault__
-      : null;
+    ? window.__hyperionVault__
+    : null;
 
   if (gv) {
     return gv;
@@ -51,9 +51,10 @@ export async function loadCollection(id: string): Promise<CollectionNormalized> 
 
 export function subscribe<S>(
   selector: (state: any) => any,
+  context: any,
   subscription: (state: S | null, vault: Vault) => void
 ): () => void {
-  return globalVault().subscribe(selector, subscription);
+  return globalVault().subscribe(selector, context, subscription);
 }
 
 type MappedType<T extends TraversableEntityTypes> = T extends 'Collection'

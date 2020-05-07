@@ -6,28 +6,25 @@ import { languageCtx } from '../MainView/MainView';
 import { useSelector, useCanvas } from '@hyperion-framework/react-vault';
 
 const mainHeaderSelector = createSelector({
-  context: [ manifestContext, languageCtx ],
+  context: [manifestContext, languageCtx],
   selector: (state, ctx) => {
     return {
       id: ctx.manifest.id,
-      label: ctx.manifest.label[ ctx.language ],
+      label: ctx.manifest.label[ctx.language],
     };
   },
 });
 
 export const MainHeader = ({ onChangeMenu, currentMenu }) => {
-
   const { id, label } = useSelector(mainHeaderSelector);
   const tidyId = id.replace(/^http(s)?:\/\//, '');
 
-  const handleChangeMenu = useCallback((name) => () =>
-    onChangeMenu(name), [onChangeMenu]
-  );
+  const handleChangeMenu = useCallback(name => () => onChangeMenu(name), [onChangeMenu]);
 
   return (
     <Header>
       <Header.Logo>
-        <img src={imageUrl}/>
+        <img src={imageUrl} />
       </Header.Logo>
       <Header.Resource>
         <React.Fragment>
@@ -38,12 +35,16 @@ export const MainHeader = ({ onChangeMenu, currentMenu }) => {
         </React.Fragment>
       </Header.Resource>
       <Header.Menu>
-        <Header.MenuItem onClick={handleChangeMenu('tweets')} isSelected={currentMenu === 'tweets'}>Tweets</Header.MenuItem>
-        <Header.MenuItem onClick={handleChangeMenu('metadata')}
-                         isSelected={currentMenu === 'metadata'}>Metadata</Header.MenuItem>
-        <Header.MenuItem onClick={handleChangeMenu('share')} isSelected={currentMenu === 'share'}>Share</Header.MenuItem>
+        <Header.MenuItem onClick={handleChangeMenu('tweets')} isSelected={currentMenu === 'tweets'}>
+          Tweets
+        </Header.MenuItem>
+        <Header.MenuItem onClick={handleChangeMenu('metadata')} isSelected={currentMenu === 'metadata'}>
+          Metadata
+        </Header.MenuItem>
+        <Header.MenuItem onClick={handleChangeMenu('share')} isSelected={currentMenu === 'share'}>
+          Share
+        </Header.MenuItem>
       </Header.Menu>
     </Header>
-
   );
 };

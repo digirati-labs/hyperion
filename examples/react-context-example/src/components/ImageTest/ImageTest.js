@@ -6,13 +6,11 @@ import {
   useImageService,
   useManifest,
   useThumbnail,
-  useVault,
   useVaultEffect,
 } from '@hyperion-framework/react-vault';
 import { canvasContext, combineContext, manifestContext, thumbnailSizeContext } from '@hyperion-framework/vault';
 import { World } from '@hyperion-framework/atlas';
 import { ImageService } from '@hyperion-framework/atlas';
-import { TiledImage } from '@hyperion-framework/atlas';
 
 const ReactWorldContext = React.createContext(null);
 
@@ -65,10 +63,8 @@ const ViewerCanvas = ({ setZoom, ...props }) => {
   if (world) {
     const points = world.getPointsAt({ width: 1000, height: 1000, x: 0, y: 0, scale: 1 });
     return (
-      <div
-        style={{ width: 1000, height: 1000, position: 'relative', border: '1px solid red' }}
-      >
-        {points.map(layer => {
+      <div style={{ width: 1000, height: 1000, position: 'relative', border: '1px solid red' }}>
+        {points.map((layer, k) => {
           const lastPointIndex = (layer.points.length - 5) / 5;
           const p = [];
           for (let i = 0; i <= lastPointIndex; i++) {
@@ -88,13 +84,13 @@ const ViewerCanvas = ({ setZoom, ...props }) => {
               />
             );
           }
-          return <React.Fragment>{p}</React.Fragment>;
+          return <React.Fragment key={k}>{p}</React.Fragment>;
         })}
       </div>
     );
   }
 
-  return <img key={thumbnail.id} src={thumbnail} alt="thumbnail" />;
+  return <img key={thumbnail.id} src={thumbnail.id} alt="thumbnail" />;
 };
 
 const ViewerManifest = () => {
@@ -113,7 +109,6 @@ const ViewerManifest = () => {
   );
 
   if (!currentCanvasDimension) {
-    console.log(currentCanvas);
     return 'loading...';
   }
 
@@ -139,7 +134,6 @@ const ViewerManifest = () => {
       </Context>
     </WorldProvider>
   );
-  return <div>Manifest: {manifest.label.en.join('')}</div>;
 };
 
 export const ImageTest = () => {

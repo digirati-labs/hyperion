@@ -4,6 +4,7 @@ import { Store } from 'redux';
 import { Epic } from 'redux-observable';
 import mitt, { Emitter } from 'mitt';
 import { AllActions, requestOfflineResource, requestResource, RequestState } from './redux/entities';
+import { modifyEntityField } from './redux/entities';
 import { ActionType } from 'typesafe-actions';
 import {
   AnnotationNormalized,
@@ -28,6 +29,7 @@ import {
   UnknownSizeImage,
   VariableSizeImage,
 } from '@atlas-viewer/iiif-image-api/lib/types';
+import { StateSelector } from './context/createSelector';
 
 export type VaultOptions = {
   reducers: {};
@@ -67,6 +69,17 @@ export class Vault<S extends VaultState = VaultState> {
       );
     this.emitter = mitt();
     this.imageService = new ImageServiceLoader();
+  }
+
+  modifyEntityField(entity: Reference<TraversableEntityTypes>, key: string, value: any) {
+    this.store.dispatch(
+      modifyEntityField({
+        id: entity.id,
+        type: entity.type,
+        key,
+        value,
+      })
+    );
   }
 
   middleware = (store: Store) => (next: (action: AllActions) => S) => (action: AllActions): S => {
@@ -136,7 +149,8 @@ export class Vault<S extends VaultState = VaultState> {
       | AnnotationPageNormalized
       | ContentResource,
     request: ImageCandidateRequest,
-    dereference?: boolean
+    dereference?: boolean,
+    candidates: Array<ImageCandidate> = []
   ): Promise<{
     best: null | undefined | FixedSizeImage | FixedSizeImageService | VariableSizeImage | UnknownSizeImage;
     fallback: Array<ImageCandidate>;
@@ -166,7 +180,12 @@ export class Vault<S extends VaultState = VaultState> {
         const contentResources = fullInput.body;
         // @todo this could be configuration.
         const firstContentResources = this.fromRef<ContentResource>(contentResources[0]);
-        return await this.imageService.getThumbnailFromResource(firstContentResources, request, dereference);
+        return await this.imageService.getThumbnailFromResource(
+          firstContentResources,
+          request,
+          dereference,
+          candidates
+        );
       }
 
       case 'Canvas': {
@@ -174,37 +193,37 @@ export class Vault<S extends VaultState = VaultState> {
         // check for thumbnail resource first?
         if (canvas.thumbnail && canvas.thumbnail.length) {
           const thumbnail = this.fromRef<ContentResource>(canvas.thumbnail[0]);
-          const potentialThumbanils = this.getThumbnail(thumbnail, request, dereference);
-          if (potentialThumbanils) {
-            return potentialThumbanils;
+          const potentialThumbnails = await this.imageService.getImageCandidates(thumbnail, dereference);
+          if (potentialThumbnails && potentialThumbnails.length) {
+            candidates.push(...potentialThumbnails);
           }
         }
 
-        return this.getThumbnail(canvas.items[0], request, dereference);
+        return this.getThumbnail(canvas.items[0], request, dereference, candidates);
       }
 
       // Unsupported for now.
       case 'AnnotationPage': {
         const annotationPage = fullInput as AnnotationPageNormalized;
-        return this.getThumbnail(annotationPage.items[0], request, dereference);
+        return this.getThumbnail(annotationPage.items[0], request, dereference, candidates);
       }
 
       case 'Choice': {
         const choice: ChoiceBody = fullInput as any;
         // @todo this could also be configuration, just choosing the first choice.
-        return this.getThumbnail(choice.items[0], request, dereference);
+        return this.getThumbnail(choice.items[0], request, dereference, candidates);
       }
       case 'Collection': {
         // This one is tricky, as the manifests may not have been loaded. But we will give it a shot.
         const collection = fullInput as CollectionNormalized;
         const firstManifest = collection.items[0];
-        return this.getThumbnail(firstManifest, request, dereference);
+        return this.getThumbnail(firstManifest, request, dereference, candidates);
       }
 
       case 'Manifest': {
         const manifest = fullInput as ManifestNormalized;
         const firstCanvas = manifest.items[0];
-        return this.getThumbnail(firstCanvas, request, dereference);
+        return this.getThumbnail(firstCanvas, request, dereference, candidates);
       }
 
       case 'SpecificResource':
@@ -214,7 +233,7 @@ export class Vault<S extends VaultState = VaultState> {
       case 'Text':
       case 'TextualBody':
       case 'Video':
-        return this.imageService.getThumbnailFromResource(fullInput, request, dereference);
+        return this.imageService.getThumbnailFromResource(fullInput, request, dereference, candidates);
 
       // Seems unlikely these would appear, but it would be an error..
       case 'Service': // @todo could do something with this.
@@ -263,11 +282,15 @@ export class Vault<S extends VaultState = VaultState> {
     });
   }
 
-  subscribe<T>(selector: (state: S) => T | null, subscription: (state: T | null, vault: Vault<S>) => void): () => void {
+  subscribe<T>(
+    selector: StateSelector<any, any, any>,
+    ctx: any,
+    subscription: (state: T | null, vault: Vault<S>) => void
+  ): () => void {
     let lastState: T | null;
     return this.store.subscribe(() => {
       const state = this.store.getState();
-      const selectedState = selector(state);
+      const selectedState = selector(state, ctx, {});
       if (lastState !== selectedState) {
         subscription(selectedState, this);
       }

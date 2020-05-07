@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Context, useExternalManifest, useVaultEffect } from '@hyperion-framework/react-vault';
 import {
   manifestContext,
@@ -16,8 +16,23 @@ export const languageCtx = createContext({
 
 export const ManifestLoader = ({ children }) => {
   // this will eventually be dynamic.
-  const { isLoaded, id } = useExternalManifest('https://wellcomelibrary.org/iiif/b18035723/manifest');
+  const [manifestUri, setManifestUri] = useState(
+    window.location.hash.slice(1) || 'https://wellcomelibrary.org/iiif/b18035723/manifest'
+  );
+  const { isLoaded, id } = useExternalManifest(manifestUri);
   const [currentCanvas, setCurrentCanvas] = useState('');
+
+  useEffect(() => {
+    const listener = () => {
+      if (window.location.hash.slice(1)) {
+        setManifestUri(window.location.hash.slice(1));
+      }
+    };
+    window.addEventListener('hashchange', listener);
+    return () => {
+      window.removeEventListener('hashchange', listener);
+    };
+  });
 
   useVaultEffect(
     vault => {

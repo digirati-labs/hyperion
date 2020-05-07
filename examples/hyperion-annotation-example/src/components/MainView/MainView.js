@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
-import { useManifest, useCanvas, Context, useThumbnail } from '@hyperion-framework/react-vault';
+import {
+  useManifest,
+  useCanvas,
+  Context,
+  useThumbnail,
+  useVaultEffect,
+  useVault,
+  Thumbnail,
+} from '@hyperion-framework/react-vault';
 import { PageLayout as Layout } from '../../blocks/PageLayout/PageLayout';
 import { MainHeader } from '../MainHeader/MainHeader';
 import { ThumbnailViewer as Thumbs } from '../../blocks/ThumbnailViewer/ThumbnailViewer';
 import { canvasContext, thumbnailSizeContext } from '@hyperion-framework/vault';
 
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 const CanvasThumbnail = ({ cover = false, onClick, selected }) => {
-  const thumbnail = useThumbnail();
+  const thumbnail = useThumbnail({ minWidth: 100 });
+
+  if (!thumbnail) {
+    return null;
+  }
 
   return (
     <Thumbs.Thumbnail cover={cover} onClick={onClick} selected={selected}>
       <Thumbs.ThumbnailWrapper>
-        <Thumbs.ThumbnailImage src={thumbnail} />
+        <Thumbs.ThumbnailImage src={thumbnail.id} />
       </Thumbs.ThumbnailWrapper>
     </Thumbs.Thumbnail>
   );
@@ -20,8 +40,31 @@ const CanvasThumbnail = ({ cover = false, onClick, selected }) => {
 export const MainView = ({ setCurrentCanvas }) => {
   const manifest = useManifest();
   const canvas = useCanvas();
-  const thumbnail = useThumbnail();
+  const [thumbnail, setThumbnail] = useState();
+
   const [currentMenu, setCurrentMenu] = useState('tweets');
+  const [log, setLog] = useState([]);
+
+  useVaultEffect(
+    v => {
+      v.getThumbnail(
+        canvas,
+        {
+          maxHeight: 1000,
+          maxWidth: 1000,
+          explain: true,
+        },
+        true
+      ).then(thumb => {
+        console.log(canvas, thumb);
+        setLog(thumb.log);
+        if (thumb.best) {
+          setThumbnail(thumb.best.id);
+        }
+      });
+    },
+    [canvas]
+  );
 
   return (
     <Layout>
@@ -44,9 +87,15 @@ export const MainView = ({ setCurrentCanvas }) => {
         <button>Login</button>
       </Layout.RightPanel>
       <Layout.Content>
-        <img src={thumbnail} style={{ margin: '0 auto', objectFit: 'contain', flex: '1 1 0px' }} />
+        <div>
+          {log.map((e, i) => (
+            <pre>{e}</pre>
+          ))}
+        </div>
       </Layout.Content>
-      <Layout.ActionPanel />
+      <Layout.ActionPanel>
+        <img src={thumbnail} style={{ margin: '0 auto', objectFit: 'contain', flex: '1 1 0px' }} />
+      </Layout.ActionPanel>
       <Layout.Footer />
     </Layout>
   );

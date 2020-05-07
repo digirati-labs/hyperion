@@ -75,13 +75,26 @@ export const ViewCanvas = () => {
     thumb && (
       <img
         alt={service && service.tiles.length ? 'Image service available' : 'loading...'}
-        src={thumb.uri}
+        src={thumb.id}
         height={thumb.height}
         width={thumb.width}
       />
     )
   );
 };
+
+let tick = 0;
+const asyncTestSelector = createSelector({
+  context: [manifestContext],
+  selector: async (state, ctx) => {
+    tick++;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(tick);
+      }, 1000);
+    });
+  },
+});
 
 export const ViewManifest = () => {
   const manifest = useManifest();
@@ -109,20 +122,6 @@ export const ViewManifest = () => {
     </div>
   );
 };
-
-let tick = 0;
-const asyncTestSelector = createSelector({
-  context: [manifestContext],
-  selector: async (state, ctx) => {
-    tick++;
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(tick);
-      }, 1000);
-    });
-  },
-});
-
 export const ViewCollection = () => {
   const collection = useSelector(viewCollectionSelector);
 
