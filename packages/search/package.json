@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/search",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "dist/hyperion-framework-search.js",
   "umd:main": "dist/hyperion-framework-search.umd.js",
   "module": "dist/hyperion-framework-search.mjs",

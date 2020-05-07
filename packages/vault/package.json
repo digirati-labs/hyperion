@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/vault",
-  "version": "0.3.10",
+  "version": "0.4.0",
   "main": "dist/umd/@hyperion-framework/vault.js",
   "module": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.0.6",
-    "@hyperion-framework/types": "^0.3.9",
+    "@hyperion-framework/types": "^0.4.0",
     "axios": "^0.18.0",
     "deepmerge": "^3.1.0",
     "hash-string": "^1.0.0",
