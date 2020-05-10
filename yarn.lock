@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@atlas-viewer/iiif-image-api@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.0.8.tgz#b3d6e7bda3da61c003e1544fb37c296808401acc"
-  integrity sha512-przFH+DBQCKa+cQjLOyzIbrtsrKAIqlXgU3I9eyYI92UmHaNBof69ATCv9zW1KVJSIrdxSngGh+Xpg5IzbtdKQ==
+"@atlas-viewer/iiif-image-api@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.0.9.tgz#d18c9b0165db85ed6789530c5de968d548f6f8e0"
+  integrity sha512-lUG37/mgAAKiT4IImCiSQsN+7a08lYjlCKaEgc12mC3LJexaRzsNLmmF+7/31URx8ugoc0bdENWPH9+vGAnzlw==
   dependencies:
     "@hyperion-framework/types" "^0.3.8"
     axios "^0.19.2"
