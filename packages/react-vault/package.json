@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/react-vault",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "dist/umd/@hyperion-framework/react-vault.js",
   "module": "lib/index.js",
   "typings": "dist/@types/index.d.ts",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.0.9",
-    "@hyperion-framework/vault": "^0.4.2",
+    "@hyperion-framework/vault": "^0.4.3",
     "redux-react-hook": "^3.2.0"
   },
   "peerDependencies": {
