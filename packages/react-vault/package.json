@@ -16,7 +16,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@atlas-viewer/iiif-image-api": "^1.0.7",
+    "@atlas-viewer/iiif-image-api": "^1.0.8",
     "@hyperion-framework/vault": "^0.4.1",
     "redux-react-hook": "^3.2.0"
   },

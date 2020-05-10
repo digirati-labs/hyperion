@@ -13,7 +13,7 @@
     "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./lib"
   },
   "dependencies": {
-    "@atlas-viewer/iiif-image-api": "^1.0.7",
+    "@atlas-viewer/iiif-image-api": "^1.0.8",
     "@hyperion-framework/types": "^0.4.0",
     "axios": "^0.18.0",
     "deepmerge": "^3.1.0",
