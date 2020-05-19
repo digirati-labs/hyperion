@@ -1,11 +1,11 @@
 {
   "name": "hyperion-annotation-example",
   "private": true,
-  "version": "0.4.3",
+  "version": "0.4.4",
   "dependencies": {
     "@fesk/react-bem": "1.1.4",
-    "@hyperion-framework/react-vault": "^0.4.3",
-    "@hyperion-framework/vault": "^0.4.3",
+    "@hyperion-framework/react-vault": "^0.4.4",
+    "@hyperion-framework/vault": "^0.4.4",
     "@reach/router": "^1.2.1",
     "docz-theme-default": "1.0.4",
     "react": "^16.8.0",
