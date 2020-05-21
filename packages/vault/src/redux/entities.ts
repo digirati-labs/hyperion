@@ -18,7 +18,7 @@ export const modifyEntityField = createStandardAction(MODIFY_ENTITY_FIELD)<{
 }>();
 
 export const entityReducer = (
-  state: Entities = defaultEntities,
+  state: Entities = { ...defaultEntities },
   action: ActionType<typeof importEntities> | ActionType<typeof modifyEntityField> | AllActions
 ) => {
   if (action.type === MODIFY_ENTITY_FIELD) {
