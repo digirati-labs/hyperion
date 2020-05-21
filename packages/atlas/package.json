@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/atlas",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "main": "dist/umd/@hyperion-framework/atlas.js",
   "module": "lib/index.js",
   "typings": "dist/@types/index.d.ts",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@hyperion-framework/types": "^0.4.0",
-    "@hyperion-framework/vault": "^0.4.5",
+    "@hyperion-framework/vault": "^0.4.6",
     "popmotion": "^8.6.8",
     "typescript-memoize": "^1.0.0-alpha.3"
   },
