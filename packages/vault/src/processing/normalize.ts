@@ -88,6 +88,21 @@ export const defaultEntities: Entities = {
   Selector: {},
 };
 
+export function getDefaultEntities(): Entities {
+  return {
+    Collection: {},
+    Manifest: {},
+    Canvas: {},
+    AnnotationPage: {},
+    AnnotationCollection: {},
+    Annotation: {},
+    ContentResource: {},
+    Range: {},
+    Service: {},
+    Selector: {},
+  }
+}
+
 export type EntityReference = { id?: string; type?: string };
 export type PolyEntity = EntityReference | string;
 
@@ -241,7 +256,7 @@ export function convertPresentation2<T extends any>(entity: T): T | Manifest | C
 
 export function normalize(unknownEntity: unknown) {
   const entity = convertPresentation2(unknownEntity);
-  const entities: Entities = { ...defaultEntities };
+  const entities: Entities = getDefaultEntities();
   const mapping: Mapping = {};
   const addToEntities = mapToEntities(entities);
   const addToMapping = recordTypeInMapping(mapping);

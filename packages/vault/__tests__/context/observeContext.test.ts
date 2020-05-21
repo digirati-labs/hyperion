@@ -1,6 +1,6 @@
 import { observeContext } from '../../src/context/observeContext';
 import { createStore } from '../../src/redux/createStore';
-import { defaultEntities, emptyManifest, importEntities, manifestContext } from '../../src';
+import { getDefaultEntities, emptyManifest, importEntities, manifestContext } from '../../src';
 
 describe('context/observe-context', () => {
   test('it can handle changes to the state and context', async () => {
@@ -16,7 +16,7 @@ describe('context/observe-context', () => {
     store.dispatch(
       importEntities({
         entities: {
-          ...defaultEntities,
+          ...getDefaultEntities(),
           Manifest: {
             'http://example.org/manifest.json': {
               ...emptyManifest,

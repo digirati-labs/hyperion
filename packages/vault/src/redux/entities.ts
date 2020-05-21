@@ -1,6 +1,6 @@
 import { createStandardAction, ActionType } from 'typesafe-actions';
 import produce from 'immer';
-import { defaultEntities, Entities, Mapping, normalize } from '../processing/normalize';
+import { Entities, getDefaultEntities, Mapping, normalize } from '../processing/normalize';
 import { TraversableEntityTypes } from '../processing/traverse';
 
 // Entities
@@ -18,7 +18,7 @@ export const modifyEntityField = createStandardAction(MODIFY_ENTITY_FIELD)<{
 }>();
 
 export const entityReducer = (
-  state: Entities = { ...defaultEntities },
+  state: Entities = getDefaultEntities(),
   action: ActionType<typeof importEntities> | ActionType<typeof modifyEntityField> | AllActions
 ) => {
   if (action.type === MODIFY_ENTITY_FIELD) {

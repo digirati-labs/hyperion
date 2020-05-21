@@ -1,5 +1,5 @@
 import { observeSelector } from '../../src/context/observeSelector';
-import { createStore, defaultEntities, emptyManifest, importEntities, manifestContext } from '../../src';
+import { createStore, getDefaultEntities, emptyManifest, importEntities, manifestContext } from '../../src';
 import { createSelector } from '../../src/context/createSelector';
 
 describe('context/observer-selector', () => {
@@ -8,7 +8,7 @@ describe('context/observer-selector', () => {
     store.dispatch(
       importEntities({
         entities: {
-          ...defaultEntities,
+          ...getDefaultEntities(),
           Manifest: {
             'http://example.org/manifest.json': {
               ...emptyManifest,

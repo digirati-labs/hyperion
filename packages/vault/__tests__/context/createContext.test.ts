@@ -1,4 +1,4 @@
-import { defaultEntities } from '../../src';
+import { getDefaultEntities } from '../../src';
 import { createContext } from '../../src/context/createContext';
 import { emptyManifest } from '../../src/resources/manifest';
 
@@ -6,7 +6,7 @@ describe('create context', () => {
   const createState = () => ({
     hyperion: {
       entities: {
-        ...defaultEntities,
+        ...getDefaultEntities(),
       },
       mapping: {},
       requests: {},

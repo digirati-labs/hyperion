@@ -2,13 +2,13 @@ import { createContext, emptyContext } from '../../src/context/createContext';
 import { createSelector } from '../../src/context/createSelector';
 import { emptyManifest, manifestContext } from '../../src/resources/manifest';
 import { combineContext } from '../../src/context/combineContext';
-import { defaultEntities, VaultState } from '../../src';
+import { getDefaultEntities, VaultState } from '../../src';
 
 describe('create selector', () => {
   const createState = (): VaultState => ({
     hyperion: {
       entities: {
-        ...defaultEntities,
+        ...getDefaultEntities(),
       },
       mapping: {},
       requests: {},
