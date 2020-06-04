@@ -12,6 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true, // importing helper functions from tslib
     "noEmitHelpers": true, // disable emitting inline helper functions
+    "jsx": "react",
     "lib": [
       "dom",
       "es2016",
@@ -52,9 +53,6 @@
     },
     {
       "path": "./packages/react-vault"
-    },
-    {
-      "path": "./packages/atlas"
     },
     {
       "path": "./packages/pattern-matching"

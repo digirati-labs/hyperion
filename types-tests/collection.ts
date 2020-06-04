@@ -7,6 +7,7 @@ function cast<T>(m: T): T {
 }
 
 // typings:expect-error
+// @ts-expect-error
 cast<Collection>({});
 
 cast<Collection>({

@@ -1,23 +1,5 @@
 {
-  "name": "vanilla-minimum-viewer",
-  "private": true,
-  "version": "0.4.6",
-  "dependencies": {
-    "@hyperion-framework/vault": "^0.4.6"
-  },
   "scripts": {
-    "build": "fesk-build",
-    "start": "fesk-start"
-  },
-  "devDependencies": {
-    "@fesk/scripts": "1.4.0-pr.3eaea9db"
-  },
-  "fesk": {
-    "port": 5103,
-    "metalsmith": {
-      "nunjucks": {
-        "liveServerPort": 35735
-      }
-    }
+    "start": "../../node_modules/.bin/webpack-dev-server --entry ./src/index.js --config ../webpack.config.js"
   }
 }

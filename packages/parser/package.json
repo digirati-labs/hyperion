@@ -1,28 +1,30 @@
 {
   "name": "@hyperion-framework/parser",
   "version": "0.4.6",
-  "main": "lib/index.js",
-  "module": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "web": "dist/index.umd.js",
+  "typings": "dist/types/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "start": "tsc -p ./ --watch",
-    "build": "NODE_ENV=production tsc -p ./",
-    "prepare": "NODE_ENV=production tsc -p ./"
+    "build": "rollup -c && tsc -p ./tsconfig.types.json",
+    "start": "rollup -c --watch",
+    "test": "jest",
+    "build-types": "tsc -p ./tsconfig.types.json",
+    "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
     "@hyperion-framework/types": "^0.4.0",
-    "hash-string": "^1.0.0",
-    "iiif-prezi2to3": "^1.0.8"
+    "iiif-prezi2to3": "2.0.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "lib"
-  ],
   "devDependencies": {
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   }
 }

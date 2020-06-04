@@ -15,14 +15,20 @@
     "test": "NODE_ENV=test jest --verbose --coverage"
   },
   "devDependencies": {
+    "@ampproject/rollup-plugin-closure-compiler": "^0.26.0",
+    "rollup": "^2.13.1",
+    "@rollup/plugin-typescript": "^4.1.2",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "@rollup/plugin-commonjs": "^12.0.0",
+    "rollup-plugin-terser": "^6.1.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-visualizer": "^4.0.4",
     "@fesk/eslint-config-standard": "1.4.0-pr.b6dc2fa3",
     "@fesk/module-release": "^0.0.3",
-    "@types/jest": "^23.3.12",
+    "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^2.4.0",
     "@typescript-eslint/parser": "^2.4.0",
     "babel-eslint": "^10.0.1",
-    "copy-webpack-plugin": "^5.1.1",
-    "css-loader": "^3.4.2",
     "dtslint": "^3.4.1",
     "eslint": "^5.15.1",
     "eslint-plugin-import": "^2.20.2",
@@ -31,21 +37,22 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
-    "jest": "25.2.7",
+    "html-webpack-plugin": "^4.3.0",
+    "jest": "^26.0.1",
     "jest-fetch-mock": "^2.1.2",
     "lerna": "^3.10.7",
-    "mini-css-extract-plugin": "^0.9.0",
     "prettier": "^1.15.3",
-    "sass-loader": "^8.0.2",
-    "ts-jest": "^25.2.0",
-    "tslib": "^1.11.1",
-    "typescript": "^3.8.3",
-    "typings-tester": "^0.3.2"
+    "ts-jest": "^26.1.0",
+    "ts-loader": "^7.0.5",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.5",
+    "typings-tester": "^0.3.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
   },
   "private": true,
   "workspaces": [
-    "packages/*",
-    "examples/*",
-    "documentation"
+    "packages/*"
   ]
 }

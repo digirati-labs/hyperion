@@ -2,15 +2,20 @@
   "name": "@hyperion-framework/pattern-matching",
   "version": "0.4.0",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
-  "main": "dist/umd/@hyperion-framework/pattern-matching.js",
-  "module": "lib/index.js",
-  "typings": "dist/@types/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "web": "dist/index.umd.js",
+  "typings": "dist/types/index.d.ts",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "start": "fesk-start --cjs --noServer",
-    "build": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
-    "build-types": "tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
-    "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types"
+    "build": "rollup -c && tsc -p ./tsconfig.types.json",
+    "start": "rollup -c --watch",
+    "test": "jest",
+    "build-types": "tsc -p ./tsconfig.types.json",
+    "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
     "@hyperion-framework/types": "^0.4.0"
@@ -18,15 +23,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "fesk": {
-    "typescript": true
-  },
-  "files": [
-    "dist",
-    "lib"
-  ],
   "devDependencies": {
-    "@fesk/scripts": "1.4.0-pr.3eaea9db",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   }
 }

@@ -1,43 +1,43 @@
 {
   "name": "@hyperion-framework/react-vault",
   "version": "0.4.6",
-  "main": "dist/umd/@hyperion-framework/react-vault.js",
-  "module": "lib/index.js",
-  "typings": "dist/@types/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "web": "dist/index.umd.js",
+  "typings": "dist/types/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "start": "fesk-start --cjs --noServer",
-    "build": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
-    "build-types": "tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types",
-    "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./dist/@types"
-  },
-  "publishConfig": {
-    "access": "public"
+    "build": "rollup -c && tsc -p ./tsconfig.types.json",
+    "start": "rollup -c --watch",
+    "test": "jest",
+    "build-types": "tsc -p ./tsconfig.types.json",
+    "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.0.9",
     "@hyperion-framework/vault": "^0.4.6",
+    "@hyperion-framework/store": "^0.4.6",
     "react-query": "^1.5.2",
+    "redux": "^4.0.5",
     "redux-react-hook": "^3.2.0",
     "react-use": "^15.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "@fesk/babel-config": "1.4.0-pr.a95f698d",
-    "@fesk/scripts": "1.4.0-pr.3eaea9db",
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
+    "prop-types": "^15.7.2",
+    "redux": "^4.0.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "tslib": "^1.9.3"
+    "tslib": "^2.0.0"
   },
-  "files": [
-    "dist",
-    "lib"
-  ],
-  "fesk": {
-    "typescript": true
+  "publishConfig": {
+    "access": "public"
   }
 }

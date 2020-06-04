@@ -1,9 +1,10 @@
 import { Collection, Manifest } from '@hyperion-framework/types';
 import Upgrader from 'iiif-prezi2to3';
 
-export function convertPresentation2<T extends any>(entity: T): T | Manifest | Collection {
+export function convertPresentation2(entity: any): Manifest | Collection {
   if (
     (entity &&
+      entity['@context'] &&
       (entity['@context'] === 'http://iiif.io/api/presentation/2/context.json' ||
         entity['@context'].indexOf('http://iiif.io/api/presentation/2/context.json') !== -1 ||
         // Yale context.
