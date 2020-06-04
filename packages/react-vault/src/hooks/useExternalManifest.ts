@@ -1,24 +1,28 @@
-import { useState } from 'react';
-import { useVaultEffect } from './useVaultEffect';
+import { useMemo, useState } from 'react';
+import { useQuery } from 'react-query';
+import { useVault } from './useVault';
+import { ManifestNormalized } from '@hyperion-framework/types';
+import { resolveIfExists } from '@hyperion-framework/store';
 
-export const useExternalManifest = (id: string): { id: string; isLoaded: boolean } => {
-  const [isLoaded, setIsLoaded] = useState(false);
+export const useExternalManifest = (
+  id: string
+): { id: string; isLoaded: boolean; error: any; manifest?: ManifestNormalized } => {
+  const vault = useVault();
   const [realId, setRealId] = useState(id);
 
-  useVaultEffect(
-    vault => {
-      vault
-        .loadManifest(id)
-        .then(resource => {
-          setRealId(resource.id);
-          setIsLoaded(true);
-        })
-        .catch(err => {
-          throw new Error(err);
-        });
+  const initialData = useMemo(() => resolveIfExists<ManifestNormalized>(vault.getState(), id), [id, vault]);
+
+  const { data: manifest, error, isFetching } = useQuery(
+    `manifest:${id}`,
+    async () => {
+      const fetchedManifest = initialData ? initialData : await vault.loadManifest(id);
+      if (fetchedManifest) {
+        setRealId(fetchedManifest.id);
+      }
+      return fetchedManifest;
     },
-    [id]
+    { initialData }
   );
 
-  return { isLoaded, id: realId };
+  return { isLoaded: !isFetching, id: realId, error, manifest };
 };

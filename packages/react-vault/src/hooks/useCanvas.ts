@@ -1,21 +1,37 @@
-import { useContext } from 'react';
-import { ReactContext } from '../context/Context';
-import { useVault } from './useVault';
-import { CustomContext, VaultState } from '@hyperion-framework/vault';
+import { useResourceContext } from '../context/ResourceContext';
 import { CanvasNormalized } from '@hyperion-framework/types';
+import { useVault } from './useVault';
+import { useMemo } from 'react';
 
-export const useCanvas = <
-  S extends VaultState,
-  U,
-  C extends { canvas: CanvasNormalized }
-  >(): CanvasNormalized => {
-  const context = useContext(ReactContext) as CustomContext<'canvas', CanvasNormalized>;
+export function useCanvas(options?: { id: string }): CanvasNormalized | undefined;
+export function useCanvas<T>(
+  options?: { id: string; selector: (canvas: CanvasNormalized) => T },
+  deps?: any[]
+): T | undefined;
+export function useCanvas<T = CanvasNormalized>(
+  options: {
+    id?: string;
+    selector?: (canvas: CanvasNormalized) => T;
+  } = {},
+  deps: any[] = []
+): CanvasNormalized | T | undefined {
+  const { id, selector } = options;
+  const ctx = useResourceContext();
   const vault = useVault();
-  const { canvas } = context(vault.getState(), {} as U);
+  const canvasId = id ? id : ctx.canvas;
 
-  if (typeof canvas === 'undefined') {
-    throw new Error('useCanvas should only be called from a canvas context');
-  }
+  const canvas = canvasId ? vault.select(s => s.hyperion.entities.Canvas[canvasId]) : undefined;
 
-  return canvas;
-};
+  return useMemo(
+    () => {
+      if (!canvas) {
+        return undefined;
+      }
+      if (selector) {
+        return selector(canvas);
+      }
+      return canvas;
+    },
+    [canvas, selector, ...deps]
+  );
+}

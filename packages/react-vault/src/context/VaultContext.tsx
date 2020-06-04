@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import { StoreContext } from 'redux-react-hook';
-import {Vault, VaultOptions} from '@hyperion-framework/vault';
+import { Vault, VaultOptions } from '@hyperion-framework/vault';
+import { ResourceContextType, ResourceProvider } from './ResourceContext';
 
 export const ReactVaultContext = React.createContext<{
   vault: Vault | null;
   setVaultInstance: (vault: Vault) => void;
 }>({
   vault: null,
-  setVaultInstance: (vault: Vault) => {},
+  setVaultInstance: (vault: Vault) => {
+    // Do nothing.
+  },
 });
 
-export const VaultProvider: React.FC<{ vault?: Vault, vaultOptions?: VaultOptions }> = ({ vault, vaultOptions, children }) => {
+export const VaultProvider: React.FC<{
+  vault?: Vault;
+  vaultOptions?: VaultOptions;
+  resources?: ResourceContextType;
+}> = ({ vault, vaultOptions, resources, children }) => {
   const [vaultInstance, setVaultInstance] = useState<Vault>(() => {
     if (vault) {
       return vault;
@@ -23,7 +30,9 @@ export const VaultProvider: React.FC<{ vault?: Vault, vaultOptions?: VaultOption
 
   return (
     <ReactVaultContext.Provider value={{ vault: vaultInstance, setVaultInstance }}>
-      <StoreContext.Provider value={vaultInstance.getStore()}>{children}</StoreContext.Provider>
+      <StoreContext.Provider value={vaultInstance.getStore()}>
+        <ResourceProvider value={resources || {}}>{children}</ResourceProvider>
+      </StoreContext.Provider>
     </ReactVaultContext.Provider>
   );
 };

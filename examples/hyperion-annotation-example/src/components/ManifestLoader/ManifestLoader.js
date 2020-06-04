@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Context, useExternalManifest, useVaultEffect } from '@hyperion-framework/react-vault';
-import {
-  manifestContext,
-  createContext,
-  combineContext,
-  canvasContext,
-  thumbnailSizeContext,
-} from '@hyperion-framework/vault';
+import { ResourceProvider, useExternalManifest } from '@hyperion-framework/react-vault';
 import { MainView } from '../MainView/MainView';
 
-export const languageCtx = createContext({
-  name: 'language',
-  creator: currentLanguage => currentLanguage,
-});
-
-export const ManifestLoader = ({ children }) => {
+export const ManifestLoader = () => {
   // this will eventually be dynamic.
   const [manifestUri, setManifestUri] = useState(
     window.location.hash.slice(1) || 'https://wellcomelibrary.org/iiif/b18035723/manifest'
   );
-  const { isLoaded, id } = useExternalManifest(manifestUri);
+  const { isLoaded, id, manifest } = useExternalManifest(manifestUri);
   const [currentCanvas, setCurrentCanvas] = useState('');
 
   useEffect(() => {
@@ -34,17 +22,15 @@ export const ManifestLoader = ({ children }) => {
     };
   });
 
-  useVaultEffect(
-    vault => {
+  useEffect(
+    () => {
       if (isLoaded) {
-        const s = vault.getState();
-        const manifest = s.hyperion.entities.Manifest[id];
         if (manifest && !currentCanvas && manifest.items[0].id) {
           setCurrentCanvas(manifest.items[0].id);
         }
       }
     },
-    [isLoaded, id, currentCanvas]
+    [manifest, isLoaded, id, currentCanvas]
   );
 
   if (!isLoaded || !currentCanvas) {
@@ -52,15 +38,13 @@ export const ManifestLoader = ({ children }) => {
   }
 
   return (
-    <Context
-      context={combineContext(
-        manifestContext(id),
-        canvasContext(currentCanvas),
-        languageCtx('en'),
-        thumbnailSizeContext({ width: 500, height: 500 })
-      )}
+    <ResourceProvider
+      value={{
+        manifest: manifest.id,
+        canvas: currentCanvas,
+      }}
     >
       <MainView setCurrentCanvas={setCurrentCanvas} />
-    </Context>
+    </ResourceProvider>
   );
 };

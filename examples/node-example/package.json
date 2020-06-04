@@ -1,0 +1,9 @@
+{
+  "name": "node-example",
+  "private": true,
+  "version": "0.4.6",
+  "main": "index.js",
+  "dependencies": {
+    "@hyperion-framework/vault": "^0.4.6"
+  }
+}

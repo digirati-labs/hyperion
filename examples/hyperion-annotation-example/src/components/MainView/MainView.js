@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import {
   useManifest,
   useCanvas,
-  Context,
   useThumbnail,
   useVaultEffect,
-  useVault,
-  Thumbnail,
+  CanvasContext,
+  useCanvasClock,
 } from '@hyperion-framework/react-vault';
 import { PageLayout as Layout } from '../../blocks/PageLayout/PageLayout';
 import { MainHeader } from '../MainHeader/MainHeader';
 import { ThumbnailViewer as Thumbs } from '../../blocks/ThumbnailViewer/ThumbnailViewer';
-import { canvasContext, thumbnailSizeContext } from '@hyperion-framework/vault';
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -41,6 +39,7 @@ export const MainView = ({ setCurrentCanvas }) => {
   const manifest = useManifest();
   const canvas = useCanvas();
   const [thumbnail, setThumbnail] = useState();
+  const { isPlaying, currentTime, play, seek, pause, duration } = useCanvasClock();
 
   const [currentMenu, setCurrentMenu] = useState('tweets');
   const [log, setLog] = useState([]);
@@ -72,15 +71,13 @@ export const MainView = ({ setCurrentCanvas }) => {
         <MainHeader onChangeMenu={setCurrentMenu} currentMenu={currentMenu} />
       </Layout.Header>
       <Layout.LeftPanel>
-        <Context context={thumbnailSizeContext({})}>
-          <Thumbs book-view large-cover>
-            {manifest.items.map(({ id }, i) => (
-              <Context context={canvasContext(id)} key={id}>
-                <CanvasThumbnail cover={i === 0} onClick={() => setCurrentCanvas(id)} selected={id === canvas.id} />
-              </Context>
-            ))}
-          </Thumbs>
-        </Context>
+        <Thumbs book-view large-cover>
+          {manifest.items.map(({ id }, i) => (
+            <CanvasContext canvas={id} key={id}>
+              <CanvasThumbnail cover={i === 0} onClick={() => setCurrentCanvas(id)} selected={id === canvas.id} />
+            </CanvasContext>
+          ))}
+        </Thumbs>
       </Layout.LeftPanel>
       <Layout.RightPanel>
         {currentMenu}
@@ -88,6 +85,11 @@ export const MainView = ({ setCurrentCanvas }) => {
       </Layout.RightPanel>
       <Layout.Content>
         <div>
+          <button onClick={play}>play</button>
+          <button onClick={pause}>pause</button>
+          <button onClick={() => seek(duration - 10)}>go to near end</button>
+          {isPlaying ? 'PLAYING' : 'PAUSED'}
+          {currentTime} / {duration}
           {log.map((e, i) => (
             <pre>{e}</pre>
           ))}

@@ -1,5 +1,4 @@
-import { Vault, VaultState } from './Vault';
-import { AllActions } from './redux/entities';
+import { Vault } from './Vault';
 
 declare global {
   interface Window {
@@ -9,6 +8,3 @@ declare global {
     __hyperionVault__: Vault;
   }
 }
-
-export type RootAction = AllActions;
-export type RootState = VaultState;

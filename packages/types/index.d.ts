@@ -13,3 +13,5 @@ export * from './iiif/structural';
 export * from './iiif/technical';
 export * from './utility';
 export * from './reference';
+export * from './traversal';
+export * from './store';

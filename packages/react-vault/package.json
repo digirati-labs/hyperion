@@ -18,9 +18,9 @@
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.0.9",
     "@hyperion-framework/vault": "^0.4.6",
-    "redux-react-hook": "^3.2.0"
-  },
-  "peerDependencies": {
+    "react-query": "^1.5.2",
+    "redux-react-hook": "^3.2.0",
+    "react-use": "^15.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

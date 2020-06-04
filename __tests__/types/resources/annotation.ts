@@ -1,4 +1,4 @@
-import {Annotation} from "@hyperion-framework/types";
+import { Annotation } from '@hyperion-framework/types';
 
 describe('types/resources/annotations', () => {
   test('it passes fixtures from W3C', () => {
@@ -193,6 +193,7 @@ describe('types/resources/annotations', () => {
           type: 'Person',
           name: 'My Pseudonym',
           nickname: 'pseudo',
+          // eslint-disable-next-line @typescript-eslint/camelcase
           email_sha1: '58bad08927902ff9307b621c54716dcc5083e339',
         },
         generator: {

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "declarationDir": "./lib",
+    "outDir": "./lib",
+    "module": "CommonJS",
+    "target": "ES5",
+    "downlevelIteration": true
+  },
+  "include": [
+    "src/*",
+    "types.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "dist",
+    "**/__tests__/*.test.ts",
+    "__tests__"
+  ]
+}
