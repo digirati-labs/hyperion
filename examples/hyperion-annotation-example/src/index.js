@@ -9,5 +9,5 @@ render(
   <VaultProvider>
     <ManifestLoader />
   </VaultProvider>,
-  document.getElementById('app')
+  document.getElementById('root')
 );

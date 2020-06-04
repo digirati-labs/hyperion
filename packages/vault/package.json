@@ -1,46 +1,33 @@
 {
   "name": "@hyperion-framework/vault",
   "version": "0.4.6",
-  "main": "dist/umd/@hyperion-framework/vault.js",
-  "module": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "web": "dist/index.umd.js",
+  "typings": "dist/types/index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "start": "fesk-start --cjs --noServer",
-    "build": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./lib",
-    "build-types": "tsc -p ./ --emitDeclarationOnly --outDir ./lib",
-    "prepublish": "fesk-build --cjs --umd && tsc -p ./ --emitDeclarationOnly --outDir ./lib"
+    "build": "rollup -c && tsc -p ./tsconfig.types.json",
+    "start": "rollup -c --watch",
+    "test": "jest",
+    "build-types": "tsc -p ./tsconfig.types.json",
+    "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.0.9",
     "@hyperion-framework/types": "^0.4.0",
     "@hyperion-framework/parser": "^0.4.6",
     "@hyperion-framework/store": "^0.4.6",
-    "deepmerge": "^3.1.0",
-    "hash-string": "^1.0.0",
-    "iiif-prezi2to3": "^1.0.8",
-    "immer": "^2.0.0",
-    "mitt": "^1.2.0",
-    "popmotion": "^8.6.8",
-    "redux": "^4.0.1",
-    "redux-observable": "^1.0.0",
-    "redux-saga": "^1.0.1",
-    "rxjs": "^6.4.0",
-    "typesafe-actions": "^3.0.0"
+    "mitt": "^1.2.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "fesk": {
-    "typescript": true
-  },
-  "files": [
-    "dist",
-    "lib"
-  ],
   "devDependencies": {
-    "@fesk/scripts": "1.4.0-pr.3eaea9db",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.5"
   }
 }

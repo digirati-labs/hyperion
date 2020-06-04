@@ -11,3 +11,4 @@ packages/*/umd
 examples/*/lib
 examples/*/umd
 *.tsbuildinfo
+stats.html

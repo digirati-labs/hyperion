@@ -110,7 +110,7 @@ function hash(object: any): string {
   return hexString;
 }
 
-function addMissingIdToContentResource<T extends Reference>(type: string) {
+function addMissingIdToContentResource<T extends Partial<Reference>>(type: string) {
   return (resource: T | string): T => {
     if (typeof resource === 'string') {
       return { id: resource, type } as T;

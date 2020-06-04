@@ -1,5 +1,16 @@
 import { allFromRef, loadManifest, subscribe, getThumbnail } from '@hyperion-framework/vault';
 
+const root = document.getElementById('root');
+if (root) {
+  root.innerHTML = `
+    <div>
+      <div>Loading state: <span id="loading-state"></span></div>
+      <h1 id="title"></h1>
+      <div id="canvasList"></div>
+    </div>
+  `;
+}
+
 const manifestId = 'https://wellcomelibrary.org/iiif/b18035723/manifest';
 
 loadManifest(manifestId).then(async res => {

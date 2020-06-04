@@ -1,38 +1,5 @@
 {
-  "name": "hyperion-annotation-example",
-  "private": true,
-  "version": "0.4.6",
-  "dependencies": {
-    "@fesk/react-bem": "1.1.4",
-    "@hyperion-framework/react-vault": "^0.4.6",
-    "@hyperion-framework/vault": "^0.4.6",
-    "@reach/router": "^1.2.1",
-    "docz-theme-default": "1.0.4",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "react-router-dom": "^4.3.1"
-  },
   "scripts": {
-    "start": "fesk-start",
-    "build": "fesk-build",
-    "docz:dev": "docz dev",
-    "docz:build": "docz build"
-  },
-  "devDependencies": {
-    "@fesk/scripts": "1.4.0-pr.3eaea9db",
-    "@fesk/webpack-config": "1.4.0-pr.a95f698d",
-    "docz": "1.0.4"
-  },
-  "resolutions": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  },
-  "fesk": {
-    "port": 5102,
-    "metalsmith": {
-      "nunjucks": {
-        "liveServerPort": 35731
-      }
-    }
+    "start": "../../node_modules/.bin/webpack-dev-server --entry ./src/index.js --config ../webpack.config.js"
   }
 }
