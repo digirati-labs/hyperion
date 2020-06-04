@@ -1,22 +1,15 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { AppHeader as Header } from '../../blocks/AppHeader/AppHeader';
 import imageUrl from '../../../hyperion-icon.png';
-import { createSelector, manifestContext } from '@hyperion-framework/vault';
-import { languageCtx } from '../MainView/MainView';
-import { useSelector, useCanvas } from '@hyperion-framework/react-vault';
-
-const mainHeaderSelector = createSelector({
-  context: [manifestContext, languageCtx],
-  selector: (state, ctx) => {
-    return {
-      id: ctx.manifest.id,
-      label: ctx.manifest.label[ctx.language],
-    };
-  },
-});
+import { useManifest } from '@hyperion-framework/react-vault';
 
 export const MainHeader = ({ onChangeMenu, currentMenu }) => {
-  const { id, label } = useSelector(mainHeaderSelector);
+  const { id, label } = useManifest({
+    selector: manifest => ({
+      id: manifest.id,
+      label: manifest.label[Object.keys(manifest.label)[0]].join(''),
+    }),
+  });
   const tidyId = id.replace(/^http(s)?:\/\//, '');
 
   const handleChangeMenu = useCallback(name => () => onChangeMenu(name), [onChangeMenu]);

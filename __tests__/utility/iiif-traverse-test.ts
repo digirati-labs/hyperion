@@ -1,5 +1,5 @@
 import { Canvas, Manifest } from '@hyperion-framework/types';
-import { Traverse } from '@hyperion-framework/vault';
+import { Traverse } from '@hyperion-framework/parser';
 
 describe('utility/iiif-traverse', () => {
   const manifest = (): Manifest => ({

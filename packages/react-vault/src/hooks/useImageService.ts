@@ -1,52 +1,67 @@
-// This is valid under a canvas context.
+import { usePaintingAnnotations } from './usePaintingAnnotations';
+import { getImageServices } from '@atlas-viewer/iiif-image-api/lib/utility/get-image-services';
+import { useCanvas } from './useCanvas';
+import { useQuery } from 'react-query';
+import { useVault } from './useVault';
+import { Service } from '@hyperion-framework/types';
 
-import {useContext, useState} from 'react';
-import {ReactContext, useVaultEffect} from '..';
-import { CtxFunction, VaultState } from '@hyperion-framework/vault';
-import { AnnotationNormalized, CanvasNormalized, Service } from '@hyperion-framework/types';
-import { getImageService, getImageServiceFromAnnotation } from '@hyperion-framework/vault';
+/**
+ * Returns the First image service on the current canvas.
+ */
+export function useImageService(): {
+  data: Service | undefined;
+  isFetching: boolean;
+  status: 'error' | 'success' | 'loading';
+} {
+  const canvas = useCanvas();
+  if (!canvas) throw new Error('Canvas not found');
+  const annotations = usePaintingAnnotations();
+  const vault = useVault();
+  const imageService = vault.getImageService();
 
-export const useImageService = (): Service | null => {
-  const context = useContext(ReactContext) as CtxFunction<
-    VaultState,
-    { canvas?: CanvasNormalized; annotation: AnnotationNormalized } & { [key: string]: any }
-  >;
-  const [currentImageService, setCurrentImageService] = useState<Service | null>(null);
-  const [isFullyLoaded, setIsFullLoaded] = useState<boolean>(false);
+  const { data, isFetching, status } = useQuery(
+    `canvas-first-image-service:${canvas.id}`,
+    async () => {
+      if (canvas && annotations.length) {
+        const annotation = annotations[0];
+        const resource = vault.fromRef<any>(annotation.body[0]);
+        const imageServices = getImageServices(resource);
 
-  // @todo new context effect hook.
-  useVaultEffect(vault => {
-    const state = vault.getState();
-    const ctx = context(state, {});
-    const imageService = ctx.annotation
-      ? getImageServiceFromAnnotation(
-        state,
-        () => ctx as { annotation: AnnotationNormalized; } & { [key: string]: any; },
-        {}
-      )
-      : getImageService(
-        state,
-        () => ctx as { canvas: CanvasNormalized; annotation?: AnnotationNormalized; } & { [key: string]: any; },
-        {}
-      );
-
-    if (imageService && !isFullyLoaded) {
-      setCurrentImageService(imageService);
-      if (!state.hyperion.requests[imageService.id]) {
-        const imageServiceUrl = imageService.id.endsWith('.info.json') ? imageService.id : `${imageService.id}/info.json`;
-        vault.load(imageServiceUrl).then(() => {
-          setIsFullLoaded(true);
-        });
-      } else {
-        setIsFullLoaded(true);
+        return (
+          (await imageService.loadService({
+            id: imageServices[0].id,
+            width: imageServices[0].width || canvas.width,
+            height: imageServices[0].height || canvas.height,
+          })) || undefined
+        );
       }
+
+      return undefined;
+    },
+    {
+      refetchInterval: false,
+      initialData: () => {
+        if (canvas && annotations.length) {
+          const annotation = annotations[0];
+          const resource = vault.fromRef<any>(annotation.body[0]);
+          const imageServices = getImageServices(resource);
+
+          return (
+            imageService.loadServiceSync({
+              id: imageServices[0].id,
+              width: imageServices[0].width || canvas.width,
+              height: imageServices[0].height || canvas.height,
+            }) || undefined
+          );
+        }
+        return undefined;
+      },
     }
+  );
 
-    if (imageService !== currentImageService) {
-      setCurrentImageService(imageService);
-    }
-
-  }, [context, isFullyLoaded]);
-
-  return currentImageService;
-};
+  return {
+    data,
+    isFetching,
+    status,
+  };
+}

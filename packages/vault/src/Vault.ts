@@ -1,11 +1,4 @@
-import { Entities, Mapping, NormalizedEntity } from './processing/normalize';
-import { createStore } from './redux/createStore';
-import { Store } from 'redux';
-import { Epic } from 'redux-observable';
-import mitt, { Emitter } from 'mitt';
-import { AllActions, requestOfflineResource, requestResource, RequestState } from './redux/entities';
-import { modifyEntityField } from './redux/entities';
-import { ActionType } from 'typesafe-actions';
+import { AllActions, createFetchHelper, createStore, entityActions, ReduxStore } from '@hyperion-framework/store';
 import {
   AnnotationNormalized,
   AnnotationPageNormalized,
@@ -14,13 +7,15 @@ import {
   CollectionItemSchemas,
   CollectionNormalized,
   ContentResource,
+  HyperionStore,
   ManifestNormalized,
+  NormalizedEntity,
   Reference,
+  TraversableEntityTypes,
 } from '@hyperion-framework/types';
-import { TraversableEntityTypes } from './processing/traverse';
-import { CtxFunction } from './context/createContext';
-import { serialise, SerialiseConfig } from './processing/serialise';
+import { SerialiseConfig, serialise } from '@hyperion-framework/parser';
 import { getFixedSizeFromImage, ImageServiceLoader } from '@atlas-viewer/iiif-image-api';
+import mitt, { Emitter } from 'mitt';
 import {
   FixedSizeImage,
   FixedSizeImageService,
@@ -29,51 +24,48 @@ import {
   UnknownSizeImage,
   VariableSizeImage,
 } from '@atlas-viewer/iiif-image-api/lib/types';
-import { StateSelector } from './context/createSelector';
 
 export type VaultOptions = {
   reducers: {};
-  epics: Epic[];
   middleware: [];
   defaultState: {};
+  customFetcher: <T>(url: string, options: T) => unknown | Promise<unknown>;
 };
 
-export type VaultState = {
-  hyperion: {
-    entities: Entities;
-    mapping: Mapping;
-    requests: RequestState;
-  };
-};
-
-export class Vault<S extends VaultState = VaultState> {
+export class Vault {
   private readonly options: VaultOptions;
-  private readonly store: Store;
+  private readonly store: ReduxStore;
   private readonly emitter: Emitter;
   private readonly imageService: ImageServiceLoader;
+  remoteFetcher: (str: string, options?: any) => Promise<NormalizedEntity | undefined>;
+  staticFetcher: (str: string, json: any) => Promise<NormalizedEntity | undefined>;
 
-  constructor(options?: Partial<VaultOptions>, store?: Store) {
-    this.options = Object.assign(options || {}, {
-      reducers: {},
-      epics: [],
-      middleware: [],
-      defaultState: {},
-    });
+  constructor(options?: Partial<VaultOptions>, store?: ReduxStore) {
+    this.options = Object.assign(
+      {
+        reducers: {},
+        middleware: [],
+        defaultState: {},
+        customFetcher: this.defaultFetcher,
+      },
+      options || {}
+    );
     this.store =
       store ||
-      createStore(
-        this.options.reducers,
-        [...this.options.middleware, this.middleware],
-        this.options.epics,
-        this.options.defaultState
-      );
+      createStore(this.options.reducers, [...this.options.middleware, this.middleware], this.options.defaultState);
     this.emitter = mitt();
     this.imageService = new ImageServiceLoader();
+    this.remoteFetcher = createFetchHelper(this.store, this.options.customFetcher) as any;
+    this.staticFetcher = createFetchHelper(this.store, (id: string, json: any) => json);
   }
+
+  defaultFetcher = (url: string) => {
+    return fetch(url).then(r => r.json());
+  };
 
   modifyEntityField(entity: Reference<TraversableEntityTypes>, key: string, value: any) {
     this.store.dispatch(
-      modifyEntityField({
+      entityActions.modifyEntityField({
         id: entity.id,
         type: entity.type,
         key,
@@ -82,20 +74,22 @@ export class Vault<S extends VaultState = VaultState> {
     );
   }
 
-  middleware = (store: Store) => (next: (action: AllActions) => S) => (action: AllActions): S => {
+  middleware = (store: ReduxStore) => (next: (action: AllActions) => HyperionStore) => (
+    action: AllActions
+  ): HyperionStore => {
     this.emitter.emit(action.type, { action, state: store.getState() });
     const state = next(action);
     this.emitter.emit(`after:${action.type}`, { action, state: store.getState() });
     return state;
   };
 
-  serialise<Return>(entity: Reference<TraversableEntityTypes>, config: SerialiseConfig<S>) {
-    return serialise<Return, S>(this, entity, config);
+  serialise<Return>(entity: Reference<TraversableEntityTypes>, config: SerialiseConfig) {
+    return serialise<Return>(this.getState(), entity, config);
   }
 
   fromRef<T extends NormalizedEntity, R = T>(
     reference: Reference<TraversableEntityTypes>,
-    selector?: <C>(state: S, ctx: C) => R
+    selector?: <C>(state: HyperionStore, ctx: C) => R
   ): R | T {
     const state = this.getState();
     const resource =
@@ -110,26 +104,27 @@ export class Vault<S extends VaultState = VaultState> {
     return selector(state, resource) as R;
   }
 
-  select<R, C>(
-    selector: (state: S, context: CtxFunction<S, C>, util: any) => R,
-    context?: CtxFunction<S, C> | undefined
-  ): R {
-    return selector(this.getState(), context ? context : () => ({} as C), {});
+  select<R>(selector: (state: HyperionStore) => R): R {
+    return selector(this.getState());
   }
 
-  getStore(): Store {
+  getStore(): ReduxStore {
     return this.store;
   }
 
-  getState(): S {
+  getState(): HyperionStore {
     return this.store.getState();
   }
 
-  loadManifest(id: string, json?: unknown): Promise<ManifestNormalized> {
+  getImageService(): ImageServiceLoader {
+    return this.imageService;
+  }
+
+  loadManifest(id: string, json?: unknown): Promise<ManifestNormalized | undefined> {
     return this.load<ManifestNormalized>(id, json);
   }
 
-  loadCollection(id: string, json?: unknown): Promise<CollectionNormalized> {
+  loadCollection(id: string, json?: unknown): Promise<CollectionNormalized | undefined> {
     return this.load<CollectionNormalized>(id, json);
   }
 
@@ -211,7 +206,7 @@ export class Vault<S extends VaultState = VaultState> {
       case 'Choice': {
         const choice: ChoiceBody = fullInput as any;
         // @todo this could also be configuration, just choosing the first choice.
-        return this.getThumbnail(choice.items[0], request, dereference, candidates);
+        return this.getThumbnail(choice.items[0] as any, request, dereference, candidates);
       }
       case 'Collection': {
         // This one is tricky, as the manifests may not have been loaded. But we will give it a shot.
@@ -247,50 +242,21 @@ export class Vault<S extends VaultState = VaultState> {
     return { best: undefined, fallback: [], log: [] };
   }
 
-  load<T>(resource: string, json?: unknown): Promise<T> {
-    return new Promise(resolve => {
-      const storeState = this.getState();
-      if (storeState.hyperion.requests[resource]) {
-        const { resourceUri } = storeState.hyperion.requests[resource];
-        const type = storeState.hyperion.mapping[resourceUri];
-        if (storeState.hyperion.entities[type][resourceUri]) {
-          resolve(storeState.hyperion.entities[type][resourceUri] as T);
-          return;
-        }
-      }
-      this.emitter.on(
-        'after:@hyperion/REQUEST_COMPLETE',
-        ({ action, state }: { action: ActionType<typeof requestResource>; state: S }) => {
-          if (action.payload.id === resource) {
-            const { resourceUri } = state.hyperion.requests[action.payload.id];
-            const resourceType = state.hyperion.mapping[resourceUri];
-            const r = state.hyperion.entities[resourceType][resourceUri];
-            resolve(r as T);
-          }
-        }
-      );
-      this.store.dispatch(
-        json
-          ? requestOfflineResource({
-              id: resource,
-              entity: json,
-            })
-          : requestResource({
-              id: resource,
-            })
-      );
-    });
+  load<T>(resource: string, json?: unknown): Promise<T | undefined> {
+    if (json) {
+      return this.staticFetcher(resource, json) as Promise<T | undefined>;
+    }
+    return this.remoteFetcher(resource) as Promise<T | undefined>;
   }
 
   subscribe<T>(
-    selector: StateSelector<any, any, any>,
-    ctx: any,
-    subscription: (state: T | null, vault: Vault<S>) => void
+    selector: (state: HyperionStore) => T,
+    subscription: (state: T | null, vault: Vault) => void
   ): () => void {
     let lastState: T | null;
     return this.store.subscribe(() => {
       const state = this.store.getState();
-      const selectedState = selector(state, ctx, {});
+      const selectedState = selector(state);
       if (lastState !== selectedState) {
         subscription(selectedState, this);
       }

@@ -1,21 +1,37 @@
-import { useContext } from 'react';
-import { ReactContext } from '../context/Context';
-import { useVault } from './useVault';
-import { CustomContext, VaultState } from '@hyperion-framework/vault';
+import { useResourceContext } from '../context/ResourceContext';
 import { ManifestNormalized } from '@hyperion-framework/types';
+import { useVault } from './useVault';
+import { useMemo } from 'react';
 
-export const useManifest = <
-  S extends VaultState,
-  U,
-  C extends { manifest: ManifestNormalized }
->(): ManifestNormalized => {
-  const context = useContext(ReactContext) as CustomContext<'manifest', ManifestNormalized>;
+export function useManifest(options?: { id: string }): ManifestNormalized | undefined;
+export function useManifest<T>(
+  options?: { id: string; selector: (manifest: ManifestNormalized) => T },
+  deps?: any[]
+): T | undefined;
+export function useManifest<T = ManifestNormalized>(
+  options: {
+    id?: string;
+    selector?: (manifest: ManifestNormalized) => T;
+  } = {},
+  deps: any[] = []
+): ManifestNormalized | T | undefined {
+  const { id, selector } = options;
+  const ctx = useResourceContext();
   const vault = useVault();
-  const { manifest } = context(vault.getState(), {} as U);
+  const manifestId = id ? id : ctx.manifest;
 
-  if (!manifest) {
-    throw new Error('useManifest should only be called from a manifest context');
-  }
+  const manifest = manifestId ? vault.select(s => s.hyperion.entities.Manifest[manifestId]) : undefined;
 
-  return manifest;
-};
+  return useMemo(
+    () => {
+      if (!manifest) {
+        return undefined;
+      }
+      if (selector) {
+        return selector(manifest);
+      }
+      return manifest;
+    },
+    [manifest, selector, ...deps]
+  );
+}

@@ -1,5 +1,5 @@
 import { Manifest } from '@hyperion-framework/types';
-import { normalize } from '@hyperion-framework/vault';
+import { normalize } from '@hyperion-framework/parser';
 
 describe('utility/normalize', () => {
   const manifest = (): Manifest => ({
@@ -7,7 +7,7 @@ describe('utility/normalize', () => {
     id: 'https://example.org/iiif/book1/manifest',
     type: 'Manifest',
     label: { en: ['Image 1'] },
-    homepage: 'http://myhomepage.com',
+    homepage: { id: 'http://myhomepage.com' },
     items: [
       {
         id: 'https://example.org/iiif/book1/canvas/p1',

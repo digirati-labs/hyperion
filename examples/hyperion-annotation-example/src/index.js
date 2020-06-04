@@ -1,4 +1,3 @@
-
 import React from 'react';
 import './main.scss';
 import { render } from 'react-dom';

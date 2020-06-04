@@ -1,6 +1,6 @@
 import { Reference } from '../reference';
 import { ContentResource } from '../resources/contentResource';
-import { Service } from '../resources/service';
+import { Service, ServiceNormalized } from '../resources/service';
 import { Canvas } from '../resources/canvas';
 import { AnnotationCollection } from '../resources/annotationCollection';
 
@@ -17,7 +17,7 @@ export declare type LinkingProperties = {
 
 export declare type LinkingNormalized = {
   seeAlso: Array<Reference<'ContentResource'>>;
-  service: Array<Reference<'Service'>>;
+  service: Array<ServiceNormalized>;
   logo: Array<Reference<'ContentResource'>>;
   homepage: Reference<'ContentResource'> | null;
   rendering: Array<Reference<'ContentResource'>>;

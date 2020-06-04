@@ -1,4 +1,4 @@
-import {OmitProperties, SomeRequired} from "../utility";
+import { OmitProperties } from '../utility';
 
 export declare type ImageSize = { width: number; height: number };
 
@@ -14,9 +14,9 @@ export declare type ImageTile = {
 export declare type ImageProfile =
   | string
   | {
-      '@context'?: 'http://iiif.io/api/image/2/context.json',
-      '@type'?: 'iiif:ImageProfile',
-      type?: 'ImageProfile',
+      '@context'?: 'http://iiif.io/api/image/2/context.json';
+      '@type'?: 'iiif:ImageProfile';
+      type?: 'ImageProfile';
       formats?: string[];
       qualities?: string[];
       supports?: string[];

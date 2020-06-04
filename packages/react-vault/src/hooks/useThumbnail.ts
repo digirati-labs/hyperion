@@ -4,11 +4,17 @@ import { useCanvas } from './useCanvas';
 import { useVaultEffect } from './useVaultEffect';
 import { ImageCandidate, ImageCandidateRequest } from '@atlas-viewer/iiif-image-api/lib/types';
 
-export function useThumbnail(request: ImageCandidateRequest, dereference?: boolean) {
+export function useThumbnail(
+  request: ImageCandidateRequest,
+  dereference?: boolean,
+  { canvasId, manifestId }: { canvasId?: string; manifestId?: string } = {}
+) {
   const [thumbnail, setThumbnail] = useState<ImageCandidate | undefined>();
-  const manifest = useManifest();
-  const canvas = useCanvas();
+  const manifest = useManifest(manifestId ? { id: manifestId } : undefined);
+  const canvas = useCanvas(canvasId ? { id: canvasId } : undefined);
   const subject = canvas ? canvas : manifest;
+
+  if (!subject) throw new Error('Must be called under the context of a manifest or canvas.');
 
   useVaultEffect(
     v => {

@@ -9,8 +9,9 @@ export declare type IIIFExternalWebResource = ExternalWebResource & {
   duration?: number;
 };
 
+export declare type ContentResourceString = string;
+
 export declare type ContentResource =
-  | string
   | EmbeddedResource
   | ExternalWebResource
   | SpecificResource

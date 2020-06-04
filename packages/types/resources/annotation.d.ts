@@ -2,7 +2,7 @@ import { TechnicalProperties } from '../iiif/technical';
 import { DescriptiveNormalized, DescriptiveProperties } from '../iiif/descriptive';
 import { LinkingNormalized, LinkingProperties } from '../iiif/linking';
 import { JsonLDContext, OmitProperties, SomeRequired } from '../utility';
-import { ContentResource } from './contentResource';
+import { ContentResource, ContentResourceString } from './contentResource';
 import { Reference } from '../reference';
 
 type AnnotationOmittedTechnical =
@@ -252,8 +252,8 @@ export declare type CreatorNormalized = string[] | Agent[];
 export declare type W3CAnnotationBody = Body | ChoiceBody;
 export declare type W3CAnnotationTarget = Target | ChoiceTarget | TargetComposite | TargetList | TargetIndependents;
 
-export declare type AnnotationBody = ChoiceBody | ContentResource;
-export declare type AnnotationTarget = W3CAnnotationTarget | ContentResource;
+export declare type AnnotationBody = ChoiceBody | ContentResource | ContentResourceString;
+export declare type AnnotationTarget = W3CAnnotationTarget | ContentResource | ContentResourceString;
 
 export declare type TargetComposite = {
   type: 'Composite';
