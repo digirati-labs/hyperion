@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/store",
-  "version": "0.4.6",
+  "version": "1.0.0-alpha.0",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
@@ -18,10 +18,10 @@
     "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
-    "@hyperion-framework/types": "^0.4.0",
-    "@hyperion-framework/parser": "^0.4.6",
-    "redux": "^4.0.5",
+    "@hyperion-framework/parser": "^1.0.0-alpha.0",
+    "@hyperion-framework/types": "^1.0.0-alpha.0",
     "immer": "^6.0.8",
+    "redux": "^4.0.5",
     "typesafe-actions": "^5.1.0"
   },
   "publishConfig": {

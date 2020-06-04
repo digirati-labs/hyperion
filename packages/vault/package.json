@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/vault",
-  "version": "0.4.6",
+  "version": "1.0.0-alpha.0",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.0.9",
-    "@hyperion-framework/types": "^0.4.0",
-    "@hyperion-framework/parser": "^0.4.6",
-    "@hyperion-framework/store": "^0.4.6",
+    "@hyperion-framework/parser": "^1.0.0-alpha.0",
+    "@hyperion-framework/store": "^1.0.0-alpha.0",
+    "@hyperion-framework/types": "^1.0.0-alpha.0",
     "mitt": "^1.2.0"
   },
   "publishConfig": {
