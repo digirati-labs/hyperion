@@ -1,5 +1,5 @@
 import { usePaintingAnnotations } from './usePaintingAnnotations';
-import { getImageServices } from '@atlas-viewer/iiif-image-api/lib/utility/get-image-services';
+import { getImageServices } from '@atlas-viewer/iiif-image-api';
 import { useCanvas } from './useCanvas';
 import { useQuery } from 'react-query';
 import { useVault } from './useVault';
