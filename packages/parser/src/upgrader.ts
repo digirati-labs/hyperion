@@ -24,6 +24,11 @@ export function convertPresentation2(entity: any): Manifest | Collection {
       const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
       return upgrade.processResource(entity, true);
     }
+    if (type === 'Canvas' || type === 'sc:Canvas') {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      const upgrade = new Upgrader({ default_lang: 'en', deref_links: false });
+      return upgrade.processResource(entity, true);
+    }
     // Image service.
     if (entity.profile) {
       // eslint-disable-next-line @typescript-eslint/camelcase
