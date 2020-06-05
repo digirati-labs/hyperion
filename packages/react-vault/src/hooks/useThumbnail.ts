@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useManifest } from './useManifest';
 import { useCanvas } from './useCanvas';
 import { useVaultEffect } from './useVaultEffect';
-import { ImageCandidate, ImageCandidateRequest } from '@atlas-viewer/iiif-image-api/lib/types';
+import { ImageCandidate, ImageCandidateRequest } from '@atlas-viewer/iiif-image-api';
 
 export function useThumbnail(
   request: ImageCandidateRequest,

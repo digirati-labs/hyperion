@@ -23,7 +23,7 @@ import {
   ImageCandidateRequest,
   UnknownSizeImage,
   VariableSizeImage,
-} from '@atlas-viewer/iiif-image-api/lib/types';
+} from '@atlas-viewer/iiif-image-api';
 
 export type VaultOptions = {
   reducers: {};

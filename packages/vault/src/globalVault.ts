@@ -7,7 +7,7 @@ import {
   TraversableEntityMappedType,
   TraversableEntityTypes,
 } from '@hyperion-framework/types';
-import { ImageCandidateRequest } from '@atlas-viewer/iiif-image-api/lib/types';
+import { ImageCandidateRequest } from '@atlas-viewer/iiif-image-api';
 
 export function globalVault(options?: VaultOptions) {
   const gv: Vault | null = global
