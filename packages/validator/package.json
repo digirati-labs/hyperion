@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/validator",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
