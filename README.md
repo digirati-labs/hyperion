@@ -47,16 +47,32 @@ vault.loadManifest('http://example.org/..').then(manifest => {
 });
 ```
 
+#### Validate Presentation 3
+With such a new specification it can be useful to have some validation. This goes beyond the types, which cannot be
+used at runtime. The validator uses an official JSON-Schema for validating.
+
+```js
+import { Validator } from '@hyperion-framework/parser';
+
+const validator = new Validator();
+
+validator.validateManifest({ ... }); // boolean
+validator.validateCollection({ ... }); // boolean
+validator.validateAnnotationPage({ ... }); // boolean
+validator.validateCustom('canvas', { ... }); // boolean
+
+```
+
 #### Upgrade Presentation 2 to 3
 
 If you want to start building with IIIF Presentation 3 you will likely want to support both IIIF Presentation 2 
-as the community transitions. The `@hyperion-framework/parser` package contains a simple converter that can
+as the community transitions. The `@hyperion-framework/presentation-2-parser` package contains a simple converter that can
 be used to convert 2 to 3 in the browser and can be dropped into most applications right after fetching an
 IIIF resource. This supports both Collections and Manifests. If you need more granular control and options
 you can check the `@hyperion-framework/presentation-2-parser` package.  
 
 ```js
-import { convertPresentation2 } from '@hyperion-framework/parser';
+import { convertPresentation2 } from '@hyperion-framework/presentation-2-parser';
 
 // ...
 
