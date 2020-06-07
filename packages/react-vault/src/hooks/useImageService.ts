@@ -3,7 +3,7 @@ import { getImageServices } from '@atlas-viewer/iiif-image-api';
 import { useCanvas } from './useCanvas';
 import { useQuery } from 'react-query';
 import { useVault } from './useVault';
-import { Service } from '@hyperion-framework/types';
+import { ImageService, Service } from '@hyperion-framework/types';
 
 /**
  * Returns the First image service on the current canvas.
@@ -25,7 +25,7 @@ export function useImageService(): {
       if (canvas && annotations.length) {
         const annotation = annotations[0];
         const resource = vault.fromRef<any>(annotation.body[0]);
-        const imageServices = getImageServices(resource);
+        const imageServices = getImageServices(resource) as ImageService[];
 
         return (
           (await imageService.loadService({
@@ -44,7 +44,7 @@ export function useImageService(): {
         if (canvas && annotations.length) {
           const annotation = annotations[0];
           const resource = vault.fromRef<any>(annotation.body[0]);
-          const imageServices = getImageServices(resource);
+          const imageServices = getImageServices(resource) as ImageService[];
 
           return (
             imageService.loadServiceSync({
