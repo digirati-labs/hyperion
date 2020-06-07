@@ -4,6 +4,7 @@ import { DescriptiveProperties } from '../iiif/descriptive';
 import { LinkingProperties } from '../iiif/linking';
 import { ContentResource } from './content-resource';
 import { SpecificResource } from '../../types/resources/annotation';
+import { RightsProperties } from '../iiif/rights';
 
 type AnnotationOmittedTechnical = '@id' | 'format' | 'height' | 'width' | 'viewingDirection' | 'navDate';
 type AnnotationOmittedLinking = 'startCanvas';
@@ -27,6 +28,7 @@ type AnnotationStructural = {
 export interface Annotation
   extends OmitProperties<TechnicalProperties, AnnotationOmittedTechnical>,
     DescriptiveProperties,
+    RightsProperties,
     AnnotationStructural,
     OmitProperties<LinkingProperties, AnnotationOmittedLinking> {
   '@id'?: string;

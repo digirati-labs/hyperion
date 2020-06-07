@@ -4,6 +4,7 @@
  * Published by the IIIF Consortium under the CC-BY license.
  * https://iiif.io/api/presentation/2.1
  */
+export * from './resources/abstract';
 export * from './resources/collection';
 export * from './resources/annotation-list';
 export * from './resources/annotation';
