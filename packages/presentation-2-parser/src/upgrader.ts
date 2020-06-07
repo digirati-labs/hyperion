@@ -1,12 +1,13 @@
 import * as Presentation3 from '@hyperion-framework/types';
 import * as Presentation2 from '@hyperion-framework/presentation-2';
+import { level1Support, imageServiceProfiles } from '@atlas-viewer/iiif-image-api';
 import { Traverse } from './traverse';
-import { SomeRequired } from '@hyperion-framework/types';
+import { Collection, Manifest, SomeRequired } from '@hyperion-framework/types';
 
 const configuration = {
   attributionLabel: 'Attribution',
   lang: 'none',
-  providerId: '',
+  providerId: 'http://example.org/provider',
   providerName: 'Unknown',
 };
 
@@ -45,28 +46,43 @@ export function convertLanguageMapping(
   return languageMap;
 }
 
-export function upgradeContext(inputContexts: string | string[]): string[] {
+export function getProfile(profile: any | any[]): string | undefined {
+  if (Array.isArray(profile)) {
+    return getProfile(profile.find(s => typeof s === 'string'));
+  }
+
+  if (level1Support.indexOf(profile) !== -1) {
+    return 'level1';
+  }
+
+  if (imageServiceProfiles.indexOf(profile) !== -1) {
+    return 'level2';
+  }
+
+  if (typeof profile !== 'string') {
+    return undefined;
+  }
+
+  return profile;
+}
+
+export function getTypeFromContext(inputContexts: string | string[]): string | undefined {
   const contexts: string[] = Array.isArray(inputContexts) ? inputContexts : [inputContexts];
-  const newContext: string[] = [];
 
   for (const context of contexts) {
     switch (context) {
       case 'http://iiif.io/api/image/2/context.json':
-        newContext.push('ImageService2');
-        break;
+      case 'http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2':
+        return 'ImageService2';
       case 'http://iiif.io/api/image/1/context.json':
       case 'http://library.stanford.edu/iiif/image-api/1.1/context.json':
-        newContext.push('ImageService1');
-        break;
+        return 'ImageService1';
       case 'http://iiif.io/api/annex/openannotation/context.json':
-        newContext.push('ImageApiSelector');
-        break;
-      default:
-        newContext.push(context);
+        return 'ImageApiSelector';
     }
   }
 
-  return newContext;
+  return undefined;
 }
 
 function getTypeFromProfile(inputProfile: string): string | undefined {
@@ -99,6 +115,13 @@ function getTypeFromProfile(inputProfile: string): string | undefined {
   return undefined;
 }
 
+function ensureArray<T>(maybeArray: T | T[]): T[] {
+  if (Array.isArray(maybeArray)) {
+    return maybeArray;
+  }
+  return [maybeArray];
+}
+
 function removePrefix(str: string) {
   for (const prefix of ['sc', 'oa', 'dcterms', 'dctypes', 'iiif']) {
     if (str.startsWith(`${prefix}:`)) {
@@ -109,7 +132,12 @@ function removePrefix(str: string) {
   return str;
 }
 
-function getNewType(oldType: string | string[], profile?: any): string {
+function getNewType(resource: any): string {
+  const id = resource['@id'] || resource.id;
+  let oldType: string | string[] = resource['@type'] || resource.type;
+  const profile: any = resource.profile || undefined;
+  const context: any = resource['@context'] || undefined;
+
   if (profile) {
     const possibleType = getTypeFromProfile(profile);
     if (possibleType) {
@@ -117,39 +145,78 @@ function getNewType(oldType: string | string[], profile?: any): string {
     }
   }
 
+  if (context) {
+    const possibleType = getTypeFromContext(context);
+    if (possibleType) {
+      return possibleType;
+    }
+  }
+
+  if (oldType) {
+    if (Array.isArray(oldType)) {
+      if (oldType.indexOf('oa:CssStylesheet') !== -1) {
+        return 'CssStylesheet';
+      }
+      if (oldType.indexOf('cnt:ContentAsText') !== -1) {
+        return 'TextualBody';
+      }
+      // Nothing we can do?
+      oldType = oldType[0];
+    }
+
+    for (const prefix of ['sc', 'oa', 'dcterms', 'dctypes', 'iiif']) {
+      if (oldType.startsWith(`${prefix}:`)) {
+        oldType = oldType.slice(prefix.length + 1);
+        break;
+      }
+    }
+
+    switch (oldType) {
+      case 'Layer':
+        return 'AnnotationCollection';
+      case 'AnnotationList':
+        return 'AnnotationPage';
+      case 'cnt:ContentAsText':
+        return 'TextualBody';
+      // @todo There are definitely some missing annotation types here.
+    }
+  }
+
+  if (resource.format) {
+    if (resource.format.startsWith('image/')) {
+      return 'Image';
+    }
+    if (resource.format.startsWith('text/')) {
+      return 'Text';
+    }
+    if (resource.format === 'application/pdf') {
+      return 'Text';
+    }
+    if (resource.format.startsWith('application/')) {
+      return 'Dataset';
+    }
+  }
+
+  if (id && (id.endsWith('.jpg') || id.endsWith('.png') || id.endsWith('.jpeg'))) {
+    return 'Image';
+  }
+
   if (!oldType) {
     return 'unknown';
   }
 
-  if (Array.isArray(oldType)) {
-    if (oldType.indexOf('oa:CssStylesheet') !== -1) {
-      return 'CssStylesheet';
-    }
-    if (oldType.indexOf('cnt:ContentAsText') !== -1) {
-      return 'TextualBody';
-    }
-    // Nothing we can do?
-    oldType = oldType[0];
-  }
-
-  for (const prefix of ['sc', 'oa', 'dcterms', 'dctypes', 'iiif']) {
-    if (oldType.startsWith(`${prefix}:`)) {
-      return getNewType(oldType.slice(prefix.length + 1));
-    }
-  }
-
-  switch (oldType) {
-    case 'Layer':
-      return 'AnnotationCollection';
-    case 'AnnotationList':
-      return 'AnnotationPage';
-    case 'cnt:ContentAsText':
-      return 'TextualBody';
-    // @todo There are definitely some missing annotation types here.
-  }
-
   // Again, nothing we can do.
-  return oldType;
+  return oldType as string;
+}
+
+const licenseRegex = /http(s)?:\/\/(creativecommons.org|rightsstatements.org)[^"'\\<\n]+/gm;
+function extractLicense(license: string) {
+  const matches = license.match(licenseRegex);
+  if (matches) {
+    return matches[0];
+  }
+
+  return license;
 }
 
 async function getContentTypeOfRemoteResource(resourceId: string): Promise<string | undefined> {
@@ -175,12 +242,18 @@ function fixLicense(
 
   const licenseList = Array.isArray(license) ? license : [license];
 
-  for (const singleLicense of licenseList) {
+  for (const rawLicense of licenseList) {
+    const singleLicense = rawLicense ? extractLicense(rawLicense) : undefined;
+
     if (
       singleLicense &&
       (singleLicense.indexOf('creativecommons.org') !== -1 || singleLicense.indexOf('rightsstatements.org') !== -1)
     ) {
-      rights = singleLicense;
+      if (singleLicense.startsWith('https://')) {
+        rights = `http://${singleLicense.slice(8)}`;
+      } else {
+        rights = singleLicense;
+      }
       continue;
     }
     if (singleLicense) {
@@ -192,6 +265,41 @@ function fixLicense(
   }
 
   return [rights, metadata];
+}
+
+const removeContexts = [
+  'http://iiif.io/api/presentation/2/context.json',
+  'http://iiif.io/api/image/2/context.json',
+  'http://iiif.io/api/image/1/context.json',
+  'http://library.stanford.edu/iiif/image-api/1.1/context.json',
+  'http://iiif.io/api/search/1/context.json',
+  'http://iiif.io/api/search/0/context.json',
+  'http://iiif.io/api/auth/1/context.json',
+  'http://iiif.io/api/auth/0/context.json',
+  'http://iiif.io/api/annex/openannotation/context.json',
+];
+
+function fixContext(inputContext: string | string[] | undefined): string | string[] | undefined {
+  if (inputContext) {
+    const contexts = Array.isArray(inputContext) ? inputContext : [inputContext];
+
+    const newContexts = [];
+    for (const context of contexts) {
+      if (context === 'http://iiif.io/api/presentation/2/context.json') {
+        newContexts.push('http://iiif.io/api/presentation/3/context.json');
+      }
+      if (removeContexts.indexOf(context) !== -1) {
+        continue;
+      }
+      newContexts.push(context);
+    }
+
+    if (contexts.length) {
+      return newContexts.length === 1 ? newContexts[0] : newContexts;
+    }
+  }
+
+  return undefined;
 }
 
 function convertMetadata(
@@ -243,9 +351,9 @@ function technicalProperties<T extends Partial<Presentation3.TechnicalProperties
   }
 
   return {
-    '@context': resource['@context'] ? upgradeContext(resource['@context']) : undefined,
-    id: resource['@id'] || mintNewIdFromResource(resource),
-    type: getNewType(resource['@type'], resource.profile) as any,
+    '@context': resource['@context'] ? fixContext(resource['@context']) : undefined,
+    id: encodeURI(resource['@id'] || mintNewIdFromResource(resource)).trim(),
+    type: getNewType(resource) as any,
     behavior: allBehaviours.length ? allBehaviours : undefined,
     // format: This will be an optional async post-process step.
     height: resource.height ? resource.height : undefined,
@@ -282,6 +390,37 @@ function descriptiveProperties<T extends Partial<Presentation3.DescriptiveProper
   } as T;
 }
 
+function parseWithin(resource: Presentation2.AbstractResource): undefined | Presentation3.LinkingProperties['partOf'] {
+  if (!resource.within) {
+    return undefined;
+  }
+
+  const withinProperties = Array.isArray(resource.within) ? resource.within : [resource.within];
+  const returnPartOf: Presentation3.LinkingProperties['partOf'] = [];
+
+  for (const within of withinProperties) {
+    if (typeof within === 'string') {
+      if (within) {
+        switch (resource['@type']) {
+          case 'sc:Manifest':
+            returnPartOf.push({ id: within, type: 'Collection' });
+            break;
+          // @todo are there more cases?
+        }
+      }
+    } else if ((within as any)['@id']) {
+      returnPartOf.push({
+        id: (within as any)['@id'], // as any since content resources don't require an `@id`
+        type: getNewType(within) as any,
+      });
+    } else {
+      // Content resource.
+    }
+  }
+
+  return returnPartOf.length ? returnPartOf : undefined;
+}
+
 function linkingProperties(resource: Presentation2.LinkingProperties & Presentation2.RightsProperties) {
   // @todo related links to metadata.
 
@@ -291,19 +430,21 @@ function linkingProperties(resource: Presentation2.LinkingProperties & Presentat
   return {
     provider:
       resource.logo || related.length
-        ? {
-            id: configuration.providerId,
-            type: 'Agent' as 'Agent',
-            homepage: related.length ? (related[0] as any) : undefined,
-            logo: resource.logo ? (resource.logo as any) : undefined,
-            label: convertLanguageMapping(configuration.providerName),
-          }
+        ? [
+            {
+              id: configuration.providerId,
+              type: 'Agent' as 'Agent',
+              homepage: related.length ? [related[0] as any] : undefined,
+              logo: resource.logo ? (Array.isArray(resource.logo) ? resource.logo : [resource.logo]) : undefined,
+              label: convertLanguageMapping(configuration.providerName),
+            },
+          ]
         : undefined,
-    partOf: resource.within ? (resource.within as any) : undefined,
-    rendering: undefined,
-    seeAlso: undefined,
+    partOf: parseWithin(resource),
+    rendering: resource.rendering,
+    seeAlso: resource.seeAlso,
     start: resource.startCanvas as any,
-    service: resource.service ? (resource.service as any) : undefined,
+    service: resource.service ? ensureArray(resource.service as any) : undefined,
     supplementary: layer ? [layer as any] : undefined,
   };
 }
@@ -317,12 +458,20 @@ function upgradeCollection(collection: Presentation2.Collection): Presentation3.
   });
 }
 
+function flattenArray<T>(array: T[][]): T[] {
+  const returnArr: T[] = [];
+  for (const arr of array) {
+    returnArr.push(...arr);
+  }
+  return returnArr;
+}
+
 function upgradeManifest(manifest: Presentation2.Manifest): Presentation3.Manifest {
   return removeUndefinedProperties({
     ...technicalProperties(manifest),
     ...descriptiveProperties(manifest),
     ...linkingProperties(manifest),
-    items: manifest.sequences as any,
+    items: flattenArray(manifest.sequences as any),
   });
 }
 
@@ -360,7 +509,7 @@ function upgradeAnnotation(annotation: Presentation2.Annotation): Presentation3.
     ...(technicalProperties(annotation) as any),
     ...(descriptiveProperties(annotation) as any),
     ...(linkingProperties(annotation) as any),
-    target: annotation.on,
+    target: typeof annotation.on === 'string' ? encodeURI(annotation.on).trim() : annotation.on,
     body: annotation.resource as any,
     // @todo stylesheet upgrade.
   });
@@ -400,7 +549,26 @@ function upgradeRange(range: any) {
 }
 
 function upgradeService(service: Presentation2.Service): Presentation3.Service {
-  return service; // Technically we could change @id -> id and @type to type
+  const { '@id': id, '@type': type, '@context': context, profile, ...newService } = service as any;
+
+  if (id) {
+    newService.id = encodeURI(id).trim();
+  }
+
+  newService.type = getNewType(service);
+
+  if (newService.type === 'unknown') {
+    newService.type = 'Service'; // optional on services.
+  }
+
+  if (profile) {
+    newService.profile = getProfile(profile);
+  }
+
+  return removeUndefinedProperties({
+    ...newService,
+    ...descriptiveProperties(newService as any),
+  });
 }
 
 function upgradeLayer(layer: Presentation2.Layer): Presentation3.AnnotationCollection {
@@ -436,3 +604,18 @@ export const presentation2to3 = new Traverse<{
   service: [upgradeService],
   layer: [upgradeLayer],
 });
+
+export function convertPresentation2(entity: any): Presentation3.Manifest | Presentation3.Collection {
+  if (
+    (entity &&
+      entity['@context'] &&
+      (entity['@context'] === 'http://iiif.io/api/presentation/2/context.json' ||
+        entity['@context'].indexOf('http://iiif.io/api/presentation/2/context.json') !== -1 ||
+        // Yale context.
+        entity['@context'] === 'http://www.shared-canvas.org/ns/context.json')) ||
+    entity['@context'] === 'http://iiif.io/api/image/2/context.json'
+  ) {
+    return presentation2to3.traverseUnknown(entity);
+  }
+  return entity;
+}

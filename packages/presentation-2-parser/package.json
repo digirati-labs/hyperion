@@ -8,7 +8,7 @@
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "files": [
-    "lib"
+    "dist"
   ],
   "scripts": {
     "build": "rollup -c && tsc -p ./tsconfig.types.json",
@@ -18,7 +18,8 @@
     "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
-    "@hyperion-framework/presentation-2": "^1.0.0-alpha.3"
+    "@hyperion-framework/presentation-2": "^1.0.0-alpha.3",
+    "@atlas-viewer/iiif-image-api": "^1.1.0"
   },
   "publishConfig": {
     "access": "public"

@@ -15,6 +15,9 @@ import {
   LinkingProperties,
   Layer,
   CommonContentResource,
+  ContentResource,
+  OneOrMany,
+  RightsProperties,
 } from '@hyperion-framework/presentation-2';
 
 export const types: TraversableEntityTypes[] = [
@@ -151,8 +154,18 @@ export class Traverse<
   traverseCollectionItems(collection: Collection): Collection {
     if (this.options.mergeMemberProperties) {
       const members = [
-        ...(collection.manifests || []),
-        ...(collection.collections || []),
+        ...(collection.manifests || []).map(manifest => {
+          if (typeof manifest === 'string') {
+            return { '@id': manifest, '@type': 'sc:Manifest' };
+          }
+          return manifest;
+        }),
+        ...(collection.collections || []).map(subCollection => {
+          if (typeof subCollection === 'string') {
+            return { '@id': subCollection, '@type': 'sc:Collection' };
+          }
+          return subCollection;
+        }),
         ...(collection.members || []),
       ];
 
@@ -162,17 +175,32 @@ export class Traverse<
     }
 
     if (collection.manifests) {
-      collection.manifests = collection.manifests.map(manifest => this.traverseManifest(manifest as Manifest));
+      collection.manifests = collection.manifests.map(manifest =>
+        this.traverseManifest(
+          typeof manifest === 'string'
+            ? ({ '@id': manifest, '@type': 'sc:Manifest' } as Manifest)
+            : (manifest as Manifest)
+        )
+      );
     }
 
     if (collection.collections) {
       collection.collections = collection.collections.map(subCollection =>
-        this.traverseCollection(subCollection as Collection)
+        this.traverseCollection(
+          typeof subCollection === 'string'
+            ? ({ '@id': subCollection, '@type': 'sc:Collection' } as Collection)
+            : (subCollection as Collection)
+        )
       );
     }
 
     if (collection.members) {
-      collection.members = collection.members.map(member => this.traverseUnknown(member));
+      collection.members = collection.members.map(member => {
+        if (typeof member === 'string') {
+          return member;
+        }
+        return this.traverseUnknown(member);
+      });
     }
 
     return collection;
@@ -248,7 +276,7 @@ export class Traverse<
           }
           return canvas;
         }),
-        ...range.members,
+        ...(range.members || []),
       ];
 
       delete range.ranges;
@@ -320,7 +348,7 @@ export class Traverse<
   }
 
   traverseService(service: Service): T['Service'] {
-    return this.traverseType(service, this.traversals.service);
+    return this.traverseType(this.traverseLinking(service as any), this.traversals.service);
   }
 
   traverseContentResource(contentResource: CommonContentResource): T['ContentResource'] {
@@ -328,15 +356,18 @@ export class Traverse<
       return this.traverseChoice(contentResource);
     }
 
-    return this.traverseType(contentResource, this.traversals.contentResource);
+    return this.traverseType(
+      this.traverseDescriptive(this.traverseLinking(contentResource as any)),
+      this.traversals.contentResource
+    );
   }
 
   traverseUnknown(item: any) {
-    if (!item['@type']) {
+    if (!item['@type'] || typeof item === 'string') {
       // Unknown item.
       return item;
     }
-    switch (identifyResource(item['@type'])) {
+    switch (identifyResource(item)) {
       case 'sc:Collection':
         return this.traverseCollection(item);
       case 'sc:Manifest':
@@ -368,24 +399,51 @@ export class Traverse<
     return item;
   }
 
-  traverseDescriptive<T extends Partial<DescriptiveProperties>>(resource: T) {
-    if (resource.thumbnail) {
-      const thumbnails = Array.isArray(resource.thumbnail) ? resource.thumbnail : [resource.thumbnail];
-      const newThumbnails: any[] = [];
+  traverseImageResource(contentResource: OneOrMany<string | ContentResource>) {
+    const wasArray = Array.isArray(contentResource);
+    const resourceList = Array.isArray(contentResource) ? contentResource : [contentResource];
+    const newResourceList: any[] = [];
 
-      for (const thumbnail of thumbnails) {
-        if (typeof thumbnail === 'string') {
-          newThumbnails.push(
-            this.traverseType({ '@id': thumbnail, '@type': 'dctypes:Image' }, this.traversals.contentResource)
-          );
-        } else {
-          newThumbnails.push(this.traverseType(thumbnail, this.traversals.contentResource));
-        }
+    for (const singleResource of resourceList) {
+      if (typeof singleResource === 'string') {
+        newResourceList.push(this.traverseContentResource({ '@id': singleResource, '@type': 'dctypes:Image' }));
+      } else {
+        newResourceList.push(this.traverseContentResource(singleResource as any));
       }
-
-      resource.thumbnail = newThumbnails;
     }
+
+    if (!wasArray && !this.options.convertPropsToArray) {
+      return newResourceList[0];
+    }
+
+    return newResourceList;
+  }
+
+  traverseDescriptive<T extends Partial<DescriptiveProperties & RightsProperties>>(resource: T) {
+    if (resource.thumbnail) {
+      resource.thumbnail = this.traverseImageResource(resource.thumbnail);
+    }
+
+    if (resource.logo) {
+      resource.logo = this.traverseImageResource(resource.logo);
+    }
+
     return resource;
+  }
+
+  traverseOneOrMoreServices(allServices: OneOrMany<any>) {
+    const wasArray = Array.isArray(allServices);
+    const services = Array.isArray(allServices) ? allServices : [allServices];
+    const newServices = [];
+    for (const service of services) {
+      newServices.push(this.traverseService(service));
+    }
+
+    if (!wasArray && !this.options.convertPropsToArray) {
+      return newServices[0];
+    }
+
+    return newServices;
   }
 
   traverseLinking<T extends Partial<LinkingProperties>>(resource: T) {
@@ -396,7 +454,7 @@ export class Traverse<
       resource.rendering = this.traverseOneOrManyType(resource.rendering, this.traversals.contentResource);
     }
     if (resource.service) {
-      resource.rendering = this.traverseOneOrManyType(resource.service, this.traversals.service);
+      resource.service = this.traverseOneOrMoreServices(resource.service);
     }
     if (resource.seeAlso) {
       resource.seeAlso = this.traverseOneOrManyType(resource.seeAlso, this.traversals.contentResource);
