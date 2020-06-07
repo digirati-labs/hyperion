@@ -31,6 +31,10 @@ export const types: TraversableEntityTypes[] = [
   'Selector',
 ];
 
+export type TraverseOptions = {
+  allowUndefinedReturn: boolean;
+};
+
 export function identifyResource(resource: any): TraversableEntityTypes {
   if (typeof resource === 'undefined' || resource === null) {
     throw new Error('Null or undefined is not a valid entity.');
@@ -59,7 +63,9 @@ export function identifyResource(resource: any): TraversableEntityTypes {
 export class Traverse {
   private traversals: Required<TraversalMap>;
 
-  constructor(traversals: TraversalMap) {
+  private options: TraverseOptions;
+
+  constructor(traversals: TraversalMap, options: Partial<TraverseOptions> = {}) {
     this.traversals = {
       collection: [],
       manifest: [],
@@ -72,6 +78,10 @@ export class Traverse {
       range: [],
       service: [],
       ...traversals,
+    };
+    this.options = {
+      allowUndefinedReturn: false,
+      ...options,
     };
   }
 
@@ -105,6 +115,9 @@ export class Traverse {
     }
     if (resource.service) {
       resource.service = resource.service.map(service => this.traverseType(service, this.traversals.service));
+    }
+    if (resource.services) {
+      resource.services = resource.services.map(service => this.traverseType(service, this.traversals.service));
     }
     if (resource.logo) {
       resource.logo = resource.logo.map(content => this.traverseType(content, this.traversals.contentResource));
@@ -254,9 +267,19 @@ export class Traverse {
   */
 
   traversePosterCanvas<T extends Collection | Manifest | Canvas | Range>(json: T): T {
+    // @deprecated
     if (json.posterCanvas) {
       json.posterCanvas = this.traverseType(json.posterCanvas, this.traversals.canvas);
     }
+
+    if (json.placeholderCanvas) {
+      json.placeholderCanvas = this.traverseType(json.placeholderCanvas, this.traversals.canvas);
+    }
+
+    if (json.accompanyingCanvas) {
+      json.accompanyingCanvas = this.traverseType(json.accompanyingCanvas, this.traversals.canvas);
+    }
+
     return json;
   }
 
@@ -315,7 +338,11 @@ export class Traverse {
 
   traverseType<T>(object: T, traversals: Array<Traversal<T>>): T {
     return traversals.reduce((acc: T, traversal: Traversal<T>): T => {
-      return traversal(acc);
+      const returnValue = traversal(acc);
+      if (typeof returnValue === 'undefined' && !this.options.allowUndefinedReturn) {
+        return acc;
+      }
+      return returnValue;
     }, object);
   }
 
