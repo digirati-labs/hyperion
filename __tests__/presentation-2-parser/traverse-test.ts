@@ -3,7 +3,7 @@ import iiifManifest from '../../fixtures/presentation-2/iiif-fixture-manifest.js
 import bibManifest from '../../fixtures/presentation-2/biblissima-manifest.json';
 import iiifAnnoList from '../../fixtures/presentation-2/iiif-fixture-annotation-list.json';
 import { Traverse } from '../../packages/presentation-2-parser/src/traverse';
-import { upgraderTraverse } from '../../packages/presentation-2-parser/src/upgrader';
+import { presentation2to3 } from '../../packages/presentation-2-parser/src/upgrader';
 
 describe('Presentation 2 Traverse', () => {
   // test('upgrade 2 to 3', () => {
@@ -25,6 +25,7 @@ describe('Presentation 2 Traverse', () => {
       manifest: [
         manifest => {
           manifestIds.push(manifest['@id']);
+          return manifest;
         },
       ],
     });
