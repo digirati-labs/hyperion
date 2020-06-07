@@ -18,7 +18,7 @@ import {
   EntityMapping,
 } from '@hyperion-framework/types';
 import { emptyCollection, emptyAnnotationPage, emptyCanvas, emptyManifest, emptyRange } from './empty-types';
-import { convertPresentation2 } from './upgrader';
+import { convertPresentation2 } from '@hyperion-framework/presentation-2-parser';
 
 export const defaultEntities: Entities = {
   Collection: {},

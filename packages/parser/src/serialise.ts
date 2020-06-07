@@ -86,7 +86,7 @@ export function serialise<Return>(state: HyperionStore, subject: Reference, conf
     const iterator = generator(resource as any, state);
     let current = iterator.next();
     while (!current.done) {
-      const requestToHydrate = current.value;
+      const requestToHydrate: Reference | Reference[] = current.value as any;
       let next: any = UNSET;
       if (requestToHydrate) {
         if (Array.isArray(requestToHydrate)) {
