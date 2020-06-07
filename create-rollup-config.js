@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import visualizer from 'rollup-plugin-visualizer';
 import replace from 'rollup-plugin-replace';
+import json from '@rollup/plugin-json';
 import compiler from '@ampproject/rollup-plugin-closure-compiler';
 
 export function createRollupConfig(globalName, pkg, external = []) {
@@ -25,6 +26,7 @@ export function createRollupConfig(globalName, pkg, external = []) {
         }),
         resolve({ browser: true }), // so Rollup can find `ms`
         commonjs({ extensions: ['.js', '.ts'] }), // the ".ts" extension is required
+        json(),
         terser(),
         compiler(),
       ],
@@ -52,6 +54,7 @@ export function createRollupConfig(globalName, pkg, external = []) {
         }),
         resolve(), // so Rollup can find `ms`
         commonjs({ extensions: ['.js', '.ts'] }), // the ".ts" extension is required
+        json(),
         visualizer(),
       ],
     },
