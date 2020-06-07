@@ -2,6 +2,7 @@ import { OmitProperties } from '../utility';
 import { TechnicalProperties } from '../iiif/technical';
 import { DescriptiveProperties } from '../iiif/descriptive';
 import { LinkingProperties } from '../iiif/linking';
+import { RightsProperties } from '../iiif/rights';
 
 type RangeOmittedTechnical = 'format' | 'viewingDirection' | 'navDate';
 type RangeOmittedLinking = 'startCanvas';
@@ -34,5 +35,6 @@ type RangeStructural = {
 export interface Range
   extends OmitProperties<TechnicalProperties, RangeOmittedTechnical>,
     DescriptiveProperties,
+    RightsProperties,
     RangeStructural,
     Partial<OmitProperties<LinkingProperties, RangeOmittedLinking>> {}

@@ -1,5 +1,5 @@
 import { LanguageProperty, OneOrMany } from '../utility';
-import { ContentResource } from '../resources/content-resource';
+import { ContentResource, ImageResourceSegment, ImageResourceSegmentWithService } from '../resources/content-resource';
 
 /**
  * The following properties ensure that the interests of the owning or publishing institutions are conveyed regardless
@@ -38,5 +38,5 @@ export declare type RightsProperties = {
    *
    * - Any resource type may have one or more logos associated with it.
    */
-  logo?: OneOrMany<ContentResource>;
+  logo?: OneOrMany<string | ImageResourceSegment | ImageResourceSegmentWithService>;
 };

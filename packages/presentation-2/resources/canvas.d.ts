@@ -4,6 +4,7 @@ import { DescriptiveProperties } from '../iiif/descriptive';
 import { LinkingProperties } from '../iiif/linking';
 import { Annotation } from './annotation';
 import { AnnotationList } from './annotation-list';
+import { RightsProperties } from '../iiif/rights';
 
 type CanvasOmittedTechnical = 'format' | 'viewingDirection' | 'navDate';
 type CanvasOmittedLinking = 'startCanvas';
@@ -22,5 +23,6 @@ type CanvasStructural = {
 export interface Canvas
   extends OmitProperties<TechnicalProperties, CanvasOmittedTechnical>,
     DescriptiveProperties,
+    RightsProperties,
     CanvasStructural,
     Partial<OmitProperties<LinkingProperties, CanvasOmittedLinking>> {}

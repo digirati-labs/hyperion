@@ -3,6 +3,7 @@ import { TechnicalProperties } from '../iiif/technical';
 import { LinkingProperties } from '../iiif/linking';
 import { Manifest } from './manifest';
 import { DescriptiveProperties } from '../iiif/descriptive';
+import { RightsProperties } from '../iiif/rights';
 
 type CollectionOmittedTechnical = 'format' | 'height' | 'width' | 'viewingDirection';
 type CollectionOmittedLinking = 'startCanvas';
@@ -10,9 +11,9 @@ type CollectionOmittedLinking = 'startCanvas';
 type CollectionStructural = {
   members?: Array<Snippet<Collection | Manifest>>;
   // @deprecated
-  collections?: Snippet<Collection>[];
+  collections?: Array<string | Snippet<Collection>>;
   // @deprecated
-  manifests?: Snippet<Manifest>[];
+  manifests?: Array<string | Snippet<Manifest>>;
 };
 
 /**
@@ -23,5 +24,6 @@ type CollectionStructural = {
 export interface Collection
   extends OmitProperties<TechnicalProperties, CollectionOmittedTechnical>,
     DescriptiveProperties,
+    RightsProperties,
     CollectionStructural,
     OmitProperties<LinkingProperties, CollectionOmittedLinking> {}

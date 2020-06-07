@@ -4,6 +4,7 @@ import { DescriptiveProperties } from '../iiif/descriptive';
 import { Sequence } from './sequence';
 import { LinkingProperties } from '../iiif/linking';
 import { Range } from './range';
+import { RightsProperties } from '../iiif/rights';
 
 type ManifestOmittedTechnical = 'format' | 'height' | 'width';
 type ManifestOmittedLinking = 'startCanvas';
@@ -52,5 +53,6 @@ type ManifestLinking = OmitProperties<LinkingProperties, ManifestOmittedLinking>
 export interface Manifest
   extends ManifestTechnical,
     DescriptiveProperties,
+    RightsProperties,
     ManifestStructural,
     Partial<ManifestLinking> {}

@@ -3,6 +3,7 @@ import { TechnicalProperties } from '../iiif/technical';
 import { DescriptiveProperties } from '../iiif/descriptive';
 import { Canvas } from './canvas';
 import { LinkingProperties } from '../iiif/linking';
+import { RightsProperties } from '../iiif/rights';
 
 type SequenceTechnical = OmitProperties<TechnicalProperties, '@id' | 'format' | 'height' | 'width' | 'navDate'>;
 type SequenceStructural = {
@@ -38,6 +39,7 @@ type SequenceStructural = {
 export declare interface Sequence
   extends SequenceTechnical,
     DescriptiveProperties,
+    RightsProperties,
     SequenceStructural,
     LinkingProperties {
   '@id'?: string;
