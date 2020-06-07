@@ -1,40 +1,8 @@
-import { OmitProperties } from '../utility';
+import { AuthService } from '../services/auth-service';
+import { GeoJsonService } from '../services/geo-json';
+import { ImageService } from '../services/image-service';
+import { SearchService } from '../services/search';
 
-export declare type ImageSize = { width: number; height: number };
+export type Service = AuthService | GeoJsonService | ImageService | SearchService;
 
-export declare type ImageTile = {
-  width: number;
-  height?: number;
-  scaleFactors: number[];
-  maxWidth?: number;
-  maxHeight?: number;
-};
-
-// @todo add in IIIF-Vocabulary
-export declare type ImageProfile =
-  | string
-  | {
-      '@context'?: 'http://iiif.io/api/image/2/context.json';
-      '@type'?: 'iiif:ImageProfile';
-      type?: 'ImageProfile';
-      formats?: string[];
-      qualities?: string[];
-      supports?: string[];
-      maxArea?: number;
-      maxHeight?: number;
-      maxWidth?: number;
-    };
-
-export interface Service {
-  '@context'?: string | string[];
-  '@id'?: string;
-  id: string;
-  profile: ImageProfile | ImageProfile[];
-  protocol?: string;
-  width?: number | null;
-  height?: number | null;
-  sizes?: ImageSize[];
-  tiles?: ImageTile[];
-}
-
-export declare type ServiceNormalized = Required<OmitProperties<Service, '@context' | '@id'>>;
+export declare type ServiceNormalized = Service; // no more normalization.

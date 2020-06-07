@@ -16,8 +16,13 @@ type AnnotationPageOmittedTechnical =
   | 'duration'
   | 'viewingDirection'
   | 'timeMode';
-type AnnotationPageOmittedDescriptive = 'posterCanvas' | 'navDate' | 'language';
-type AnnotationPageOmittedLinking = 'partOf' | 'start' | 'supplementary';
+type AnnotationPageOmittedDescriptive =
+  | 'posterCanvas'
+  | 'accompanyingCanvas'
+  | 'placeholderCanvas'
+  | 'navDate'
+  | 'language';
+type AnnotationPageOmittedLinking = 'services' | 'partOf' | 'start' | 'supplementary';
 type AnnotationPageOmittedStructural = 'annotations' | 'structures';
 
 type AnnotationPageTechnical = OmitProperties<TechnicalProperties, AnnotationPageOmittedTechnical>;

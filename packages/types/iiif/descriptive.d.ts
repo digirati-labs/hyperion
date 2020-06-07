@@ -1,6 +1,7 @@
 import { Reference } from '../reference';
 import { OmitProperties } from '../utility';
 import { Canvas, ContentResource } from '..';
+import { ResourceProvider, ResourceProviderNormalized } from '../resources/provider';
 
 export declare type InternationalString = {
   [language: string]: string[] | undefined;
@@ -20,10 +21,27 @@ export declare type DescriptiveProperties = {
   navDate: string | null;
   language: string[];
   thumbnail: ContentResource[];
+  provider?: ResourceProvider;
+  placeholderCanvas: Canvas;
+  accompanyingCanvas: Canvas;
+
+  /**
+   * @deprecated since 3.0-beta - use placeholderCanvas or accompanyingCanvas
+   */
   posterCanvas: Canvas;
 };
 
-export declare type DescriptiveNormalized = OmitProperties<DescriptiveProperties, 'thumbnail' | 'posterCanvas'> & {
+export declare type DescriptiveNormalized = OmitProperties<
+  DescriptiveProperties,
+  'provider' | 'thumbnail' | 'accompanyingCanvas' | 'placeholderCanvas' | 'posterCanvas'
+> & {
   thumbnail: Array<Reference<'ContentResource'>>;
+  placeholderCanvas: Reference<'Canvas'> | null;
+  accompanyingCanvas: Reference<'Canvas'> | null;
+  provider: ResourceProviderNormalized | null;
+
+  /**
+   * @deprecated since 3.0-beta - use placeholderCanvas or accompanyingCanvas
+   */
   posterCanvas: Reference<'Canvas'> | null;
 };

@@ -15,8 +15,13 @@ type AnnotationCollectionOmittedTechnical =
   | 'duration'
   | 'viewingDirection'
   | 'timeMode';
-type AnnotationCollectionOmittedDescriptive = 'posterCanvas' | 'navDate' | 'language';
-type AnnotationCollectionOmittedLinking = 'partOf' | 'start' | 'supplementary';
+type AnnotationCollectionOmittedDescriptive =
+  | 'posterCanvas'
+  | 'accompanyingCanvas'
+  | 'placeholderCanvas'
+  | 'navDate'
+  | 'language';
+type AnnotationCollectionOmittedLinking = 'services' | 'partOf' | 'start' | 'supplementary';
 
 type AnnotationCollectionTechnical = OmitProperties<TechnicalProperties, AnnotationCollectionOmittedTechnical>;
 type AnnotationCollectionDescriptive = OmitProperties<DescriptiveProperties, AnnotationCollectionOmittedDescriptive>;
@@ -29,14 +34,14 @@ export declare type W3CAnnotationCollection = {
   label: string | string[];
   total?: number;
   first?: string | OmitProperties<W3CAnnotationPage, 'partOf'>;
-  last?: string;
+  last?: string | OmitProperties<W3CAnnotationPage, 'partOf'>;
 };
 
 export interface AnnotationCollection
   extends SomeRequired<AnnotationCollectionTechnical, 'id'>,
     Partial<AnnotationCollectionDescriptive>,
     Partial<AnnotationCollectionLinking>,
-    OmitProperties<W3CAnnotationCollection, 'first' | 'label'> {
+    OmitProperties<W3CAnnotationCollection, 'label'> {
   partOf: Array<Collection | Manifest | string>;
 }
 

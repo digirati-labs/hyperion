@@ -7,4 +7,6 @@ export declare type OmitProperties<T, K extends keyof T> = Pick<T, Exclude<keyof
 
 export declare type JsonLDContext = {
   '@context'?: string | string[];
-}
+};
+
+export declare type IdOrAtId<T> = { id: T } | { '@id': T };
