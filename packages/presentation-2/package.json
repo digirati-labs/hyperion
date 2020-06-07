@@ -1,0 +1,25 @@
+{
+  "name": "@hyperion-framework/presentation-2",
+  "version": "1.0.0-alpha.2",
+  "source": "index.js",
+  "typings": "index.d.ts",
+  "author": "Stephen Fraser <stephen.fraser@digirati.com>",
+  "license": "MIT",
+  "files": [
+    "iiif",
+    "resources",
+    "index.d.ts",
+    "index.js",
+    "reference.d.ts",
+    "utility.d.ts"
+  ],
+  "dependencies": {
+    "@hyperion-framework/types": "^1.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "tslib": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
