@@ -1,45 +1,87 @@
 <div align="center"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/hyperion-logo.png" width="390" /></div>
 <br />
 
-Experimental framework for working with IIIF in JavaScript and Typescript.
+Set of packages for Typescript and Javascript projects both in the browser and in Node to work with IIIF.  
 
-Aims to provide safe typings for valid Presentation 3 JSON-LD and normalization step (also with typings).
+## Packages
 
-3 steps in that the library does:
-- Preprocess resources to ensure valid Presentation 3
-- Cast JSON to Typescript interface
-- Normalize resources into flat tree of resources
+- `@hyperion-framework/types` - Typescript types for the latest IIIF Presentation version (currently 3.0).
+- `@hyperion-framework/presentation-2` - Typescript types for IIIF Presentation 2.1.1 
+- `@hyperion-framework/presentation-3` - Typescript types for IIIF Presentation 3.0
+- `@hyperion-framework/parser` - Traverse, normalise, serialise IIIF Presentation 3.0
+- `@hyperion-framework/presentation-2-parser` - Traverse and upgrade IIIF Presentation 2.0
+- `@hyperion-framework/store` - Minimal Redux store for IIIF resources (note: does not include state, e.g. selected items)
+- `@hyperion-framework/vault` - Reference implementation around store and parser to make simple IIIF library
+- `@hyperion-framework/react-vault` - React hooks for Vault. IIIF building blocks for creating React components.
 
-This library can be the basis of other tools that want to work deeper with IIIF Presentation 3 resources.
+#### Related packages
+- `@atlas-viewer/iiif-image-api` - Types and tools for working with IIIF Image API (version 1-3) - [view repository](https://github.com/atlas-viewer/iiif-image-api)
+- `@atlas-viewer/atlas` - Standalone IIIF deep-zoom viewer with optional React fiber - [view repository](https://github.com/atlas-viewer/atlas)
 
-<hr />
+## Common patterns
+Some common patterns working with IIIF.
 
-<div align="left"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/vault-logo.png" width="390" /></div> 
+#### Remotely loading IIIF.
 
-This is the main library used to fetch, store and retrieve IIIF resources. It is not tied to a single framework and can be used with both JavaScript and Typescript.
-<hr />
+With Vault, you can load remote resource and work with IIIF as Presentation 3 (presentation 2 will be upgraded to 3).
+All the fields will be normalized, so you don't need to perform as many checks for undefined items. When you
+load something into Vault it will be flattened into database-like tables. When you load a manifest for example,
+the object you get back doesn't contain all of the canvases on that manifest fully, instead just a reference
+pointing to them `{ id: '..', type: 'Canvas' }`. You can retrieve the full canvas by calling `vault.fromRef(ref)`.
 
+This "references everywhere" model allows you to do the same thing for already referenced properties, such as
+`partOf` where you will always be able to get the full resource. 
 
-<div align="left"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/atlas-logo.png" width="390" /></div>
+Aside from this change in structure, the objects you get back are all Presentation 3 resources. This is not
+a complete abstraction or helper library.
+```js
+import { Vault } from '@hyperion-framework/vault';
 
-Super-fast, abstract IIIF Viewer. Build a world and fill it with canvases. Lets users move, pan and zoom, or take your users on a smooth tour of your world.
+const vault = new Vault();
 
-<hr />
+vault.loadManifest('http://example.org/..').then(manifest => {
+  // Note: manifest here is flattened. You need to call: vault.fromRef() or vault.allFromRef
+  const canvasRef = manifest.items[0] // { id: 'http://...', type: 'Canvas' }
+  const fullCanvas = vault.fromRef(canvasRef); // { id: '..', type: '', items: [], ... }
+  const allCanvases = vault.allFromRef(manifest.items); // [{ id: '..', type: '', items: [], ... }, ...]
+});
+```
 
-<div align="left"><img src="https://raw.githubusercontent.com/stephenwf/hyperion/master/react-vault-logo.png" width="390" /></div>
-React hooks are, hands down, the best way to work with IIIF.
-<hr />
+#### Upgrade Presentation 2 to 3
 
-## Development
-You need `yarn` in order to work with this monorepo. Simply clone the repository and run `yarn` followed by `yarn start`. This will build
-all of the libraries and examples, running them in watch mode. You'll get the following servers started:
-- [http://localhost:5105/](http://localhost:5105/) - Documentation site
-- [http://localhost:5103/](http://localhost:5103/) - Vanilla example
-- [http://localhost:5101/](http://localhost:5101/) - React example
-- [http://localhost:5102/](http://localhost:5102/) - Annotation example
+If you want to start building with IIIF Presentation 3 you will likely want to support both IIIF Presentation 2 
+as the community transitions. The `@hyperion-framework/parser` package contains a simple converter that can
+be used to convert 2 to 3 in the browser and can be dropped into most applications right after fetching an
+IIIF resource. This supports both Collections and Manifests. If you need more granular control and options
+you can check the `@hyperion-framework/presentation-2-parser` package.  
 
-If you want to see the pattern library for the annotation example, you can cd into `./examples/hyperion-annotation-example` and run `yarn docz:dev`. 
+```js
+import { convertPresentation2 } from '@hyperion-framework/parser';
 
-You can run tests from the root of the repository by running: `yarn test`.
+// ...
 
-**Pull requests are always welcome!* 
+const presentation3Manifest = convertPresentation2(presentation2Manifest);
+```
+
+#### Extracting a single field from all resources
+
+Given the flexibility of IIIF you may want to extract a field from all levels of an IIIF resource, like rights
+information.
+
+```js
+import { Traverse } from '@hyperion-framework/parser'; // or presentation-2-parser for Presentation 2. 
+
+// Create the helper.
+const logAllRights = Traverse.all(anyResource => {
+  if (anyResource.rights) {
+    console.log(anyResource.rights);
+  }
+});
+
+// Use the traversal helper.
+logAllRights.traverseManifest({ ... });
+```
+
+#### React
+
+[See a demo](https://codesandbox.io/s/atlas-demo-omhg3?file=/src/Canvas.js) of Atlas + Vault working together in React.
