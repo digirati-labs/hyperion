@@ -10,7 +10,7 @@ export declare type CanvasItems = AnnotationPage;
 
 type CanvasOmittedTechnical = 'format' | 'profile' | 'viewingDirection' | 'timeMode';
 type CanvasOmittedDescriptive = 'language';
-type CanvasOmittedLinking = 'start' | 'supplementary';
+type CanvasOmittedLinking = 'services' | 'start' | 'supplementary';
 type CanvasOmittedStructural = 'structures';
 
 type CanvasTechnical = OmitProperties<TechnicalProperties, CanvasOmittedTechnical>;
