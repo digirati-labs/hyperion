@@ -24,6 +24,7 @@ import {
   UnknownSizeImage,
   VariableSizeImage,
 } from '@atlas-viewer/iiif-image-api';
+import { fromRef } from './globalVault';
 
 export type VaultOptions = {
   reducers: {};
@@ -102,6 +103,13 @@ export class Vault {
     }
 
     return selector(state, resource) as R;
+  }
+
+  allFromRef<T extends NormalizedEntity, R = T>(
+    references: Reference<TraversableEntityTypes>[],
+    selector?: <C>(state: HyperionStore, ctx: C) => R
+  ) {
+    return references.map(reference => this.fromRef(reference, selector));
   }
 
   select<R>(selector: (state: HyperionStore) => R): R {

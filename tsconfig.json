@@ -1,61 +1,73 @@
 {
   "compilerOptions": {
-    "baseUrl": "./", // enables project relative paths config
-    //"outDir": "dist/", // target for compiled files
-    "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
-    "esModuleInterop": true,
-    "allowJs": false, // include js files
-    "checkJs": false, // typecheck js files
-    "declaration": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true, // importing helper functions from tslib
-    "noEmitHelpers": true, // disable emitting inline helper functions
-    "jsx": "react",
+//    //"baseUrl": "./", // enables project relative paths config
+//    //"outDir": "dist/", // target for compiled files
+//    "allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
+//    "esModuleInterop": true,
+//    "allowJs": false, // include js files
+//    "checkJs": false, // typecheck js files
+//    "declaration": true,
+//    "emitDecoratorMetadata": true,
+//    "experimentalDecorators": true,
+//    "forceConsistentCasingInFileNames": true,
+//    "importHelpers": true, // importing helper functions from tslib
+//    "noEmitHelpers": true, // disable emitting inline helper functions
+//    "jsx": "react",
     "lib": [
       "dom",
-      "es2016",
-      "es2017.object"
+      "esnext"
     ],
     "target": "es2015", // "es2015" for ES6+ engines
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "traceResolution": false,
-    "strict": true,
-    "strictNullChecks": true,
-    "skipLibCheck": true,
-    "pretty": true,
-    "removeComments": true,
-    "sourceMap": true,
     "resolveJsonModule": true,
-    "composite": true,
-    "declarationMap": true,
-    "rootDirs": [
-      "./packages"
-    ]
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "references": [
-    {
-      "path": "./packages/types"
-    },
-    {
-      "path": "./packages/vault"
-    },
-    {
-      "path": "./packages/react-vault"
-    },
-    {
-      "path": "./packages/pattern-matching"
-    }
-  ]
+    "esModuleInterop": true
+//    "noEmitOnError": true,
+//    "noFallthroughCasesInSwitch": true,
+//    "noImplicitAny": true,
+//    "noImplicitReturns": true,
+//    "noImplicitThis": true,
+//    "noUnusedLocals": true,
+//    "traceResolution": false,
+//    "strict": true,
+//    "strictNullChecks": true,
+//    "skipLibCheck": true,
+//    "pretty": true,
+//    "removeComments": true,
+//    "sourceMap": true,
+//    "resolveJsonModule": true,
+//    "composite": true,
+//    "declarationMap": true
+  }
+//  "include": [
+//    "packages/presentation-2-parser/**/*",
+//    "packages/**/*",
+//    "fixtures/**/*"
+//  ],
+//  "exclude": [
+//    "node_modules"
+//  ],
+//  "references": [
+//    {
+//      "path": "./packages/types"
+//    },
+//    {
+//      "path": "./packages/presentation-2"
+//    },
+//    {
+//      "path": "./packages/presentation-2-parser"
+//    },
+//    {
+//      "path": "./packages/vault"
+//    },
+//    {
+//      "path": "./packages/react-vault"
+//    },
+//    {
+//      "path": "./packages/pattern-matching"
+//    },
+//    {
+//      "path": "./fixtures"
+//    }
+//  ]
 }
