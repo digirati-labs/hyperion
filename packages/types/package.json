@@ -17,6 +17,7 @@
     "index.d.ts",
     "index.js",
     "reference.d.ts",
+    "traversal.d.ts",
     "utility.d.ts"
   ],
   "devDependencies": {

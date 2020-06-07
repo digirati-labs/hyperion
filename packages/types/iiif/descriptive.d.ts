@@ -21,7 +21,7 @@ export declare type DescriptiveProperties = {
   navDate: string | null;
   language: string[];
   thumbnail: ContentResource[];
-  provider?: ResourceProvider;
+  provider: ResourceProvider[];
   placeholderCanvas: Canvas;
   accompanyingCanvas: Canvas;
 
@@ -38,7 +38,7 @@ export declare type DescriptiveNormalized = OmitProperties<
   thumbnail: Array<Reference<'ContentResource'>>;
   placeholderCanvas: Reference<'Canvas'> | null;
   accompanyingCanvas: Reference<'Canvas'> | null;
-  provider: ResourceProviderNormalized | null;
+  provider: Array<ResourceProviderNormalized>;
 
   /**
    * @deprecated since 3.0-beta - use placeholderCanvas or accompanyingCanvas
