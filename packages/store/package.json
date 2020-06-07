@@ -8,7 +8,7 @@
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "files": [
-    "lib"
+    "dist"
   ],
   "scripts": {
     "build": "rollup -c && tsc -p ./tsconfig.types.json",
