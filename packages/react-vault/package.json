@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/react-vault",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
@@ -33,9 +33,9 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-use": "^15.1.0",
     "redux": "^4.0.5",
-    "tslib": "^2.0.0",
-    "react-use": "^15.1.0"
+    "tslib": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
