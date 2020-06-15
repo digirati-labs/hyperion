@@ -24,7 +24,6 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-query": "^1.5.2",
-    "react-use": "^15.1.0",
     "redux": "^4.0.5",
     "redux-react-hook": "^3.2.0"
   },
@@ -35,7 +34,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "redux": "^4.0.5",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "react-use": "^15.1.0"
   },
   "publishConfig": {
     "access": "public"
