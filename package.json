@@ -39,7 +39,7 @@
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
     "jest-fetch-mock": "^2.1.2",
-    "lerna": "^3.10.7",
+    "lerna": "^3.19.0",
     "prettier": "^1.15.3",
     "rollup": "^2.13.1",
     "rollup-plugin-replace": "^2.2.0",
