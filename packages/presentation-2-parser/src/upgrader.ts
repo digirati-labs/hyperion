@@ -397,6 +397,7 @@ function descriptiveProperties<T extends Partial<Presentation3.DescriptiveProper
       : undefined,
     navDate: resource.navDate,
     summary: resource.description ? convertLanguageMapping(resource.description) : undefined,
+    thumbnail: resource.thumbnail as any,
   } as T;
 }
 

@@ -114,6 +114,17 @@ describe('Presentation 2 to 3', () => {
 
     expect(result.structures).not.toBeUndefined();
 
+    expect(result.items[0].thumbnail).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "height": 113,
+          "id": "https://deriv.nls.uk/dcn4/7443/74438561.4.jpg",
+          "type": "Image",
+          "width": 150,
+        },
+      ]
+    `);
+
     expect(result.structures[0]).toMatchInlineSnapshot(`
       Object {
         "id": "https://view.nls.uk/iiif/7446/74464117/range/r-1",
