@@ -332,6 +332,16 @@ function mintNewIdFromResource(
   resource: SomeRequired<Presentation2.TechnicalProperties, '@type'>,
   subresource?: string
 ) {
+  const origId = encodeURI((resource as { id?: string }).id || resource['@id'] || '').trim();
+
+  if (origId && subresource) {
+    return `${origId}/${subresource}`;
+  }
+
+  if (origId) {
+    return origId;
+  }
+
   // @todo.
   return `http://example.org/${resource['@type']}${subresource ? `/${subresource}` : ''}`;
 }
@@ -485,7 +495,7 @@ function upgradeCanvas(canvas: Presentation2.Canvas): Presentation3.Canvas {
       canvas.images && canvas.images.length
         ? [
             {
-              id: mintNewIdFromResource(canvas),
+              id: mintNewIdFromResource(canvas, 'annotation-page'),
               type: 'AnnotationPage',
               items: canvas.images as any,
             },
