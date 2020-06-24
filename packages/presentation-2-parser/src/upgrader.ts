@@ -460,7 +460,7 @@ function upgradeCollection(collection: Presentation2.Collection): Presentation3.
 
 function flattenArray<T>(array: T[][]): T[] {
   const returnArr: T[] = [];
-  for (const arr of array) {
+  for (const arr of array || []) {
     returnArr.push(...arr);
   }
   return returnArr;
@@ -471,7 +471,8 @@ function upgradeManifest(manifest: Presentation2.Manifest): Presentation3.Manife
     ...technicalProperties(manifest),
     ...descriptiveProperties(manifest),
     ...linkingProperties(manifest),
-    items: flattenArray(manifest.sequences as any),
+    items: flattenArray((manifest.sequences || []) as any),
+    structures: manifest.structures as any,
   });
 }
 
@@ -480,13 +481,16 @@ function upgradeCanvas(canvas: Presentation2.Canvas): Presentation3.Canvas {
     ...technicalProperties(canvas),
     ...descriptiveProperties(canvas),
     ...linkingProperties(canvas),
-    items: [
-      {
-        id: mintNewIdFromResource(canvas),
-        type: 'AnnotationPage',
-        items: canvas.images as any,
-      },
-    ],
+    items:
+      canvas.images && canvas.images.length
+        ? [
+            {
+              id: mintNewIdFromResource(canvas),
+              type: 'AnnotationPage',
+              items: canvas.images as any,
+            },
+          ]
+        : undefined,
   });
 }
 
@@ -500,6 +504,24 @@ function upgradeAnnotationList(annotationPage: Presentation2.AnnotationList): Pr
 }
 
 function upgradeSequence(sequence: Presentation2.Sequence): Presentation3.Canvas[] {
+  /*
+    rng = {"id": s.get('@id', self.mint_uri()), "type": "Range"}
+    rng['behavior'] = ['sequence']
+    rng['items'] = []
+    for c in s['canvases']:
+      if type(c) == dict:
+        rng['items'].append({"id": c['@id'], "type": "Canvas"})
+      elif type(c) in STR_TYPES:
+        rng['items'].append({"id": c, "type": "Canvas"})
+    # Copy other properties and hand off to _generic
+    del s['canvases']
+    for k in s.keys():
+      if not k in ['@id', '@type']:
+        rng[k] = s[k]
+    self.process_generic(rng)
+    what['_structures'].append(rng)
+   */
+
   // @todo possibly return some ranges too.
   return sequence.canvases as any;
 }
@@ -541,11 +563,18 @@ function upgradeChoice(choice: Presentation2.ChoiceEmbeddedContent): Presentatio
     items: items as any,
   };
 }
-function upgradeRange(range: any) {
+function upgradeRange(range: Presentation2.Range): Presentation3.Range {
+  // range.members;
+  // range.canvases;
   // Range.
   // At the moment a range only references other ranges by id.
   // So we need to first get
-  return range;
+  return removeUndefinedProperties({
+    ...technicalProperties(range),
+    ...descriptiveProperties(range),
+    ...linkingProperties(range),
+    items: range.members as any,
+  } as Presentation3.Range);
 }
 
 function upgradeService(service: Presentation2.Service): Presentation3.Service {

@@ -8,9 +8,9 @@ type RangeOmittedTechnical = 'format' | 'viewingDirection' | 'navDate';
 type RangeOmittedLinking = 'startCanvas';
 
 type RangeStructural = {
-  canvases: string[];
-  ranges: string[];
-  members: Array<
+  canvases?: string[];
+  ranges?: string[];
+  members?: Array<
     | {
         '@id': string;
         '@type': 'sc:Canvas';

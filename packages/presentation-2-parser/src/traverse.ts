@@ -272,7 +272,7 @@ export class Traverse<
         }),
         ...(range.canvases || []).map((canvas: any) => {
           if (typeof canvas === 'string') {
-            return { '@id': canvas, '@type': 'sc:Range' };
+            return { '@id': canvas, '@type': 'sc:Canvas' };
           }
           return canvas;
         }),
@@ -281,7 +281,7 @@ export class Traverse<
 
       delete range.ranges;
       delete range.canvases;
-      range.members = members;
+      range.members = members.length ? members.map(member => this.traverseUnknown(member)) : undefined;
     }
     return range;
   }
