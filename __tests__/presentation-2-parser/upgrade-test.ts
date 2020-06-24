@@ -8,6 +8,8 @@ import folgerManifest from '../../fixtures/presentation-2/folger-manifest.json';
 import villanovaManifest from '../../fixtures/presentation-2/villanova-manifest.json';
 import ngaManifest from '../../fixtures/presentation-2/nga-manifest.json';
 import quatarManifest from '../../fixtures/presentation-2/quatar-manifest.json';
+import nlsCollection from '../../fixtures/presentation-2/nls-collection.json';
+import nlsManifest from '../../fixtures/presentation-2/nls-manifest.json';
 import { presentation2to3 } from '../../packages/presentation-2-parser/src/upgrader';
 import { Validator } from '../../packages/validator/src/validator';
 
@@ -21,6 +23,7 @@ describe('Presentation 2 to 3', () => {
     expect(validator.validators.manifest.errors).toEqual(null);
     expect(isValid).toEqual(true);
   });
+
   test('Biblissima manifest', () => {
     const result = presentation2to3.traverseManifest(iiifManifest2 as any);
     const isValid = validator.validateManifest(result);
@@ -84,9 +87,50 @@ describe('Presentation 2 to 3', () => {
     expect(validator.validators.manifest.errors).toEqual(null);
     expect(isValid).toEqual(true);
   });
+
   test('Quatar manifest', () => {
     const result = presentation2to3.traverseManifest(quatarManifest as any);
     const isValid = validator.validateManifest(result);
+
+    expect(result.structures).not.toBeUndefined();
+
+    expect(result.structures[0].items.length).toEqual(498);
+
+    expect(validator.validators.manifest.errors).toEqual(null);
+    expect(isValid).toEqual(true);
+  });
+
+  test('NLS Collection', () => {
+    const result = presentation2to3.traverseManifest(nlsCollection as any);
+    const isValid = validator.validateCollection(result);
+
+    expect(validator.validators.collection.errors).toEqual(null);
+    expect(isValid).toEqual(true);
+  });
+
+  test('NLS Manifest', () => {
+    const result = presentation2to3.traverseManifest(nlsManifest as any);
+    const isValid = validator.validateManifest(result);
+
+    expect(result.structures).not.toBeUndefined();
+
+    expect(result.structures[0]).toMatchInlineSnapshot(`
+      Object {
+        "id": "https://view.nls.uk/iiif/7446/74464117/range/r-1",
+        "items": Array [
+          Object {
+            "id": "https://view.nls.uk/iiif/7446/74464117/canvas/1",
+            "type": "Canvas",
+          },
+        ],
+        "label": Object {
+          "none": Array [
+            "Imaginative depiction of the completed Forth Rail Bridge",
+          ],
+        },
+        "type": "Range",
+      }
+    `);
 
     expect(validator.validators.manifest.errors).toEqual(null);
     expect(isValid).toEqual(true);
