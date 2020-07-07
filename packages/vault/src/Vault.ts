@@ -24,7 +24,6 @@ import {
   UnknownSizeImage,
   VariableSizeImage,
 } from '@atlas-viewer/iiif-image-api';
-import { fromRef } from './globalVault';
 
 export type VaultOptions = {
   reducers: {};
