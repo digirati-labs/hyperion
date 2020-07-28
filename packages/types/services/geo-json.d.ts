@@ -8,4 +8,4 @@ export declare type GeoJsonService = {
   | {
       id: string;
     }) &
-  Partial<import('@types/geojson').GeoJSON>;
+  Partial<import('geojson').GeoJSON>;

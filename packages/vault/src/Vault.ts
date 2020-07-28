@@ -1,3 +1,5 @@
+/// <reference types="geojson" />
+
 import { AllActions, createFetchHelper, createStore, entityActions, ReduxStore } from '@hyperion-framework/store';
 import {
   AnnotationNormalized,
