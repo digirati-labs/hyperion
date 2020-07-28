@@ -6,10 +6,12 @@ import { resolveList } from '@hyperion-framework/store';
 
 export function usePaintingAnnotations(options: { canvasId?: string } = {}): AnnotationNormalized[] {
   const canvas = useCanvas(options.canvasId ? { id: options.canvasId } : undefined);
-  if (!canvas) throw new Error('Undefined canvas');
 
   return useVaultSelector(
     state => {
+      if (!canvas) {
+        return [];
+      }
       const annotationPages = resolveList(state, canvas.items);
       const flatAnnotations: AnnotationNormalized[] = [];
       for (const page of annotationPages) {
@@ -17,6 +19,6 @@ export function usePaintingAnnotations(options: { canvasId?: string } = {}): Ann
       }
       return flatAnnotations;
     },
-    [canvas.items]
+    [canvas]
   );
 }
