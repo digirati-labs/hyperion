@@ -67,7 +67,7 @@ export interface ImageService2 {
   sizes?: ImageSize[];
   tiles?: ImageTile[];
   logo?: ContentResource | ContentResource[]; // Presentation 2 service may have non-array.
-  service: Service[];
+  service?: Service[];
 }
 
 // General purpose image service definition.
@@ -76,7 +76,7 @@ export interface ImageService {
   '@id'?: string;
   id: string;
   type: 'ImageService1' | 'ImageService2' | 'ImageService3';
-  profile: ImageServiceProfile | ImageServiceProfile[];
+  profile: ImageProfile | ImageProfile[];
   protocol?: string;
   width?: number | null;
   height?: number | null;
@@ -87,5 +87,5 @@ export interface ImageService {
   extraFormats?: string[];
   extraQualities?: string[];
   extraFeatures?: string[];
-  service: Service[];
+  service?: Service[];
 }
