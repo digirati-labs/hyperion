@@ -152,7 +152,8 @@ export class Vault {
       | ContentResource,
     request: ImageCandidateRequest,
     dereference?: boolean,
-    candidates: Array<ImageCandidate> = []
+    candidates: Array<ImageCandidate> = [],
+    dimensions?: { width: number; height: number }
   ): Promise<{
     best: null | undefined | FixedSizeImage | FixedSizeImageService | VariableSizeImage | UnknownSizeImage;
     fallback: Array<ImageCandidate>;
@@ -182,6 +183,11 @@ export class Vault {
         const contentResources = fullInput.body;
         // @todo this could be configuration.
         const firstContentResources = this.fromRef<ContentResource>(contentResources[0]);
+        if (dimensions && !(firstContentResources as any).width) {
+          (firstContentResources as any).width = dimensions.width;
+          (firstContentResources as any).height = dimensions.height;
+        }
+
         return await this.imageService.getThumbnailFromResource(
           firstContentResources,
           request,
@@ -201,31 +207,34 @@ export class Vault {
           }
         }
 
-        return this.getThumbnail(canvas.items[0], request, dereference, candidates);
+        return this.getThumbnail(canvas.items[0], request, dereference, candidates, {
+          width: canvas.width,
+          height: canvas.height,
+        });
       }
 
       // Unsupported for now.
       case 'AnnotationPage': {
         const annotationPage = fullInput as AnnotationPageNormalized;
-        return this.getThumbnail(annotationPage.items[0], request, dereference, candidates);
+        return this.getThumbnail(annotationPage.items[0], request, dereference, candidates, dimensions);
       }
 
       case 'Choice': {
         const choice: ChoiceBody = fullInput as any;
         // @todo this could also be configuration, just choosing the first choice.
-        return this.getThumbnail(choice.items[0] as any, request, dereference, candidates);
+        return this.getThumbnail(choice.items[0] as any, request, dereference, candidates, dimensions);
       }
       case 'Collection': {
         // This one is tricky, as the manifests may not have been loaded. But we will give it a shot.
         const collection = fullInput as CollectionNormalized;
         const firstManifest = collection.items[0];
-        return this.getThumbnail(firstManifest, request, dereference, candidates);
+        return this.getThumbnail(firstManifest, request, dereference, candidates, dimensions);
       }
 
       case 'Manifest': {
         const manifest = fullInput as ManifestNormalized;
         const firstCanvas = manifest.items[0];
-        return this.getThumbnail(firstCanvas, request, dereference, candidates);
+        return this.getThumbnail(firstCanvas, request, dereference, candidates, dimensions);
       }
 
       case 'SpecificResource':
@@ -235,6 +244,11 @@ export class Vault {
       case 'Text':
       case 'TextualBody':
       case 'Video':
+        if (dimensions && !(fullInput as any).width) {
+          (fullInput as any).width = dimensions.width;
+          (fullInput as any).height = dimensions.height;
+        }
+
         return this.imageService.getThumbnailFromResource(fullInput, request, dereference, candidates);
 
       // Seems unlikely these would appear, but it would be an error..

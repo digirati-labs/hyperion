@@ -3,29 +3,29 @@ import { getImageServices } from '@atlas-viewer/iiif-image-api';
 import { useCanvas } from './useCanvas';
 import { useQuery } from 'react-query';
 import { useVault } from './useVault';
-import { ImageService, Service } from '@hyperion-framework/types';
+import { ImageService } from '@hyperion-framework/types';
 
 /**
  * Returns the First image service on the current canvas.
  */
 export function useImageService(): {
-  data: Service | undefined;
+  data: ImageService | undefined;
   isFetching: boolean;
   status: 'error' | 'success' | 'loading';
 } {
   const canvas = useCanvas();
-  if (!canvas) throw new Error('Canvas not found');
   const annotations = usePaintingAnnotations();
   const vault = useVault();
   const imageService = vault.getImageService();
 
-  const { data, isFetching, status } = useQuery(
-    `canvas-first-image-service:${canvas.id}`,
+  // @todo change this once image API updated.
+  return (useQuery as any)(
+    `canvas-first-image-service:${canvas ? canvas.id : 'undefined'}`,
     async () => {
       if (canvas && annotations.length) {
         const annotation = annotations[0];
         const resource = vault.fromRef<any>(annotation.body[0]);
-        const imageServices = getImageServices(resource) as ImageService[];
+        const imageServices = getImageServices(resource) as any[];
 
         return (
           (await imageService.loadService({
@@ -39,12 +39,15 @@ export function useImageService(): {
       return undefined;
     },
     {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchIntervalInBackground: false,
       refetchInterval: false,
       initialData: () => {
         if (canvas && annotations.length) {
           const annotation = annotations[0];
           const resource = vault.fromRef<any>(annotation.body[0]);
-          const imageServices = getImageServices(resource) as ImageService[];
+          const imageServices = getImageServices(resource);
 
           return (
             imageService.loadServiceSync({
@@ -58,10 +61,4 @@ export function useImageService(): {
       },
     }
   );
-
-  return {
-    data,
-    isFetching,
-    status,
-  };
 }
