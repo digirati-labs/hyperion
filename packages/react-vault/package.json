@@ -18,7 +18,7 @@
     "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
-    "@atlas-viewer/iiif-image-api": "^1.1.0",
+    "@atlas-viewer/iiif-image-api": "^1.2.0",
     "@hyperion-framework/store": "^1.0.0-alpha.14",
     "@hyperion-framework/vault": "^1.0.0-alpha.14",
     "react": "^16.8.6",

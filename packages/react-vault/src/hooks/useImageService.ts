@@ -19,7 +19,7 @@ export function useImageService(): {
   const imageService = vault.getImageService();
 
   // @todo change this once image API updated.
-  return (useQuery as any)(
+  return useQuery(
     `canvas-first-image-service:${canvas ? canvas.id : 'undefined'}`,
     async () => {
       if (canvas && annotations.length) {
@@ -53,7 +53,7 @@ export function useImageService(): {
           const annotation = annotations[0];
           const resource = vault.fromRef<any>(annotation.body[0]);
           const imageServices = getImageServices(resource);
-          const firstImageService = imageServices[0] as any;
+          const firstImageService = imageServices[0];
 
           if (!firstImageService) {
             return undefined;

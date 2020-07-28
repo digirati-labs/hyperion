@@ -139,6 +139,7 @@ export class Vault {
 
   async getThumbnail(
     input:
+      | string
       | Reference<CollectionItemSchemas>
       | Reference<'Collection'>
       | Reference<'Manifest'>
@@ -163,11 +164,12 @@ export class Vault {
   }> {
     if (typeof input === 'string') {
       // Best shot we have.
-      return { best: getFixedSizeFromImage(input), fallback: [], log: [] };
+      return { best: getFixedSizeFromImage(input as any), fallback: [], log: [] };
     }
 
     // Run through from ref, just in case.
     const fullInput:
+      | string
       | ManifestNormalized
       | CollectionNormalized
       | CanvasNormalized
@@ -176,7 +178,7 @@ export class Vault {
       | ContentResource = this.fromRef(input as any);
 
     if (typeof fullInput === 'string') {
-      return { best: getFixedSizeFromImage(fullInput), fallback: [], log: [] };
+      return { best: getFixedSizeFromImage(fullInput as any), fallback: [], log: [] };
     }
 
     switch (fullInput.type) {
