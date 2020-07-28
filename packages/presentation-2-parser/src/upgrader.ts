@@ -2,7 +2,7 @@ import * as Presentation3 from '@hyperion-framework/types';
 import * as Presentation2 from '@hyperion-framework/presentation-2';
 import { level1Support, imageServiceProfiles } from '@atlas-viewer/iiif-image-api';
 import { Traverse } from './traverse';
-import { Collection, Manifest, SomeRequired } from '@hyperion-framework/types';
+import { SomeRequired } from '@hyperion-framework/types';
 
 const configuration = {
   attributionLabel: 'Attribution',
