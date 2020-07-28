@@ -1,3 +1,5 @@
+/// <reference types="geojson" />
+
 import { ContentResource, Service } from '..';
 
 export declare type ImageServiceProfile =
