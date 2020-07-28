@@ -11,8 +11,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c && tsc -p ./tsconfig.types.json",
-    "start": "rollup -c --watch",
+    "build": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json",
+    "start": "NODE_ENV=development rollup -c --watch",
     "test": "jest",
     "build-types": "tsc -p ./tsconfig.types.json",
     "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
