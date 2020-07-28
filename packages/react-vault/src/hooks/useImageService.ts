@@ -26,12 +26,17 @@ export function useImageService(): {
         const annotation = annotations[0];
         const resource = vault.fromRef<any>(annotation.body[0]);
         const imageServices = getImageServices(resource) as any[];
+        const firstImageService = imageServices[0] as any;
+
+        if (!firstImageService) {
+          return undefined;
+        }
 
         return (
           (await imageService.loadService({
-            id: imageServices[0].id,
-            width: imageServices[0].width || canvas.width,
-            height: imageServices[0].height || canvas.height,
+            id: firstImageService.id,
+            width: firstImageService.width || canvas.width,
+            height: firstImageService.height || canvas.height,
           })) || undefined
         );
       }
@@ -48,12 +53,17 @@ export function useImageService(): {
           const annotation = annotations[0];
           const resource = vault.fromRef<any>(annotation.body[0]);
           const imageServices = getImageServices(resource);
+          const firstImageService = imageServices[0] as any;
+
+          if (!firstImageService) {
+            return undefined;
+          }
 
           return (
             imageService.loadServiceSync({
-              id: imageServices[0].id,
-              width: imageServices[0].width || canvas.width,
-              height: imageServices[0].height || canvas.height,
+              id: firstImageService.id,
+              width: firstImageService.width || canvas.width,
+              height: firstImageService.height || canvas.height,
             }) || undefined
           );
         }
