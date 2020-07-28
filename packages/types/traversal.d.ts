@@ -9,7 +9,6 @@ import { Range, RangeNormalized } from './resources/range';
 import { Service, ServiceNormalized } from './resources/service';
 
 type Traversal<T> = (jsonLd: T) => Partial<T> | any;
-// type Reducer<T> = (jsonLd: T, action: any) => T;
 
 type TraversalMap = {
   collection?: Array<Traversal<Collection>>;
