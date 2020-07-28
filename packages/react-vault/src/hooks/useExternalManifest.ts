@@ -6,7 +6,7 @@ import { resolveIfExists } from '@hyperion-framework/store';
 
 export const useExternalManifest = (
   id: string,
-  config: QueryOptions<ManifestNormalized, any> = {}
+  config: QueryOptions<ManifestNormalized> = {}
 ): { id: string; isLoaded: boolean; error: any; manifest?: ManifestNormalized } => {
   const vault = useVault();
   const [realId, setRealId] = useState(id);

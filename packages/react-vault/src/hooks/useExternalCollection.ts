@@ -6,7 +6,7 @@ import { resolveIfExists } from '@hyperion-framework/store';
 
 export const useExternalCollection = (
   id: string,
-  config: QueryOptions<CollectionNormalized, any> = {}
+  config: QueryOptions<CollectionNormalized> = {}
 ): { id: string; isLoaded: boolean; collection?: CollectionNormalized } => {
   const vault = useVault();
   const [realId, setRealId] = useState(id);
