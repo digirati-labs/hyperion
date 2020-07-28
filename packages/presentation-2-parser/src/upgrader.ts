@@ -87,6 +87,11 @@ export function getTypeFromContext(inputContexts: string | string[]): string | u
 
 function getTypeFromProfile(inputProfile: string): string | undefined {
   switch (inputProfile) {
+    case 'http://iiif.io/api/image/2/level0.json':
+    case 'http://iiif.io/api/image/2/level1.json':
+    case 'http://iiif.io/api/image/2/level2.json':
+      return 'ImageService2';
+
     case 'http://iiif.io/api/auth/1/kiosk':
     case 'http://iiif.io/api/auth/1/login':
     case 'http://iiif.io/api/auth/1/clickthrough':
@@ -328,6 +333,8 @@ function removeUndefinedProperties(obj: any) {
   return obj;
 }
 
+let mintedIdCounter = 0;
+
 function mintNewIdFromResource(
   resource: SomeRequired<Presentation2.TechnicalProperties, '@type'>,
   subresource?: string
@@ -342,8 +349,10 @@ function mintNewIdFromResource(
     return origId;
   }
 
+  mintedIdCounter++;
+
   // @todo.
-  return `http://example.org/${resource['@type']}${subresource ? `/${subresource}` : ''}`;
+  return `http://example.org/${resource['@type']}${subresource ? `/${subresource}` : ''}/${mintedIdCounter}`;
 }
 
 function technicalProperties<T extends Partial<Presentation3.TechnicalProperties>>(
