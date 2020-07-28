@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/pattern-matching",
-  "version": "1.0.0-alpha.13",
+  "version": "1.0.0-alpha.14",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -18,7 +18,7 @@
     "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
-    "@hyperion-framework/types": "^1.0.0-alpha.13"
+    "@hyperion-framework/types": "^1.0.0-alpha.14"
   },
   "publishConfig": {
     "access": "public"
