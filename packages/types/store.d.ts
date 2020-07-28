@@ -61,7 +61,6 @@ export type EntityMapping = {
 
 export type RequestState = {
   [id: string]: {
-    // This may expand with time requested and other request specific details.
     loadingState: 'RESOURCE_ERROR' | 'RESOURCE_LOADING' | 'RESOURCE_READY';
     uriMismatch: boolean;
     requestUri: string;
