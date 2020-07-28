@@ -7,6 +7,8 @@ import replace from 'rollup-plugin-replace';
 import json from '@rollup/plugin-json';
 import compiler from '@ampproject/rollup-plugin-closure-compiler';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export function createRollupConfig(globalName, pkg, external = []) {
   return [
     {
@@ -20,15 +22,15 @@ export function createRollupConfig(globalName, pkg, external = []) {
         },
       ],
       plugins: [
-        typescript({ target: 'es5' }),
+        typescript({ target: isProduction ? 'es5' : 'es2020' }),
         replace({
-          'process.env.NODE_ENV': JSON.stringify('production'),
+          'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
         }),
         resolve({ browser: true }), // so Rollup can find `ms`
         commonjs({ extensions: ['.js', '.ts'] }), // the ".ts" extension is required
         json(),
-        terser(),
-        compiler(),
+        isProduction && terser(),
+        isProduction && compiler(),
       ],
       external,
     },
@@ -50,12 +52,12 @@ export function createRollupConfig(globalName, pkg, external = []) {
       plugins: [
         typescript(),
         replace({
-          'process.env.NODE_ENV': JSON.stringify('production'),
+          'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
         }),
         resolve(), // so Rollup can find `ms`
         commonjs({ extensions: ['.js', '.ts'] }), // the ".ts" extension is required
         json(),
-        visualizer(),
+        isProduction && visualizer(),
       ],
     },
   ];
