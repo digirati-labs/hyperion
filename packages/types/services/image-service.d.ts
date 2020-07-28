@@ -70,12 +70,30 @@ export interface ImageService2 {
   service?: Service[];
 }
 
+export interface ImageService3 {
+  '@context'?: string | string[];
+  id: string;
+  type: 'ImageService1' | 'ImageService2' | 'ImageService3';
+  profile: 'level0' | 'level1' | 'level2';
+  protocol?: string;
+  width?: number | null;
+  height?: number | null;
+  attribution?: string;
+  sizes?: ImageSize[];
+  tiles?: ImageTile[];
+  logo?: ContentResource[]; // Presentation 2 service may have non-array.
+  extraFormats?: string[];
+  extraQualities?: string[];
+  extraFeatures?: string[];
+  service?: Service[];
+}
+
 // General purpose image service definition.
 export interface ImageService {
   '@context'?: string | string[];
   '@id'?: string;
   id: string;
-  type: 'ImageService1' | 'ImageService2' | 'ImageService3';
+  type?: 'ImageService1' | 'ImageService2' | 'ImageService3';
   profile: ImageProfile | ImageProfile[];
   protocol?: string;
   width?: number | null;
