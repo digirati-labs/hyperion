@@ -796,24 +796,42 @@ describe('vault', () => {
     expect(await vault.getThumbnail(manifest.items[1], {}, true)).toMatchInlineSnapshot(`
       Object {
         "best": Object {
-          "height": 259,
-          "id": "https://deriv.nls.uk/dcn4/1291/1664/129116649.4.jpg",
+          "height": 256,
+          "id": "https://view.nls.uk/iiif/1291/1664/129116649.5/full/256,/0/default.jpg",
           "type": "fixed",
-          "width": 150,
+          "unsafe": false,
+          "width": 256,
         },
-        "fallback": Array [],
+        "fallback": Array [
+          Object {
+            "height": 2329,
+            "id": "https://view.nls.uk/iiif/1291/1664/129116649.5/full/full/0/native.jpg",
+            "type": "fixed",
+            "unsafe": true,
+            "width": 1349,
+          },
+        ],
         "log": Array [],
       }
     `);
     expect(await vault.getThumbnail(manifest.items[2], {}, true)).toMatchInlineSnapshot(`
       Object {
         "best": Object {
-          "height": 259,
-          "id": "https://deriv.nls.uk/dcn4/1291/1666/129116661.4.jpg",
+          "height": 256,
+          "id": "https://view.nls.uk/iiif/1291/1666/129116661.5/full/256,/0/default.jpg",
           "type": "fixed",
-          "width": 150,
+          "unsafe": false,
+          "width": 256,
         },
-        "fallback": Array [],
+        "fallback": Array [
+          Object {
+            "height": 2329,
+            "id": "https://view.nls.uk/iiif/1291/1666/129116661.5/full/full/0/native.jpg",
+            "type": "fixed",
+            "unsafe": true,
+            "width": 1349,
+          },
+        ],
         "log": Array [],
       }
     `);
