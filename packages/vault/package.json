@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/vault",
-  "version": "1.0.0-alpha.15",
+  "version": "1.0.0-alpha.19",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
