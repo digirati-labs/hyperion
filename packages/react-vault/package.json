@@ -18,14 +18,14 @@
     "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
-    "@atlas-viewer/iiif-image-api": "^1.2.0",
+    "@atlas-viewer/iiif-image-api": "^1.2.1",
     "@hyperion-framework/store": "^1.0.0-alpha.15",
     "@hyperion-framework/vault": "^1.0.0-alpha.15",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-query": "^1.5.2",
+    "react-query": "^1.5.10",
     "redux": "^4.0.5",
-    "redux-react-hook": "^3.2.0"
+    "redux-react-hook": "^3.2.1"
   },
   "devDependencies": {
     "@types/react": "^16.8.25",

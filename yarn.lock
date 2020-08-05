@@ -30,6 +30,13 @@
   dependencies:
     "@hyperion-framework/types" "^1.0.0-alpha.14"
 
+"@atlas-viewer/iiif-image-api@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.2.1.tgz#44cd37e1381639267ee5fb887886d70d6d4942e4"
+  integrity sha512-MJ74O4uenouCe/oBr8INWLDfpct47gaUp5SK9J2t3hk3RDTUv2oTOSuu+BaehsmjY4SNVItRPH2/5hilLKiG9Q==
+  dependencies:
+    "@hyperion-framework/types" "^1.0.0-alpha.14"
+
 "@babel/code-frame@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -1655,10 +1662,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@scarf/scarf@^1.0.0":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.0.5.tgz#accee0bce88a9047672f7c8faf3cada59c996b81"
-  integrity sha512-9WKaGVpQH905Aqkk+BczFEeLQxS07rl04afFRPUG9IcSlOwmo5EVVuuNu0d4M9LMYucObvK0LoAe+5HfMW2QhQ==
+"@scarf/scarf@^1.0.6":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.1.0.tgz#b84b4a91cd938a688d36245b7a7db6fbc476a499"
+  integrity sha512-b2iE8kjjzzUo2WZ0xuE2N77kfnTds7ClrDxcz3Atz7h2XrNVoAPUoT75i7CY0st5x++70V91Y+c6RpBX9MX7Jg==
 
 "@sinonjs/commons@^1.7.0":
   version "1.7.1"
@@ -4704,7 +4711,7 @@ eslint@^5.15.1:
     table "^5.2.3"
     text-table "^0.2.0"
 
-eslint@^6.8.0:
+eslint@^6.5.1, eslint@^6.8.0:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.8.0.tgz#62262d6729739f9275723824302fb227c8c93ffb"
   integrity sha512-K+Iayyo2LtyYhDSYwz5D5QdWw0hCacNzyq1Y821Xna2xSJj7cijoLLYmLxTQgcgZ9mC61nryMy9S7GRbYpI5Ig==
@@ -9355,13 +9362,13 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.2.tgz#09891d324cad1cb0c1f2d91f70a71a4bee34df0f"
   integrity sha512-D+NxhSR2HUCjYky1q1DwpNUD44cDpUXzSmmFyC3ug1bClcU/iDNy0YNn1iwme28fn+NFhpA13IndOd42CrFb+Q==
 
-react-query@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.2.tgz#955d20ee2f3418476e9ab1080b54ccbc73018858"
-  integrity sha512-dXN75mZiF3mBR2HAPBpsNvltPAW8MwLn/psKwjtippEBMoSa2Cqy7JxizAY23cKvXA0551RIsp5W01GNh/vw8w==
+react-query@^1.5.10:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-1.5.10.tgz#9b23af061e8171e95503e1932cc07d0cebe806eb"
+  integrity sha512-Kjgii5rK1g9kpLCUGBeGIqFG0IoAMe/oRKzpIfNQUyegJ/Lh5o9lmbmpTPMBWbP3gZDFfAC3081llqxg7QiqCg==
   dependencies:
-    "@scarf/scarf" "^1.0.0"
-    ts-toolbelt "^6.4.2"
+    "@scarf/scarf" "^1.0.6"
+    ts-toolbelt "^6.9.4"
 
 react-universal-interface@^0.6.0:
   version "0.6.0"
@@ -9601,10 +9608,12 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redux-react-hook@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/redux-react-hook/-/redux-react-hook-3.2.0.tgz#a0793054aa6554007094cd6dc6f47082c089b0b9"
-  integrity sha512-GibqTO/Cgl2nRuhw2wacyfd2Nds8pYAPU/eYuTqXZ9v01CT7s7LSwDfPdtQua7TBqE8XNjrwKZqfDyEtfXt7vQ==
+redux-react-hook@^3.2.1:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/redux-react-hook/-/redux-react-hook-3.4.0.tgz#9a58740ab12a5256fc058dfeb1b0e747bd384c99"
+  integrity sha512-b8NICcx8gJgo+nth6isjBx4dU4dYSo2CFzqkuSeebgpOgGNPWlhPBn/tw1D3JLyJZMHzEpEnafnm36OnVJrTTw==
+  dependencies:
+    eslint "^6.5.1"
 
 redux@^4.0.5:
   version "4.0.5"
@@ -11214,10 +11223,10 @@ ts-loader@^7.0.5:
     micromatch "^4.0.0"
     semver "^6.0.0"
 
-ts-toolbelt@^6.4.2:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.9.0.tgz#49b0f9a398f3140830a5c68650544def828eb304"
-  integrity sha512-mFadvi7O2t/MMGh44mFUm3s0QyMrfIs7W7We06Lo6e1oD4PyXcfYQykoWjhXDwS7+7rOwg3VPnGBowIugZTY3g==
+ts-toolbelt@^6.9.4:
+  version "6.13.39"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.13.39.tgz#80541ce39b595a42be5ddd04e3e6df65597774f8"
+  integrity sha512-VD/rJ6+NGFA7AK2KWmGzLifrqA060M9o7+R2BxJtLBlwmfEaGdqGeyUPRDKhMZPMgpT/JMQ6+X+/ppaZNzuhvw==
 
 tslib@^1.10.0:
   version "1.13.0"
