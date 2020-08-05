@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/react-vault",
-  "version": "1.0.0-alpha.16",
+  "version": "1.0.0-alpha.17",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
