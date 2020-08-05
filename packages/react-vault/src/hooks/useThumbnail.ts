@@ -14,7 +14,7 @@ export function useThumbnail(
   const canvas = useCanvas(canvasId ? { id: canvasId } : undefined);
   const subject = canvas ? canvas : manifest;
 
-  if (!subject) throw new Error('Must be called under the context of a manifest or canvas.');
+  if (!subject) throw new Error('Must be called under a manifest or canvas context.');
 
   useVaultEffect(
     v => {
