@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/react-vault",
-  "version": "1.0.0-alpha.22",
+  "version": "1.0.0-alpha.23",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.2.1",
-    "@hyperion-framework/store": "^1.0.0-alpha.22",
-    "@hyperion-framework/vault": "^1.0.0-alpha.22",
+    "@hyperion-framework/store": "^1.0.0-alpha.23",
+    "@hyperion-framework/vault": "^1.0.0-alpha.23",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-query": "^1.5.10",
