@@ -355,6 +355,7 @@ function mintNewIdFromResource(
   return `http://example.org/${resource['@type']}${subresource ? `/${subresource}` : ''}/${mintedIdCounter}`;
 }
 
+// @todo this was removed due to identifiers not being able to be used externally after upgrading.
 function resolveDecodedURI(uri: string) {
   return encodeURI(decodeURIComponent(uri)).trim();
 }
@@ -375,7 +376,7 @@ function technicalProperties<T extends Partial<Presentation3.TechnicalProperties
 
   return {
     '@context': resource['@context'] ? fixContext(resource['@context']) : undefined,
-    id: resolveDecodedURI(resource['@id'] || mintNewIdFromResource(resource)).trim(),
+    id: (resource['@id'] || mintNewIdFromResource(resource)).trim(),
     type: getNewType(resource) as any,
     behavior: allBehaviours.length ? allBehaviours : undefined,
     // format: This will be an optional async post-process step.
