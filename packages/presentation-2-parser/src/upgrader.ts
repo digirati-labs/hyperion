@@ -607,8 +607,8 @@ function upgradeService(service: Presentation2.Service): Presentation3.Service {
 
   if (id) {
     // @todo revisit encoded image URLs.
-    // newService.id = id;
-    newService.id = encodeURI(id).trim();
+    newService.id = id;
+    // newService.id = encodeURI(id).trim();
   }
 
   newService.type = getNewType(service);
