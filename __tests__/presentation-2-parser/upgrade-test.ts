@@ -11,6 +11,7 @@ import quatarManifest from '../../fixtures/presentation-2/quatar-manifest.json';
 import nlsCollection from '../../fixtures/presentation-2/nls-collection.json';
 import nlsManifest from '../../fixtures/presentation-2/nls-manifest.json';
 import nlsManifest2 from '../../fixtures/presentation-2/nls-manifest-2.json';
+import ghent from '../../fixtures/presentation-2/ghent.json';
 import { presentation2to3 } from '../../packages/presentation-2-parser/src/upgrader';
 import { Validator } from '../../packages/validator/src/validator';
 
@@ -44,6 +45,18 @@ describe('Presentation 2 to 3', () => {
   test('NLW manifest', () => {
     const result = presentation2to3.traverseManifest(nlwManifest as any);
     const isValid = validator.validateManifest(result);
+
+    expect(validator.validators.manifest.errors).toEqual(null);
+    expect(isValid).toEqual(true);
+  });
+
+  test('Ghent manifest', () => {
+    const result = presentation2to3.traverseManifest(ghent as any);
+    const isValid = validator.validateManifest(result);
+
+    expect(result.id).toEqual(
+      'https://adore.ugent.be/IIIF/manifests/archive.ugent.be:DEED7A64-2798-11E3-B8DE-18E597481370'
+    );
 
     expect(validator.validators.manifest.errors).toEqual(null);
     expect(isValid).toEqual(true);
