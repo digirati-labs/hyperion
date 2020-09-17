@@ -606,6 +606,8 @@ function upgradeService(service: Presentation2.Service): Presentation3.Service {
   const { '@id': id, '@type': type, '@context': context, profile, ...newService } = service as any;
 
   if (id) {
+    // @todo revisit encoded image URLs.
+    // newService.id = id;
     newService.id = encodeURI(id).trim();
   }
 
