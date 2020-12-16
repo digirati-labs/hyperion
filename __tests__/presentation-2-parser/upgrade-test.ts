@@ -12,6 +12,7 @@ import nlsCollection from '../../fixtures/presentation-2/nls-collection.json';
 import nlsManifest from '../../fixtures/presentation-2/nls-manifest.json';
 import nlsManifest2 from '../../fixtures/presentation-2/nls-manifest-2.json';
 import ghent from '../../fixtures/presentation-2/ghent.json';
+import sbbManifest from '../../fixtures/presentation-2/sbb-test.json';
 import { presentation2to3 } from '../../packages/presentation-2-parser/src/upgrader';
 import { Validator } from '../../packages/validator/src/validator';
 
@@ -164,6 +165,14 @@ describe('Presentation 2 to 3', () => {
   });
   test('NLS Manifest 2', () => {
     const result = presentation2to3.traverseManifest(nlsManifest2 as any);
+    const isValid = validator.validateManifest(result);
+
+    expect(validator.validators.manifest.errors).toEqual(null);
+    expect(isValid).toEqual(true);
+  });
+
+  test('SBB manifest', () => {
+    const result = presentation2to3.traverseManifest(sbbManifest as any);
     const isValid = validator.validateManifest(result);
 
     expect(validator.validators.manifest.errors).toEqual(null);
