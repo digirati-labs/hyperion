@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.2.0",
-    "@hyperion-framework/presentation-2": "^1.0.0-alpha.14"
+    "@hyperion-framework/presentation-2": "^1.0.0-alpha.14",
+    "rollup": "^2.36.1"
   },
   "publishConfig": {
     "access": "public"
