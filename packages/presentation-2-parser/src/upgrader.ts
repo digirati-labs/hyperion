@@ -547,6 +547,10 @@ function upgradeSequence(sequence: Presentation2.Sequence): Presentation3.Canvas
     what['_structures'].append(rng)
    */
 
+  if (!sequence.canvases || sequence.canvases.length === 0) {
+    return [];
+  }
+
   // @todo possibly return some ranges too.
   return sequence.canvases as any;
 }
