@@ -23,7 +23,8 @@
     "@hyperion-framework/store": "^1.0.0-alpha.24",
     "@hyperion-framework/types": "^1.0.0-alpha.14",
     "@types/geojson": "^7946.0.7",
-    "mitt": "^1.2.0"
+    "mitt": "^1.2.0",
+    "rollup": "^2.36.1"
   },
   "publishConfig": {
     "access": "public"
