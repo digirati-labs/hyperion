@@ -41,12 +41,11 @@ function resolveIfExists<T extends NormalizedEntity>(state: HyperionStore, url: 
   const request = state.hyperion.requests[url];
   // Return the resource.
   const resourceType = state.hyperion.mapping[url];
-  if (!resourceType || !state.hyperion.entities[resourceType][request.resourceUri]) {
+  if (!resourceType && (request.resourceUri && !state.hyperion.entities[resourceType][request.resourceUri])) {
     // Continue refetching resource, this is an invalid state.
     return undefined;
   }
-
-  return state.hyperion.entities[resourceType][request.resourceUri] as T;
+  return state.hyperion.entities[resourceType][request ? request.resourceUri : url] as T;
 }
 
 export function serialisedFieldsToObject<T>(fields: Field[] | [string]): T {
@@ -56,7 +55,7 @@ export function serialisedFieldsToObject<T>(fields: Field[] | [string]): T {
     if (key === UNWRAP) {
       return value as T;
     }
-    if (value !== UNSET) {
+    if (value !== UNSET && typeof value !== 'undefined' && value !== null) {
       object[key] = value;
     }
   }
@@ -88,6 +87,7 @@ export function serialise<Return>(state: HyperionStore, subject: Reference, conf
     while (!current.done) {
       const requestToHydrate: Reference | Reference[] = current.value as any;
       let next: any = UNSET;
+
       if (requestToHydrate) {
         if (Array.isArray(requestToHydrate)) {
           const nextList: any[] = [];

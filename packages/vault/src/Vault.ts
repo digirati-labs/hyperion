@@ -15,7 +15,7 @@ import {
   Reference,
   TraversableEntityTypes,
 } from '@hyperion-framework/types';
-import { SerialiseConfig, serialise } from '@hyperion-framework/parser';
+import { SerialiseConfig, serialise, serialiseConfigPresentation2, serialiseConfigPresentation3 } from '@hyperion-framework/parser';
 import { getFixedSizeFromImage, ImageServiceLoader } from '@atlas-viewer/iiif-image-api';
 import mitt, { Emitter } from 'mitt';
 import {
@@ -87,6 +87,14 @@ export class Vault {
 
   serialise<Return>(entity: Reference<TraversableEntityTypes>, config: SerialiseConfig) {
     return serialise<Return>(this.getState(), entity, config);
+  }
+
+  toPresentation2<Return>(entity: Reference<TraversableEntityTypes>) {
+    return this.serialise<Return>(entity, serialiseConfigPresentation2);
+  }
+
+  toPresentation3<Return>(entity: Reference<TraversableEntityTypes>) {
+    return this.serialise<Return>(entity, serialiseConfigPresentation3);
   }
 
   fromRef<T extends NormalizedEntity, R = T>(

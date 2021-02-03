@@ -20,6 +20,7 @@
   "dependencies": {
     "@hyperion-framework/presentation-2-parser": "^1.0.0-alpha.24",
     "@hyperion-framework/types": "^1.0.0-alpha.14",
+    "@hyperion-framework/presentation-2": "^1.0.0-alpha.14",
     "rollup": "^2.36.1"
   },
   "publishConfig": {

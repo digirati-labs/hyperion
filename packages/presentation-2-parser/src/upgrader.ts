@@ -51,12 +51,12 @@ export function getProfile(profile: any | any[]): string | undefined {
     return getProfile(profile.find(s => typeof s === 'string'));
   }
 
-  if (level1Support.indexOf(profile) !== -1) {
-    return 'level1';
-  }
-
   if (imageServiceProfiles.indexOf(profile) !== -1) {
     return 'level2';
+  }
+
+  if (level1Support.indexOf(profile) !== -1) {
+    return 'level1';
   }
 
   if (typeof profile !== 'string') {
