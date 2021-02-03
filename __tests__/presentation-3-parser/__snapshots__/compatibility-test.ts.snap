@@ -135,7 +135,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -166,7 +165,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -197,7 +195,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -228,7 +225,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -259,7 +255,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -290,7 +285,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -321,7 +315,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -352,7 +345,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -383,7 +375,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -414,7 +405,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -445,7 +435,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -476,7 +465,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -507,7 +495,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -538,7 +525,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -569,7 +555,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -600,7 +585,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
@@ -631,7 +615,6 @@ Object {
         Object {
           "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas",
           "@type": "sc:Canvas",
-          "annotations": Array [],
           "height": 1998,
           "images": Array [
             Array [
