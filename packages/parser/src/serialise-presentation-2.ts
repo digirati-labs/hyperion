@@ -150,7 +150,7 @@ export const serialiseConfigPresentation2: SerialiseConfig = {
       ...(yield* descriptiveProperties(entity)),
       ...(yield* linkingProperties(entity)),
       ['images', yield entity.items],
-      ['annotations', yield entity.annotations],
+      ['annotations', entity.annotations && entity.annotations.length ? yield entity.annotations : undefined],
     ];
   },
 
