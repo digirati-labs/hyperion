@@ -59,15 +59,15 @@ function getResource(entityOrString: PolyEntity, type: string): Reference {
 }
 
 function mapToEntities(entities: Entities) {
-  return <T extends Reference | string>(type: TraversableEntityTypes) => {
+  return <T extends Reference | string>(type: TraversableEntityTypes, defaultStringType?: string) => {
     const storeType = entities[type] ? entities[type] : {};
     return (r: T): T => {
-      const resource = getResource(r, type);
+      const resource = getResource(r, defaultStringType || type);
       if (resource && resource.id && type) {
         storeType[resource.id] = storeType[resource.id]
           ? (Object.assign({}, storeType[resource.id], resource) as any)
           : Object.assign({}, resource);
-        return { id: resource.id, type: type } as T;
+        return { id: resource.id, type: type === 'ContentResource' ? type : resource.type } as T;
       }
       return resource as T;
     };
@@ -75,13 +75,17 @@ function mapToEntities(entities: Entities) {
 }
 
 function recordTypeInMapping(mapping: EntityMapping) {
-  return <T extends Reference | string>(type: TraversableEntityTypes) => {
+  return <T extends Reference | string>(type: TraversableEntityTypes, defaultStringType?: string) => {
     return (r: T): T => {
-      const { id } = getResource(r, type);
+      const { id, type: foundType } = getResource(r, defaultStringType || type);
       if (typeof id === 'undefined') {
         throw new Error('Found invalid entity without an ID.');
       }
-      mapping[id] = type;
+      if (type === 'ContentResource') {
+        mapping[id] = type;
+      } else {
+        mapping[id] = foundType as any;
+      }
       return r;
     };
   };
@@ -211,8 +215,8 @@ export function normalize(unknownEntity: unknown) {
     range: [
       // This will add a LOT to the state, maybe this will be configurable down the line.
       ensureDefaultFields<Range, RangeNormalized>(emptyRange),
-      addToMapping<Range>('Range'),
-      addToEntities<Range>('Range'),
+      addToMapping<Range>('Range', 'Canvas'),
+      addToEntities<Range>('Range', 'Canvas'),
     ],
     // Remove this, content resources are NOT usually processed by this library.
     // They need to be available in full when they get passed down the chain.
