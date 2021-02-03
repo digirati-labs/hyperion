@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/parser",
-  "version": "1.0.0-alpha.24",
+  "version": "1.0.0-alpha.25",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
@@ -18,9 +18,9 @@
     "prepare": "NODE_ENV=production rollup -c && tsc -p ./tsconfig.types.json"
   },
   "dependencies": {
-    "@hyperion-framework/presentation-2-parser": "^1.0.0-alpha.24",
-    "@hyperion-framework/types": "^1.0.0-alpha.14",
     "@hyperion-framework/presentation-2": "^1.0.0-alpha.14",
+    "@hyperion-framework/presentation-2-parser": "^1.0.0-alpha.25",
+    "@hyperion-framework/types": "^1.0.0-alpha.14",
     "rollup": "^2.36.1"
   },
   "publishConfig": {
