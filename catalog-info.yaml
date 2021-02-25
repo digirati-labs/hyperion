@@ -12,5 +12,5 @@ metadata:
     backstage.io/techdocs-ref: url:https://github.com/digirati-labs/hyperion
 spec:
   type: library
-  owner: CNCF
+  owner: user:stephenwf
   lifecycle: experimental
