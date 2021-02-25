@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: hyperion-framework
+  description: |
+    General purpose IIIF framework
+  links:
+    - title: Documentation
+      url: https://hyperion.stephen.wf/
+  annotations:
+    github.com/project-slug: digirati-labs/hyperion
+spec:
+  type: library
+  owner: CNCF
+  lifecycle: experimental
