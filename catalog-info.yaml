@@ -9,6 +9,7 @@ metadata:
       url: https://hyperion.stephen.wf/
   annotations:
     github.com/project-slug: digirati-labs/hyperion
+    backstage.io/techdocs-ref: url:https://github.com/digirati-labs/hyperion
 spec:
   type: library
   owner: CNCF
