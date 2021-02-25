@@ -1,0 +1,7 @@
+site_name: 'hyperion-framework'
+
+nav:
+  - Home: README.md
+
+plugins:
+  - techdocs-core
