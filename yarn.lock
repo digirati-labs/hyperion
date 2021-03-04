@@ -23,17 +23,10 @@
     magic-string "0.25.7"
     uuid "8.1.0"
 
-"@atlas-viewer/iiif-image-api@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.2.0.tgz#3c3309dd8dc8ad443fceba4725d5f240f52bfbf4"
-  integrity sha512-J7ult1uGp6E/dip31Y0PwudnInTc/7ZX8pcLPtRxb301/2c+MyseCc8eRxCHyyaJIEiHguKgmLyfgZL284aIIQ==
-  dependencies:
-    "@hyperion-framework/types" "^1.0.0-alpha.14"
-
-"@atlas-viewer/iiif-image-api@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.2.1.tgz#44cd37e1381639267ee5fb887886d70d6d4942e4"
-  integrity sha512-MJ74O4uenouCe/oBr8INWLDfpct47gaUp5SK9J2t3hk3RDTUv2oTOSuu+BaehsmjY4SNVItRPH2/5hilLKiG9Q==
+"@atlas-viewer/iiif-image-api@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.2.2.tgz#a7851267ec5afedda19858562e11f664b4f1cf87"
+  integrity sha512-UH4plQWg3DbFPkjl6SBxp/GIo8ZjB25p1s4LcdbEMeTaA+yI7XytLvcMHVljz4FL+9Za6xiwjTHYImx2hJl+4g==
   dependencies:
     "@hyperion-framework/types" "^1.0.0-alpha.14"
 
@@ -5373,6 +5366,11 @@ fsevents@~2.1.2:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.1.3.tgz#fb738703ae8d2f9fe900c33836ddebee8b97f23e"
   integrity sha512-Auw9a4AxqWpa9GUfj370BMPzzyncfBABW8Mab7BGWBYDj4Isgq+cDKtx0i6u9jcX9pQDnswsaaOTgTmA5pEjuQ==
 
+fsevents@~2.3.1:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
+  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
+
 function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
@@ -9942,6 +9940,13 @@ rollup@^2.13.1:
   optionalDependencies:
     fsevents "~2.1.2"
 
+rollup@^2.36.1:
+  version "2.40.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.40.0.tgz#efc218eaede7ab590954df50f96195188999c304"
+  integrity sha512-WiOGAPbXoHu+TOz6hyYUxIksOwsY/21TRWoO593jgYt8mvYafYqQl+axaA8y1z2HFazNUUrsMSjahV2A6/2R9A==
+  optionalDependencies:
+    fsevents "~2.3.1"
+
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
@@ -11364,6 +11369,11 @@ typescript@^3.9.5:
   version "3.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
   integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
+
+typescript@^4.1.3:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.2.tgz#1450f020618f872db0ea17317d16d8da8ddb8c4c"
+  integrity sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
 
 typescript@next:
   version "3.4.0-dev.20190206"
