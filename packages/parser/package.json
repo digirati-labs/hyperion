@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/parser",
-  "version": "1.0.0-alpha.26",
+  "version": "1.0.0-alpha.27",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hyperion-framework/presentation-2": "^1.0.0-alpha.14",
-    "@hyperion-framework/presentation-2-parser": "^1.0.0-alpha.26",
+    "@hyperion-framework/presentation-2-parser": "^1.0.0-alpha.27",
     "@hyperion-framework/types": "^1.0.0-alpha.14",
     "rollup": "^2.36.1"
   },
