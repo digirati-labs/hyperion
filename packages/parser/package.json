@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/parser",
-  "version": "1.0.0-alpha.28",
+  "version": "1.0.0-alpha.29",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
