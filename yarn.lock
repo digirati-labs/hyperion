@@ -23,10 +23,10 @@
     magic-string "0.25.7"
     uuid "8.1.0"
 
-"@atlas-viewer/iiif-image-api@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.2.2.tgz#a7851267ec5afedda19858562e11f664b4f1cf87"
-  integrity sha512-UH4plQWg3DbFPkjl6SBxp/GIo8ZjB25p1s4LcdbEMeTaA+yI7XytLvcMHVljz4FL+9Za6xiwjTHYImx2hJl+4g==
+"@atlas-viewer/iiif-image-api@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@atlas-viewer/iiif-image-api/-/iiif-image-api-1.2.3.tgz#19fda467aee85fbf1ca19027e0a5110eca0bd7a4"
+  integrity sha512-kRnH7pAWoL/RYhycMaFAuWh7u4ygsw1BPV2ynflqClvvkdzKZ1CjhiBGI4gnTA5MzPcSGvfbqsXwNkDEG1zj2A==
   dependencies:
     "@hyperion-framework/types" "^1.0.0-alpha.14"
 
