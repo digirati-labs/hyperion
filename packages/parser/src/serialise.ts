@@ -41,7 +41,10 @@ function resolveIfExists<T extends NormalizedEntity>(state: HyperionStore, url: 
   const request = state.hyperion.requests[url];
   // Return the resource.
   const resourceType = state.hyperion.mapping[url];
-  if (!resourceType && (request.resourceUri && !state.hyperion.entities[resourceType][request.resourceUri])) {
+  if (
+    !resourceType &&
+    (request && request.resourceUri && !state.hyperion.entities[resourceType][request.resourceUri])
+  ) {
     // Continue refetching resource, this is an invalid state.
     return undefined;
   }
