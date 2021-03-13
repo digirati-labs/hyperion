@@ -52,7 +52,11 @@ function parseCanvasTarget(target: any): any {
     return target.map(t => parseCanvasTarget(t));
   }
 
-  if ('type' in target && target.type === 'Canvas') {
+  if (typeof target === 'string') {
+    return target;
+  }
+
+  if (target.type && target.type === 'Canvas') {
     return target.id;
   }
 
@@ -73,6 +77,12 @@ function unNestArray<T>(oneOrArray: T[] | undefined, onlyOne = false): T | T[] |
 function convertService(service: any) {
   if (!service) {
     return undefined;
+  }
+
+  if (typeof service === 'string') {
+    return {
+      '@id': service,
+    };
   }
 
   if ('@id' in service) {
