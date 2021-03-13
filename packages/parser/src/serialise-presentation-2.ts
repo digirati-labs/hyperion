@@ -47,12 +47,24 @@ export function languageString2to3(
   });
 }
 
+function parseCanvasTarget(target: any): any {
+  if (Array.isArray(target)) {
+    return target.map(t => parseCanvasTarget(t));
+  }
+
+  if ('type' in target && target.type === 'Canvas') {
+    return target.id;
+  }
+
+  return target;
+}
+
 function unNestArray<T>(oneOrArray: T[] | undefined, onlyOne = false): T | T[] | undefined {
   if (!oneOrArray) {
     return undefined;
   }
 
-  if (oneOrArray.length > 1 || onlyOne) {
+  if (oneOrArray.length > 1 && !onlyOne) {
     return oneOrArray;
   }
   return oneOrArray[0] || undefined;
@@ -63,6 +75,12 @@ function convertService(service: any) {
     return undefined;
   }
 
+  if ('@id' in service) {
+    const newService = { ...service };
+    delete newService['@type'];
+    return newService;
+  }
+
   // @todo support auth.
   return {
     '@context': 'http://iiif.io/api/image/2/context.json',
@@ -71,7 +89,7 @@ function convertService(service: any) {
   };
 }
 
-function technicalProperties(props: Partial<TechnicalProperties>, type: string) {
+function technicalProperties(props: Partial<TechnicalProperties>, type?: string) {
   return [
     ['@id', props.id],
     ['@type', type],
@@ -144,18 +162,27 @@ export const serialiseConfigPresentation2: SerialiseConfig = {
   },
 
   Canvas: function*(entity) {
+    const paintingPage = yield entity.items;
+    const resources = paintingPage[0];
     return [
       // Items.
       ...technicalProperties(entity, 'sc:Canvas'),
       ...(yield* descriptiveProperties(entity)),
       ...(yield* linkingProperties(entity)),
-      ['images', yield entity.items],
-      ['annotations', entity.annotations && entity.annotations.length ? yield entity.annotations : undefined],
+      ['images', resources ? resources.resources : undefined],
+      [
+        'annotations',
+        entity.annotations && entity.annotations.length ? unNestArray(yield entity.annotations) : undefined,
+      ],
     ];
   },
 
   AnnotationPage: function*(entity) {
-    return [[UNWRAP, yield entity.items]];
+    return [
+      ...technicalProperties(entity, 'sc:AnnotationList'),
+      ...(yield* descriptiveProperties(entity)),
+      ['resources', entity.items && entity.items.length ? unNestArray(yield entity.items) : undefined],
+    ];
   },
 
   Annotation: function*(entity) {
@@ -164,21 +191,25 @@ export const serialiseConfigPresentation2: SerialiseConfig = {
       ['@type', 'oa:Annotation'],
       // This could be improved.
       ['motivation', 'sc:painting'],
-      ['on', entity.target],
+      ['on', parseCanvasTarget(entity.target)],
       ['resource', unNestArray(yield entity.body, true)],
     ];
   },
 
   ContentResource: function*(entity: any) {
-    if (entity.type === 'Image') {
-      return [
-        // Image properties.
-        ...technicalProperties(entity, 'dctypes:Image'),
-        ...(yield* descriptiveProperties(entity)),
-        ...(yield* linkingProperties(entity)),
-      ];
+    switch (entity.type) {
+      case 'Image':
+        return [
+          // Image properties.
+          ...technicalProperties(entity, 'dctypes:Image'),
+          ...(yield* descriptiveProperties(entity)),
+          ...(yield* linkingProperties(entity)),
+        ];
+      case 'Text':
+      case 'Dataset':
+      default:
+        return [...technicalProperties(entity, undefined), ...(yield* descriptiveProperties(entity))];
     }
-    return [[UNSET]];
   },
 
   AnnotationCollection: function*(entity) {
