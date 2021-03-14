@@ -179,7 +179,7 @@ export const serialiseConfigPresentation2: SerialiseConfig = {
       ...technicalProperties(entity, 'sc:Canvas'),
       ...(yield* descriptiveProperties(entity)),
       ...(yield* linkingProperties(entity)),
-      ['images', resources ? resources.resources : undefined],
+      ['images', resources ? [resources.resources] : undefined],
       [
         'annotations',
         entity.annotations && entity.annotations.length ? unNestArray(yield entity.annotations) : undefined,

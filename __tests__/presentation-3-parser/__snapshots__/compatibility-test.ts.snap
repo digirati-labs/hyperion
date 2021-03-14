@@ -142,19 +142,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [1]",
@@ -170,19 +168,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [2]",
@@ -198,19 +194,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [3]",
@@ -226,19 +220,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [4]",
@@ -254,19 +246,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [5]",
@@ -282,19 +272,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [6]",
@@ -310,19 +298,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [7]",
@@ -338,19 +324,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": "4 [8]",
@@ -366,19 +350,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": "5 [9]",
@@ -394,19 +376,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": "6 [10]",
@@ -422,19 +402,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": "7 [11]",
@@ -450,19 +428,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": "8 [12]",
@@ -478,19 +454,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [13]",
@@ -506,19 +480,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [14]",
@@ -534,19 +506,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [15]",
@@ -562,19 +532,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [16]",
@@ -590,19 +558,17 @@ Object {
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "on": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas",
-              "resource": Array [
-                Object {
-                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/full/full/0/default.jpg",
-                  "@type": "dctypes:Image",
-                  "height": 1998,
-                  "service": Object {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017",
-                    "profile": "http://iiif.io/api/image/2/profiles/level2.json",
-                  },
-                  "width": 1226,
+              "resource": Object {
+                "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "height": 1998,
+                "service": Object {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017",
+                  "profile": "http://iiif.io/api/image/2/profiles/level2.json",
                 },
-              ],
+                "width": 1226,
+              },
             },
           ],
           "label": " -  [17]",
