@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/presentation-2-parser",
-  "version": "1.0.0-alpha.28",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "web": "dist/index.umd.js",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@atlas-viewer/iiif-image-api": "^1.2.4",
-    "@hyperion-framework/presentation-2": "^1.0.0-alpha.14",
+    "@hyperion-framework/presentation-2": "^1.0.0",
     "rollup": "^2.36.1"
   },
   "publishConfig": {
