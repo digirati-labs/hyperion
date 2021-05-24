@@ -20,7 +20,7 @@
   "dependencies": {
     "@hyperion-framework/parser": "^1.0.0-alpha.30",
     "@hyperion-framework/types": "^1.0.0-alpha.14",
-    "immer": "^6.0.8",
+    "immer": "^9.0.2",
     "redux": "^4.0.5",
     "rollup": "^2.36.1",
     "typesafe-actions": "^5.1.0"
