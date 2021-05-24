@@ -59,11 +59,11 @@ describe('vault', () => {
     global.fetch = jest.fn(async test => {
       return {
         json() {
-          if (!httpMocks[test]) {
+          if (!httpMocks[test.toString()]) {
             throw new Error(`missing ${test}`);
           }
 
-          return httpMocks[test];
+          return httpMocks[test.toString()];
         },
       };
     });
