@@ -10,21 +10,48 @@ import {
 import { ImageCandidateRequest } from '@atlas-viewer/iiif-image-api';
 
 export function globalVault(options?: VaultOptions) {
-  const gv: Vault | null = global
-    ? (global as any).__hyperionVault__
-    : typeof window !== 'undefined' && window.__hyperionVault__
-    ? window.__hyperionVault__
-    : null;
+  try {
+    let gv: Vault | null = globalThis
+      ? (globalThis as any).__hyperionVault__
+      : typeof window !== 'undefined' && window.__hyperionVault__
+      ? window.__hyperionVault__
+      : null;
 
-  if (gv) {
-    return gv;
+    try {
+      // @ts-ignore
+      if (!gv && global && global.__hyperionVault__) {
+        // @ts-ignore
+        gv = global.__hyperionVault__;
+      }
+    } catch (e) {
+      // no-op
+    }
+
+    if (gv) {
+      return gv;
+    }
+  } catch (e) {
+    // no-op
   }
 
   const newVault = new Vault(options);
 
-  if (typeof global !== 'undefined') {
-    (global as any).__hyperionVault__ = newVault;
+  try {
+    if (typeof globalThis !== 'undefined') {
+      (globalThis as any).__hyperionVault__ = newVault;
+    }
+  } catch (e) {
+    // no-op
   }
+
+  try {
+    if (typeof global !== 'undefined') {
+      (global as any).__hyperionVault__ = newVault;
+    }
+  } catch (e) {
+    // no-op
+  }
+
   if (typeof window !== 'undefined') {
     window.__hyperionVault__ = newVault;
   }

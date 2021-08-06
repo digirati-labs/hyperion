@@ -117,7 +117,7 @@ export class Vault {
   allFromRef<T extends NormalizedEntity, R = T>(
     references: Reference<TraversableEntityTypes>[],
     selector?: <C>(state: HyperionStore, ctx: C) => R
-  ) {
+  ): any[] {
     return references.map(reference => this.fromRef(reference, selector));
   }
 
