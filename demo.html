@@ -1,0 +1,76 @@
+<script src="https://unpkg.com/@hyperion-framework/vault@1.0.1/dist/index.umd.js"></script>
+<script src="./experimental/web-components.js"></script>
+
+<h1>Demo</h1>
+
+<iiif-manifest id="man1" src="https://iiif.wellcomecollection.org/presentation/b29343768">
+  <iiif-canvas id="can1" src="https://iiif.wellcomecollection.org/presentation/b29343768/canvases/b29343768_0001.jp2">
+    <h3>Thumbnail</h3>
+    <canvas-thumbnail id="thumb" width="400" />
+  </iiif-canvas>
+
+  <div id="sizes">
+    <!-- button for each size in the thumbnail -->
+  </div>
+
+  <iiif-canvas id="can2" idx="0">
+    <h3>By index</h3>
+    <canvas-thumbnail id="thumb2" width="400" />
+  </iiif-canvas>
+  <br/>
+  <button id="prev">Prev</button> <button id="next">Next</button>
+</iiif-manifest>
+
+<pre id="log"></div>
+
+<script>
+  // Some useful bits.
+  const vault = window.__hyperionVault__; // The global vault.
+  
+
+  const $thumb = document.getElementById('thumb');
+
+  // Example of listening into what the components are doing in the background.
+  document.getElementById('can1').addEventListener('canvas-loaded', e => {
+    // e.target is our iiif-canvas component, which has a `manifest` and `canvas` property from the vault.
+    const el = e.target;
+    const manifest = el.manifest;
+    const canvas = el.canvas;
+
+    const thumbnail = el.vault.fromRef(canvas.thumbnail[0]);
+    if (thumbnail.service && thumbnail.service[0] && thumbnail.service[0].sizes) {
+      const sizes = thumbnail.service[0].sizes;
+
+      const $sizesContainer = document.getElementById('sizes');
+      $sizesContainer.innerHTML = '';
+
+      for (const size of sizes) {
+        const $btn = document.createElement('button');
+        $btn.addEventListener('click', () => {
+          $thumb.setAttribute('width', size.width);
+        });
+        $btn.innerText = `${size.width} x ${size.height}`;
+        console.log($sizesContainer);
+        $sizesContainer.appendChild($btn);
+      }
+    }
+  });
+
+
+  // Pagination through indexes.
+  const $next = document.getElementById('next');
+  const $prev = document.getElementById('prev');
+  const $can2 = document.getElementById('can2');
+  let currentIdx = 0;
+
+  $next.addEventListener('click', () => {
+    currentIdx += 1;
+    $can2.setAttribute('idx', currentIdx);
+  })
+  $prev.addEventListener('click', () => {
+    if (currentIdx === 0) return;
+    currentIdx -= 1;
+    $can2.setAttribute('idx', currentIdx);
+  })
+
+</script> 

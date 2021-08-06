@@ -1,0 +1,52 @@
+<script src="https://unpkg.com/@hyperion-framework/vault@1.0.1/dist/index.umd.js"></script>
+<script src="./experimental/web-components.js"></script>
+
+<h1>Demo</h1>
+
+<iiif-manifest id="man1" src="https://iiif.wellcomecollection.org/presentation/b29343768">
+  <iiif-canvas id="can1" idx="0">
+    <h3>Thumbnail</h3>
+    <canvas-thumbnail id="thumb" width="400" />
+  </iiif-canvas>
+</iiif-manifest>
+
+<button id="next">Next</button>
+
+<pre id="log"></div>
+
+<script>
+  const vault = window.__hyperionVault__; // The global vault.
+
+  let index = 0;
+
+  document.getElementById('next').addEventListener("click", e => {
+    const $man = document.getElementById('man1');
+    const $can = document.getElementById('can1');
+    const $thumb = document.getElementById('thumb');
+    $can.setAttribute("src", $man.manifest.items[index].id);
+    index++;
+  });
+
+  // myManifest = vault.load("manifesturl")
+  // imageControl.image = myManifest.items[0].thumbnail
+
+  // vault.loadManifest(.. .).then(manifestRef => {
+
+  //   const page = `
+  //     <iiif-manifest src="${manifestRef.id}">
+  //       <sidebar>
+  //         ${manifestRef.items.map(ref => {
+  //           const canvas = vault.fromRef(ref);
+  //           // https://codesandbox.io/s/hyperion-demo-single-image-service-23cm4
+
+  //           return `
+  //             <thumbnail src="${canvas.thumbnail[0].id}" width="200" />
+  //           `;
+  //         })}
+  //       </sidebar>
+  //     </iiif-manifest>
+  //   `;
+
+  // });
+
+</script> 
