@@ -15,7 +15,12 @@ import {
   Reference,
   TraversableEntityTypes,
 } from '@hyperion-framework/types';
-import { SerialiseConfig, serialise, serialiseConfigPresentation2, serialiseConfigPresentation3 } from '@hyperion-framework/parser';
+import {
+  SerialiseConfig,
+  serialise,
+  serialiseConfigPresentation2,
+  serialiseConfigPresentation3,
+} from '@hyperion-framework/parser';
 import { getFixedSizeFromImage, ImageServiceLoader } from '@atlas-viewer/iiif-image-api';
 import mitt, { Emitter } from 'mitt';
 import {

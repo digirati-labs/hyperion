@@ -1,7 +1,6 @@
 import { ActionType } from 'typesafe-actions';
 import { createAction } from 'typesafe-actions';
 import { RequestState } from '@hyperion-framework/types';
-import produce from 'immer';
 
 export const RESOURCE_ERROR = 'RESOURCE_ERROR';
 export const RESOURCE_LOADING = 'RESOURCE_LOADING';
@@ -29,35 +28,55 @@ export const requestActions = {
 
 export type RequestActions = ActionType<typeof requestActions>;
 
-export const requestReducer = (state: RequestState = {}, action: ActionType<typeof requestActions> | any) =>
-  produce(state, (draft: RequestState) => {
-    switch (action.type) {
-      case REQUEST_RESOURCE:
-      case REQUEST_OFFLINE_RESOURCE:
-        draft[action.payload.id] = {
+export const requestReducer = (state: RequestState = {}, action: ActionType<typeof requestActions> | any) => {
+  switch (action.type) {
+    case REQUEST_RESOURCE:
+    case REQUEST_OFFLINE_RESOURCE:
+      return {
+        ...state,
+        [action.payload.id]: {
           requestUri: action.payload.id,
           loadingState: 'RESOURCE_LOADING',
           uriMismatch: false,
           resourceUri: action.payload.id,
-        };
-        break;
-      case REQUEST_MISMATCH:
-        draft[action.payload.requestId].uriMismatch = true;
-        draft[action.payload.requestId].resourceUri = action.payload.actualId;
-        draft[action.payload.actualId] = {
+        },
+      };
+      break;
+    case REQUEST_MISMATCH:
+      return {
+        ...state,
+        [action.payload.requestId]: {
+          ...(state[action.payload.requestId] || {}),
+          uriMismatch: true,
+          resourceUri: action.payload.actualId,
+        },
+        [action.payload.actualId]: {
           requestUri: action.payload.requestId,
           loadingState: state[action.payload.requestId].loadingState,
           uriMismatch: true,
           resourceUri: action.payload.actualId,
-        };
-        break;
-      case REQUEST_ERROR:
-        draft[action.payload.id].loadingState = 'RESOURCE_ERROR';
-        draft[action.payload.id].error = action.payload.message;
-        break;
-      case REQUEST_COMPLETE:
-        draft[action.payload.id].loadingState = 'RESOURCE_READY';
-        break;
-    }
-    return draft;
-  });
+        },
+      };
+    case REQUEST_ERROR:
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...(state[action.payload.id] || {}),
+          loadingState: 'RESOURCE_ERROR',
+          error: action.payload.message,
+        },
+      };
+      break;
+    case REQUEST_COMPLETE:
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...(state[action.payload.id] || {}),
+          loadingState: 'RESOURCE_READY',
+          error: undefined,
+        },
+      };
+      break;
+  }
+  return state;
+};

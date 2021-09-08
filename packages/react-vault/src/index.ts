@@ -3,6 +3,7 @@ export * from './context/AnnotationContext';
 // export * from './context/AnnotationPageContext';
 export * from './context/CanvasContext';
 export * from './context/CollectionContext';
+export * from './context/ManifestContext';
 export * from './context/RangeContext';
 export * from './context/VaultContext';
 export * from './context/ResourceContext';
@@ -29,6 +30,7 @@ export * from './hooks/useSearchService';
 export * from './hooks/useThumbnail';
 export * from './hooks/useVault';
 export * from './hooks/useVaultEffect';
+export * from './hooks/useVaultSelector';
 // export * from './hooks/useVirtualCanvas';
 
 // Viewer exports.

@@ -1,4 +1,3 @@
-import produce from 'immer';
 import { ActionType, createAction } from 'typesafe-actions';
 import { EntityMapping, TraversableEntityTypes } from '@hyperion-framework/types';
 
@@ -12,17 +11,20 @@ export const mappingActions = { addMapping, addMappings };
 
 export type MappingActions = ActionType<typeof mappingActions>;
 
-export const mappingReducer = (state: EntityMapping = {}, action: ActionType<typeof mappingActions> | any) =>
-  produce(state, (draft: EntityMapping) => {
-    switch (action.type) {
-      case ADD_MAPPING:
-        draft[action.payload.id] = action.payload.type;
-        return draft;
-      case ADD_MAPPINGS:
-        return {
-          ...state,
-          ...action.payload.mapping,
-        };
-    }
-    return draft;
-  });
+export const mappingReducer = (state: EntityMapping = {}, action: ActionType<typeof mappingActions> | any) => {
+  switch (action.type) {
+    case ADD_MAPPING:
+      return {
+        ...state,
+        [action.payload.id]: action.payload.type,
+      };
+
+    case ADD_MAPPINGS:
+      return {
+        ...state,
+        ...action.payload.mapping,
+      };
+    default:
+      return state;
+  }
+};

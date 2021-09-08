@@ -1,5 +1,5 @@
 {
-  "name": "@hyperion-framework/store",
+  "name": "@hyperion-framework/editor",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -19,10 +19,10 @@
   },
   "dependencies": {
     "@hyperion-framework/parser": "^1.0.0",
+    "@hyperion-framework/store": "^1.0.0",
     "@hyperion-framework/types": "^1.0.0",
-    "redux": "^4.0.5",
-    "rollup": "^2.36.1",
-    "typesafe-actions": "^5.1.0"
+    "@hyperion-framework/vault": "^1.0.1",
+    "rollup": "^2.36.1"
   },
   "publishConfig": {
     "access": "public"

@@ -1,0 +1,27 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <pre id="output"></pre>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/immer/9.0.6/immer.umd.production.min.js"></script>
+
+    <script src="./dist/index.umd.js"></script>
+    <script>
+      const builder = new IIIFBuilder();
+
+      const newManifest = builder.createManifest('http://example.org/manifest-1', manifest => {
+        manifest.setLabel('Test label');
+      });
+
+      document.getElementById('output').innerText = JSON.stringify(
+        builder.toPresentation3({ id: newManifest.id, type: 'Manifest' }),
+        null,
+        4
+      );
+    </script>
+  </body>
+</html>
