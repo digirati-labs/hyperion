@@ -34,7 +34,7 @@ export function useImageService(): {
 
         return (
           (await imageService.loadService({
-            id: firstImageService.id,
+            id: firstImageService.id || firstImageService['@id'],
             width: firstImageService.width || canvas.width,
             height: firstImageService.height || canvas.height,
           })) || undefined
@@ -61,7 +61,7 @@ export function useImageService(): {
 
           return (
             imageService.loadServiceSync({
-              id: firstImageService.id,
+              id: firstImageService.id || (firstImageService['@id'] as string),
               width: firstImageService.width || canvas.width,
               height: firstImageService.height || canvas.height,
             }) || undefined
