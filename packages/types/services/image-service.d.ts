@@ -61,6 +61,7 @@ export declare type ImageProfile =
 export interface ImageService2 {
   '@context'?: string | string[];
   '@id': string;
+  '@type'?: 'ImageService2';
   profile: ImageProfile | ImageProfile[];
   protocol?: string;
   width?: number | null;

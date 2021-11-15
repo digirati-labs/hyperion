@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Compatibility Presentation 2 serialisation from normalised 3 1`] = `
+exports[`Compatibility Presentation 2 + 3 serialisation from normalised 1`] = `
 Object {
   "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497/manifest",
   "@type": "sc:Manifest",
@@ -762,10 +762,674 @@ Object {
 }
 `;
 
-exports[`Compatibility Presentation 3 serialisation from normalised 1`] = `
+exports[`Compatibility Presentation 2 + 3 serialisation from normalised 2`] = `
 Object {
   "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/manifest",
-  "items": Array [],
+  "items": Array [
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [1]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [2]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [3]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [4]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [5]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [6]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [7]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          "4 [8]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          "5 [9]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          "6 [10]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          "7 [11]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          "8 [12]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [13]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [14]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [15]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [16]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+    Object {
+      "height": 1998,
+      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas",
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas/annotation-page",
+          "items": Array [
+            Object {
+              "body": Array [
+                Object {
+                  "height": 1998,
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/full/full/0/default.jpg",
+                  "service": Array [
+                    Object {
+                      "@id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017",
+                      "@type": "ImageService2",
+                      "profile": "http://iiif.io/api/image/2/level2.json",
+                    },
+                  ],
+                  "type": "Image",
+                  "width": 1226,
+                },
+              ],
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/annotation",
+              "target": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas",
+              "type": "Annotation",
+            },
+          ],
+          "type": "AnnotationPage",
+        },
+      ],
+      "label": Object {
+        "none": Array [
+          " -  [17]",
+        ],
+      },
+      "type": "Canvas",
+      "width": 1226,
+    },
+  ],
   "label": Object {
     "none": Array [
       "Kurtze Nachricht von dem freyen Unterricht, welchen arme Kinder in den Friedrichsstädtischen teutschen Schulen geniessen",
@@ -1142,130 +1806,698 @@ Object {
   "structures": Array [
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-1",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-2",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-3",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-4",
+                  "items": Array [
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
+                      "type": "Canvas",
+                    },
+                  ],
+                  "label": Object {
+                    "none": Array [
+                      "Vorderdeckel",
+                    ],
+                  },
+                  "type": "Range",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-5",
+                  "items": Array [
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
+                      "type": "Canvas",
+                    },
+                  ],
+                  "label": Object {
+                    "none": Array [
+                      "Spiegel",
+                    ],
+                  },
+                  "type": "Range",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-6",
+                  "items": Array [
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
+                      "type": "Canvas",
+                    },
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
+                      "type": "Canvas",
+                    },
+                  ],
+                  "label": Object {
+                    "none": Array [
+                      "Vorsatz",
+                    ],
+                  },
+                  "type": "Range",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Einband",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-7",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Titelblatt",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-8",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "[Dritte Fortsetzung]",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-9",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-10",
+                  "items": Array [
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
+                      "type": "Canvas",
+                    },
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
+                      "type": "Canvas",
+                    },
+                  ],
+                  "label": Object {
+                    "none": Array [
+                      "Vorsatz",
+                    ],
+                  },
+                  "type": "Range",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-11",
+                  "items": Array [
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
+                      "type": "Canvas",
+                    },
+                  ],
+                  "label": Object {
+                    "none": Array [
+                      "Spiegel",
+                    ],
+                  },
+                  "type": "Range",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-12",
+                  "items": Array [
+                    Object {
+                      "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
+                      "type": "Canvas",
+                    },
+                  ],
+                  "label": Object {
+                    "none": Array [
+                      "Rückdeckel",
+                    ],
+                  },
+                  "type": "Range",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Einband",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-13",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Farbinformation",
+                ],
+              },
+              "type": "Range",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Kurtze Nachricht von dem freyen Unterricht, welchen arme Kinder in den Friedrichsstädtischen teutschen Schulen geniessen",
+            ],
+          },
+          "type": "Range",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Kurtze Nachricht von dem freyen Unterricht, welchen arme Kinder in den Friedrichsstädtischen teutschen Schulen geniessen",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-2",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-3",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-4",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Vorderdeckel",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-5",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Spiegel",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-6",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Vorsatz",
+                ],
+              },
+              "type": "Range",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Einband",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-7",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Titelblatt",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-8",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "[Dritte Fortsetzung]",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-9",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-10",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
+                  "type": "Canvas",
+                },
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Vorsatz",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-11",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Spiegel",
+                ],
+              },
+              "type": "Range",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-12",
+              "items": Array [
+                Object {
+                  "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
+                  "type": "Canvas",
+                },
+              ],
+              "label": Object {
+                "none": Array [
+                  "Rückdeckel",
+                ],
+              },
+              "type": "Range",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Einband",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-13",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Farbinformation",
+            ],
+          },
+          "type": "Range",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Kurtze Nachricht von dem freyen Unterricht, welchen arme Kinder in den Friedrichsstädtischen teutschen Schulen geniessen",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-3",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-4",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Vorderdeckel",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-5",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Spiegel",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-6",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Vorsatz",
+            ],
+          },
+          "type": "Range",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Einband",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-4",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0001/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Vorderdeckel",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-5",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0002/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Spiegel",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-6",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0003/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0004/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Vorsatz",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-7",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0005/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0006/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Titelblatt",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-8",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0007/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0008/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0009/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0010/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0011/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0012/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "[Dritte Fortsetzung]",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-9",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-10",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
+              "type": "Canvas",
+            },
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Vorsatz",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-11",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Spiegel",
+            ],
+          },
+          "type": "Range",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-12",
+          "items": Array [
+            Object {
+              "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
+              "type": "Canvas",
+            },
+          ],
+          "label": Object {
+            "none": Array [
+              "Rückdeckel",
+            ],
+          },
+          "type": "Range",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Einband",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-10",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0013/canvas",
+          "type": "Canvas",
+        },
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0014/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Vorsatz",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-11",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0015/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Spiegel",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-12",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0016/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Rückdeckel",
         ],
       },
       "type": "Range",
     },
     Object {
       "id": "https://content.staatsbibliothek-berlin.de/dc/840973497/range/range-13",
-      "items": Array [],
+      "items": Array [
+        Object {
+          "id": "https://content.staatsbibliothek-berlin.de/dc/840973497-0017/canvas",
+          "type": "Canvas",
+        },
+      ],
       "label": Object {
         "none": Array [
-          "",
+          "Farbinformation",
         ],
       },
       "type": "Range",

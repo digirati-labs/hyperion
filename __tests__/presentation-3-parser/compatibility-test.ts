@@ -8,17 +8,6 @@ import { serialiseConfigPresentation3 } from '../../packages/parser/src/serialis
 import { Validator } from '../../packages/validator/src/validator';
 
 describe('Compatibility', () => {
-  test('Presentation 2 serialisation from normalised 3', async () => {
-    const vault = new Vault();
-    const manifest = await vault.loadManifest(nlsManifest2['@id'], nlsManifest2);
-
-    const result = serialise(vault.getState(), manifest, serialiseConfigPresentation2);
-
-    expect(result as any).toMatchSnapshot();
-
-    // No validator exists at the moment.
-  });
-
   // This calls out the the network, skip in normal test runs.
   test.skip('Wellcome - presentation 3', async () => {
     const vault = new Vault();
@@ -91,20 +80,29 @@ describe('Compatibility', () => {
     // No validator exists at the moment.
   });
 
-  test('Presentation 3 serialisation from normalised', async () => {
+  test('Presentation 2 + 3 serialisation from normalised', async () => {
     const vault = new Vault();
+
     const manifest = await vault.loadManifest(nlsManifest2['@id'], nlsManifest2);
 
-    const result = serialise(vault.getState(), manifest, serialiseConfigPresentation3);
+    // Presentation 2
+    const resultPresentation2 = serialise(vault.getState(), manifest, serialiseConfigPresentation2);
+
+    expect(resultPresentation2 as any).toMatchSnapshot();
+
+    // Presentation 3
+    const resultPresentation3: any = serialise(vault.getState(), manifest, serialiseConfigPresentation3);
+
+    expect(resultPresentation3.items).not.toHaveLength(0);
 
     const validator = new Validator();
 
-    const isValid = await validator.validateManifest(result);
+    const isValid = await validator.validateManifest(resultPresentation3);
 
     expect(validator.validators.manifest.errors).toEqual(null);
 
     expect(isValid).toEqual(true);
 
-    expect(result as any).toMatchSnapshot();
+    expect(resultPresentation3 as any).toMatchSnapshot();
   });
 });

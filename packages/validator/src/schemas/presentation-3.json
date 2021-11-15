@@ -9,7 +9,6 @@
       "title": "Id must be presesnt and must be a URI"
     },
     "lngString": {
-      "$id": "#lngString",
       "title": "Language string, must have a language and value must be an array.",
       "type": "object",
       "patternProperties": {
@@ -25,7 +24,6 @@
       "additionalProperties": false
     },
     "keyValueString": {
-      "$id": "#keyValueString",
       "type": "object",
       "properties": {
         "label": {"$ref": "#/types/lngString" },
@@ -225,7 +223,7 @@
         {
           "type": "string",
           "format": "uri",
-          "pattern": "http://creativecommons.org/publicdomain/mark/.*"
+          "pattern": "http://creativecommons.org/publicdomain/.*"
         },
         {
           "type": "string",
@@ -371,6 +369,7 @@
             "navDate": { "$ref": "#/classes/navDate" },
             "provider": { "$ref": "#/classes/provider" },
             "seeAlso": { "$ref": "#/classes/seeAlso" },
+            "services": { "$ref": "#/classes/service" },
             "thumbnail": {
               "type": "array",
               "items": { "$ref": "#/classes/resource" }
@@ -421,8 +420,8 @@
                 }
               ]
             },
-            "id": {},
-            "label": {},
+            "id": { "$ref": "#/types/id" },
+            "label": {"$ref": "#/types/lngString" },
             "type": {
               "type": "string",
               "pattern": "^Manifest"
@@ -432,6 +431,7 @@
             "requiredStatement": { "$ref": "#/types/keyValueString" },
             "rendering": { "$ref": "#/types/external" },
             "service": { "$ref": "#/classes/service" },
+            "services": { "$ref": "#/classes/service" },
             "viewingDirection": { "$ref": "#/classes/viewingDirection" },
             "rights": { "$ref": "#/classes/rights" },
             "start": {},
@@ -467,7 +467,8 @@
                 "$ref": "#/classes/annotationPage"
               }
             }
-          }
+          },
+          "required": ["id", "type", "label"]
         }
       ]
     },
@@ -598,11 +599,13 @@
               ]
             },
             "body": {
-              "oneOf": [
+              "anyOf": [
                 {
+                  "type": "object",
                   "$ref": "#/classes/resource"
                 },
                 {
+                  "type": "object",
                   "allOf":[
                     { "$ref": "#/classes/choice" },
                     {
@@ -615,11 +618,18 @@
                       "required": ["items"]
                     }
                   ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
                 }
+
               ]
             },
             "target": {
-              "oneOf": [
+              "anyOf": [
                 { "$ref": "#/classes/annoTarget" },
                 {
                   "type": "array",
@@ -657,7 +667,17 @@
         "format": { "$ref": "#/types/format" },
         "accessibility": { "type": "string"},
         "source": { "$ref": "#/types/id" },
-        "selector": { "$ref": "#/classes/annoSelector" }
+        "selector": {
+          "oneOf": [
+            { "$ref": "#/classes/annoSelector" },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/classes/annoSelector"
+              }
+            }
+          ]
+        }
       },
       "required": ["source", "selector"]
     },
@@ -723,14 +743,9 @@
     }
   },
   "$id": "http://iiif.io/api/presentation/3/schema.json" ,
-  "allOf": [
-    { "$ref": "#/types/class" },
-    {
-      "oneOf": [
-        { "$ref": "#/classes/manifest" },
-        { "$ref": "#/classes/collection" },
-        { "$ref": "#/classes/annotationPage" }
-      ]
-    }
+  "oneOf": [
+    { "$ref": "#/classes/manifest" },
+    { "$ref": "#/classes/collection" },
+    { "$ref": "#/classes/annotationPage" }
   ]
 }

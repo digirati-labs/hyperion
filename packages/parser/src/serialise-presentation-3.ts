@@ -4,6 +4,8 @@ import {
   DescriptiveNormalized,
   LinkingNormalized,
   AnnotationCollection,
+  ImageService3,
+  ImageService2,
 } from '@hyperion-framework/types';
 
 function technicalProperties(entity: Partial<TechnicalProperties>): Array<[keyof TechnicalProperties, any]> {
@@ -28,6 +30,28 @@ function filterEmpty<T>(item?: T[]): T[] | undefined {
     return undefined;
   }
   return item;
+}
+
+function service2compat(service: ImageService3): ImageService2 | ImageService3 {
+  if (service && service.type && service.type === 'ImageService2') {
+    const { id, type, profile, ..._service } = service;
+    return {
+      '@id': id,
+      '@type': type,
+      profile: profile.startsWith('http') ? profile : `http://iiif.io/api/image/2/${profile}.json`,
+      ..._service,
+    } as any;
+  }
+
+  return service;
+}
+
+function filterService2Compat(services?: any[]) {
+  if (!services || services.length === 0) {
+    return undefined;
+  }
+
+  return (services as any[]).map(service2compat);
 }
 
 function* descriptiveProperties(
@@ -56,8 +80,8 @@ function* linkingProperties(
 ): Generator<any, any, Array<[keyof LinkingNormalized, any]>> {
   return [
     ['seeAlso', filterEmpty(yield entity.seeAlso)],
-    ['service', filterEmpty(entity.service)],
-    ['services', filterEmpty(entity.services)],
+    ['service', filterService2Compat(entity.service)],
+    ['services', filterService2Compat(entity.services)],
     ['rendering', filterEmpty(yield entity.rendering)],
     ['supplementary', filterEmpty(yield entity.supplementary)],
 
@@ -108,7 +132,7 @@ export const serialiseConfigPresentation3: SerialiseConfig = {
 
   Service: function*(entity) {
     // Are there other properties on a service?
-    return [[UNWRAP, entity]];
+    return [[UNWRAP, service2compat(entity as any)]];
   },
 
   Annotation: function*(entity) {
