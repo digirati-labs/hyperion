@@ -47,7 +47,20 @@ export type TraversableEntity =
   | Service
   | Selector;
 
-type TraversableEntityMappedType<T extends TraversableEntityTypes> = T extends 'Collection'
+export type TraversableEntityMap = {
+  Collection: Collection;
+  Manifest: Manifest;
+  Canvas: Canvas;
+  AnnotationPage: AnnotationPage;
+  AnnotationCollection: AnnotationCollection;
+  Annotation: Annotation;
+  ContentResource: ContentResource;
+  Range: Range;
+  Service: Service;
+  Selector: Selector;
+};
+
+export type TraversableEntityMappedType<T extends TraversableEntityTypes> = T extends 'Collection'
   ? CollectionNormalized
   : T extends 'Manifest'
   ? ManifestNormalized

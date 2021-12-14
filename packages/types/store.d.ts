@@ -69,12 +69,15 @@ export type RequestState = {
   };
 };
 
-export type EntityStore = {
+export type MetaState = Record<string, Record<string, Record<string, any>>>;
+
+export type EntityStore<Meta extends MetaState = MetaState> = {
   entities: Entities;
   mapping: EntityMapping;
   requests: RequestState;
+  meta: Meta;
 };
 
-export type HyperionStore = {
-  hyperion: EntityStore;
+export type HyperionStore<Meta extends MetaState = MetaState> = {
+  hyperion: EntityStore<Meta>;
 };

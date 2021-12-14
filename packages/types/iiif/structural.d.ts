@@ -10,6 +10,6 @@ export declare type StructuralProperties<T> = {
 
 export declare type StructuralNormalized<T extends Reference<P>, P> = {
   items: T[];
-  annotations: Array<Reference<'Annotation'>>;
+  annotations: Array<Reference<'AnnotationPage'>>;
   structures: Array<Reference<'Range'>>;
 };
