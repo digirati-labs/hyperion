@@ -492,11 +492,32 @@ function flattenArray<T>(array: T[][]): T[] {
 }
 
 function upgradeManifest(manifest: Presentation2.Manifest): Presentation3.Manifest {
+  const allCanvases = [];
+  const behavior = [];
+  for (const sequence of manifest.sequences || []) {
+    if (sequence.canvases.length) {
+      allCanvases.push(...sequence.canvases);
+    }
+    if (sequence.behavior) {
+      behavior.push(...sequence.behavior);
+    }
+  }
+
+  // This comes from the sequence.
+  const technical = technicalProperties(manifest);
+  if (behavior.length) {
+    if (technical.behavior) {
+      technical.behavior.push(...behavior);
+    } else {
+      technical.behavior = behavior;
+    }
+  }
+
   return removeUndefinedProperties({
-    ...technicalProperties(manifest),
+    ...technical,
     ...descriptiveProperties(manifest),
     ...linkingProperties(manifest),
-    items: flattenArray((manifest.sequences || []) as any),
+    items: allCanvases,
     structures: manifest.structures as any,
   });
 }
@@ -528,7 +549,12 @@ function upgradeAnnotationList(annotationPage: Presentation2.AnnotationList): Pr
   });
 }
 
-function upgradeSequence(sequence: Presentation2.Sequence): Presentation3.Canvas[] {
+function upgradeSequence(
+  sequence: Presentation2.Sequence
+): {
+  canvases: Presentation3.Canvas[];
+  behavior?: string[];
+} {
   /*
     rng = {"id": s.get('@id', self.mint_uri()), "type": "Range"}
     rng['behavior'] = ['sequence']
@@ -548,11 +574,17 @@ function upgradeSequence(sequence: Presentation2.Sequence): Presentation3.Canvas
    */
 
   if (!sequence.canvases || sequence.canvases.length === 0) {
-    return [];
+    return {
+      canvases: [],
+      behavior: [],
+    };
   }
 
   // @todo possibly return some ranges too.
-  return sequence.canvases as any;
+  return {
+    canvases: sequence.canvases as any[],
+    behavior: sequence.viewingHint ? [sequence.viewingHint] : [],
+  };
 }
 
 function upgradeAnnotation(annotation: Presentation2.Annotation): Presentation3.Annotation {

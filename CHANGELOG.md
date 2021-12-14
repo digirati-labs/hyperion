@@ -13,3 +13,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed normalised `.annotations` property type (`Annotation` -> `AnnotationPage`)
+- Fixed missing `behavior` when upgrading Presentation 2 to 3
