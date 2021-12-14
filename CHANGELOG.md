@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added missing IIIF selector extensions to types (https://iiif.io/api/annex/openannotation/)
 - Added new "Meta" section of vault state
+- Added additional traversal of inline annotations on a canvas
 
 ### Fixed
 - Fixed normalised `.annotations` property type (`Annotation` -> `AnnotationPage`)

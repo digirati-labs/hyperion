@@ -210,9 +210,21 @@ export class Traverse {
     return canvas;
   }
 
+  traverseInlineAnnotationPages<T extends Manifest | Canvas>(resource: T): T {
+    resource.annotations = (resource.annotations || []).map(
+      (annotationPage: AnnotationPage): AnnotationPage => {
+        return this.traverseAnnotationPage(annotationPage);
+      }
+    );
+
+    return resource;
+  }
+
   traverseCanvas(canvas: Canvas): Canvas {
     return this.traverseType<Canvas>(
-      this.traversePosterCanvas(this.traverseDescriptive(this.traverseLinking(this.traverseCanvasItems(canvas)))),
+      this.traverseInlineAnnotationPages(
+        this.traversePosterCanvas(this.traverseDescriptive(this.traverseLinking(this.traverseCanvasItems(canvas))))
+      ),
       this.traversals.canvas
     );
   }
