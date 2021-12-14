@@ -85,21 +85,19 @@ describe('utility/iiif-traverse', () => {
 
   it('it can do a hack-job normalize', () => {
     const store: any = {};
-    const traversal = Traverse.all(
-      (resource: any): any => {
-        if (resource.id && resource.type) {
-          store[resource.type] = store[resource.type] ? store[resource.type] : {};
-          store[resource.type][resource.id] = store[resource.type][resource.id]
-            ? {
-                ...store[resource.type][resource.id],
-                ...resource,
-              }
-            : Object.assign({}, resource);
-          return { id: resource.id, type: resource.type };
-        }
-        return resource;
+    const traversal = Traverse.all((resource: any): any => {
+      if (resource.id && resource.type) {
+        store[resource.type] = store[resource.type] ? store[resource.type] : {};
+        store[resource.type][resource.id] = store[resource.type][resource.id]
+          ? {
+              ...store[resource.type][resource.id],
+              ...resource,
+            }
+          : Object.assign({}, resource);
+        return { id: resource.id, type: resource.type };
       }
-    );
+      return resource;
+    });
 
     const result = traversal.traverseManifest(manifest());
 
@@ -156,14 +154,12 @@ describe('utility/iiif-traverse', () => {
 
   test('it can traverse all', () => {
     const ids: string[] = [];
-    const traversal = Traverse.all(
-      (resource: any): any => {
-        if (resource.id) {
-          ids.push(resource.id);
-        }
-        return resource;
+    const traversal = Traverse.all((resource: any): any => {
+      if (resource.id) {
+        ids.push(resource.id);
       }
-    );
+      return resource;
+    });
 
     traversal.traverseManifest(manifest());
 

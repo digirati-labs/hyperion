@@ -211,11 +211,13 @@ export class Traverse {
   }
 
   traverseInlineAnnotationPages<T extends Manifest | Canvas>(resource: T): T {
-    resource.annotations = (resource.annotations || []).map(
-      (annotationPage: AnnotationPage): AnnotationPage => {
-        return this.traverseAnnotationPage(annotationPage);
-      }
-    );
+    if (resource.annotations) {
+      resource.annotations = resource.annotations.map(
+        (annotationPage: AnnotationPage): AnnotationPage => {
+          return this.traverseAnnotationPage(annotationPage);
+        }
+      );
+    }
 
     return resource;
   }
