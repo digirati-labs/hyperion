@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new `useImageTile` hook
 - Added new visible canvas context
 
+### Removed
+- Removed `redux-react-hook` context provider (need to add manually)
+
 ### Fixed
 - Fixed normalised `.annotations` property type (`Annotation` -> `AnnotationPage`)
 - Fixed missing `behavior` when upgrading Presentation 2 to 3
