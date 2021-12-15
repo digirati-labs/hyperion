@@ -22,6 +22,7 @@ export * from './hooks/useExternalCollection';
 export * from './hooks/useExternalManifest';
 // export * from './hooks/useImageMatrix';
 export * from './hooks/useImageService';
+export * from './hooks/useImageTile';
 export * from './hooks/useManifest';
 // export * from './hooks/useMappedState';
 export * from './hooks/usePaintingAnnotations';

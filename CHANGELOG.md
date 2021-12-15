@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new `Vault.setResourceMeta()` API for setting metadata for a resource
 - Added new `Vault.addEventListener()` API for setting event listeners on a resource metadata
 - Added new `Vault.removeEventListener()` API for removing event listeners on a resource metadata
+- Added new `useResources` hook
+- Added new `useImageTile` hook
 
 ### Fixed
 - Fixed normalised `.annotations` property type (`Annotation` -> `AnnotationPage`)
@@ -22,4 +24,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed subscription refreshing when changes are made to vault
 - Fixed unmounting error in `useThumbnail`
 - Improved performance of `useVaultSelector`
-- Added new `useResources` hook
