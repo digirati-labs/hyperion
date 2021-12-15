@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new `Vault.removeEventListener()` API for removing event listeners on a resource metadata
 - Added new `useResources` hook
 - Added new `useImageTile` hook
+- Added new visible canvas context
 
 ### Fixed
 - Fixed normalised `.annotations` property type (`Annotation` -> `AnnotationPage`)
