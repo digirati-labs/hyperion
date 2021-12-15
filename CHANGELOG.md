@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new `useImageTile` hook
 - Added new visible canvas context
 - Added new `ContextBridge` for multiple react reconciler support
+- Added new `useResourceEvents` hook
+- Added new `useEventListener` hook
 
 ### Removed
 - Removed `redux-react-hook` context provider (need to add manually)
