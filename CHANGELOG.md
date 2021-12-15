@@ -21,3 +21,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed missing `behavior` when upgrading Presentation 2 to 3
 - Fixed subscription refreshing when changes are made to vault
 - Fixed unmounting error in `useThumbnail`
+- Improved performance of `useVaultSelector`
