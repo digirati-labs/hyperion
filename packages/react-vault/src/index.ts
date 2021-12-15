@@ -26,6 +26,7 @@ export * from './hooks/useManifest';
 // export * from './hooks/useMappedState';
 export * from './hooks/usePaintingAnnotations';
 export * from './hooks/useRange';
+export * from './hooks/useResources';
 export * from './hooks/useSearchService';
 export * from './hooks/useThumbnail';
 export * from './hooks/useVault';
