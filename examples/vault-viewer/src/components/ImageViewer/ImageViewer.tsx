@@ -30,16 +30,14 @@ export const ImageViewer: FC = () => {
       style={{ flex: '1 1 0px', height: 'calc(100% - 10px)' }}
     >
       <ContextBridge bridge={bridge}>
-        <DualViewer />
+        <MultiImageViewer />
       </ContextBridge>
     </AtlasAuto>
   );
 };
 
-const DualViewer = () => {
+const MultiImageViewer = ({ marginWidth = 40 }: { marginWidth?: number }) => {
   const canvases = useVisibleCanvases();
-
-  const marginWidth = 40;
   let width = 0;
   const canvasComponents = [];
   for (const canvas of canvases) {
