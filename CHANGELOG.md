@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added new `useEventListener` hook
 - Added `SimpleViewerContext`
 - Added better support for annotations and annotation pages
+- Added `useRenderingStrategy` hook
 
 ### Removed
 - Removed `redux-react-hook` context provider (need to add manually)

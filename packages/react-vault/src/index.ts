@@ -12,6 +12,7 @@ export * from './context/VisibleCanvasContext';
 
 // Hook exports
 export * from './hooks/useAnnotation';
+export * from './hooks/useAnnotationPageManager';
 // export * from './hooks/useAnnotationPage';
 export * from './hooks/useAnnotationsAtTime';
 export * from './hooks/useCanvas';
@@ -38,6 +39,7 @@ export * from './hooks/useVault';
 export * from './hooks/useVaultEffect';
 export * from './hooks/useVaultSelector';
 // export * from './hooks/useVirtualCanvas';
+export * from './hooks/useRenderingStrategy';
 
 // Viewer exports.
 export * from './viewers/SimpleViewerContext';
