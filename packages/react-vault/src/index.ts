@@ -7,6 +7,7 @@ export * from './context/ManifestContext';
 export * from './context/RangeContext';
 export * from './context/VaultContext';
 export * from './context/ResourceContext';
+export * from './context/VisibleCanvasContext';
 
 // Hook exports
 export * from './hooks/useAnnotation';
