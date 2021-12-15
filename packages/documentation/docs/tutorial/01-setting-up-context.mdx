@@ -1,0 +1,11 @@
+# Setting up context
+
+In order to use the features provided by the framework, we need to wrap our application in a component called a **provider**.
+This provider will allow any components we write further down in our application can access the same IIIF resources and share some state.
+
+To add the provider we simple wrap our application in `<VaultProvider />`
+
+
+import { SettingUpContext } from '../../src/sandboxes/setting-up-context.csb';
+
+<SettingUpContext />
