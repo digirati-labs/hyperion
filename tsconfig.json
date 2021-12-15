@@ -21,8 +21,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "esModuleInterop": true
-//    "noEmitOnError": true,
+    "esModuleInterop": true,
+    //    "noEmitOnError": true,
 //    "noFallthroughCasesInSwitch": true,
 //    "noImplicitAny": true,
 //    "noImplicitReturns": true,
