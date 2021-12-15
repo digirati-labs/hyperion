@@ -40,5 +40,5 @@ export * from './hooks/useVaultSelector';
 // export * from './hooks/useVirtualCanvas';
 
 // Viewer exports.
-// export * from './viewers/SimpleViewerContext';
+export * from './viewers/SimpleViewerContext';
 // export * from './viewers/SingleCanvasContext';
