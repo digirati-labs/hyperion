@@ -1,6 +1,6 @@
 {
   "name": "@hyperion-framework/presentation-2",
-  "version": "1.1.0",
+  "version": "2.0.0-alpha.0",
   "source": "index.js",
   "typings": "index.d.ts",
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
@@ -15,7 +15,7 @@
     "utility.d.ts"
   ],
   "dependencies": {
-    "@hyperion-framework/types": "^1.1.0"
+    "@hyperion-framework/types": "^2.0.0-alpha.0"
   },
   "devDependencies": {
     "tslib": "^2.0.0"

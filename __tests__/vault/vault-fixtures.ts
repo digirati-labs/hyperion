@@ -76,7 +76,9 @@ describe('vault', () => {
         "@context": "http://iiif.io/api/presentation/3/context.json",
         "accompanyingCanvas": null,
         "annotations": Array [],
-        "behavior": Array [],
+        "behavior": Array [
+          "paged",
+        ],
         "homepage": null,
         "id": "https://view.nls.uk/manifest/1286/9359/128693590/manifest.json",
         "items": Array [

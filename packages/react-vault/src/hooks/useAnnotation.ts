@@ -1,7 +1,9 @@
 import { useResourceContext } from '../context/ResourceContext';
 import { AnnotationNormalized } from '@hyperion-framework/types';
-import { useVault } from './useVault';
 import { useMemo } from 'react';
+import { useVaultSelector } from './useVaultSelector';
+import { expandTarget } from '../utility/expand-target';
+import { useVault } from './useVault';
 
 export function useAnnotation(options?: { id: string }): AnnotationNormalized | undefined;
 export function useAnnotation<T>(
@@ -20,18 +22,34 @@ export function useAnnotation<T = AnnotationNormalized>(
   const vault = useVault();
   const annotationId = id ? id : ctx.annotation;
 
-  const annotation = annotationId ? vault.select(s => s.hyperion.entities.Annotation[annotationId]) : undefined;
+  const annotation = useVaultSelector(s => (annotationId ? s.hyperion.entities.Annotation[annotationId] : undefined), [
+    annotationId,
+  ]);
 
-  return useMemo(
-    () => {
-      if (!annotation) {
-        return undefined;
-      }
-      if (selector) {
-        return selector(annotation);
-      }
-      return annotation;
-    },
-    [annotation, selector, ...deps]
+  const body = useVaultSelector(
+    s =>
+      annotation && annotation.body
+        ? annotation.body
+            .map(singleBody => (singleBody ? s.hyperion.entities[singleBody.type][singleBody.id] : null))
+            .filter(Boolean)
+        : [],
+    [annotation]
   );
+
+  return useMemo(() => {
+    if (!annotation) {
+      return undefined;
+    }
+
+    const newAnnotation: any = {
+      ...annotation,
+      body,
+      target: expandTarget(annotation.target as any, { typeMap: vault.getState().hyperion.mapping }),
+    };
+
+    if (selector) {
+      return selector(newAnnotation);
+    }
+    return newAnnotation;
+  }, [annotation, selector, body, ...deps]);
 }

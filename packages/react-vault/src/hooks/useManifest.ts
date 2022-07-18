@@ -22,16 +22,13 @@ export function useManifest<T = ManifestNormalized>(
 
   const manifest = manifestId ? vault.select(s => s.hyperion.entities.Manifest[manifestId]) : undefined;
 
-  return useMemo(
-    () => {
-      if (!manifest) {
-        return undefined;
-      }
-      if (selector) {
-        return selector(manifest);
-      }
-      return manifest;
-    },
-    [manifest, selector, ...deps]
-  );
+  return useMemo(() => {
+    if (!manifest) {
+      return undefined;
+    }
+    if (selector) {
+      return selector(manifest);
+    }
+    return manifest;
+  }, [manifest, selector, ...deps]);
 }

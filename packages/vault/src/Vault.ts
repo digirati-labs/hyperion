@@ -1,6 +1,13 @@
 /// <reference types="geojson" />
 
-import { AllActions, createFetchHelper, createStore, entityActions, ReduxStore } from '@hyperion-framework/store';
+import {
+  AllActions,
+  createFetchHelper,
+  createStore,
+  entityActions,
+  metaActions,
+  ReduxStore,
+} from '@hyperion-framework/store';
 import {
   AnnotationNormalized,
   AnnotationPageNormalized,
@@ -13,6 +20,7 @@ import {
   ManifestNormalized,
   NormalizedEntity,
   Reference,
+  RequestState,
   TraversableEntityTypes,
 } from '@hyperion-framework/types';
 import {
@@ -31,6 +39,8 @@ import {
   UnknownSizeImage,
   VariableSizeImage,
 } from '@atlas-viewer/iiif-image-api';
+import { areInputsEqual } from './are-inputs-equal';
+import { Meta } from './meta';
 
 export type VaultOptions = {
   reducers: {};
@@ -287,18 +297,118 @@ export class Vault {
     return this.remoteFetcher(resource) as Promise<T | undefined>;
   }
 
+  areInputsEqual(newInputs: readonly unknown[] | unknown, lastInputs: readonly unknown[] | unknown) {
+    return areInputsEqual(newInputs, lastInputs);
+  }
+
   subscribe<T>(
     selector: (state: HyperionStore) => T,
-    subscription: (state: T | null, vault: Vault) => void
+    subscription: (state: T, vault: Vault) => void,
+    skipInitial = false
   ): () => void {
-    let lastState: T | null;
+    let lastState: T | null = skipInitial ? null : selector(this.store.getState());
+    if (!skipInitial) {
+      subscription(lastState as any, this);
+    }
     return this.store.subscribe(() => {
       const state = this.store.getState();
       const selectedState = selector(state);
-      if (lastState !== selectedState) {
+      if (!areInputsEqual(lastState, selectedState)) {
         subscription(selectedState, this);
       }
       lastState = selectedState;
     });
+  }
+
+  requestStatus(id: string): RequestState[any] | undefined {
+    return this.select<RequestState[any]>(state => {
+      return state.hyperion.requests[id];
+    });
+  }
+
+  getResourceMeta<T extends Meta = Meta>(resource: string): Partial<T> | undefined;
+  getResourceMeta<T extends Meta = Meta, Key extends keyof T = keyof T>(
+    resource: string,
+    metaKey: Key
+  ): T[Key] | undefined;
+  getResourceMeta<T extends Meta = Meta, Key extends keyof T = keyof T>(
+    resource: string,
+    metaKey?: Key
+  ): Partial<T> | T[Key] | undefined {
+    const resourceMeta = this.getState().hyperion.meta[resource as any] as any;
+
+    if (!resourceMeta) {
+      return undefined;
+    }
+
+    if (!metaKey) {
+      return resourceMeta as Partial<T>;
+    }
+
+    return resourceMeta[metaKey] as T[Key];
+  }
+
+  setMetaValue<Value = any>(
+    [id, meta, key]: [string, string, string],
+    newValueOrUpdate: Value | ((oldValue: Value | undefined) => Value)
+  ) {
+    this.getStore().dispatch(
+      typeof newValueOrUpdate === 'function'
+        ? metaActions.setMetaValueDynamic({
+            id,
+            meta: meta as any,
+            key,
+            updateValue: newValueOrUpdate as any,
+          })
+        : metaActions.setMetaValue({
+            id,
+            meta: meta as any,
+            key,
+            value: newValueOrUpdate,
+          })
+    );
+  }
+
+  addEventListener<T>(
+    resource: Reference<TraversableEntityTypes>,
+    event: string,
+    listener: (e: any, resource: T) => void,
+    scope?: string[]
+  ) {
+    if (!resource) {
+      return;
+    }
+
+    this.setMetaValue<Array<{ callback: Function; scope?: string[] }>>(
+      [resource.id, 'eventManager', event],
+      registeredCallbacks => {
+        const callbacks = registeredCallbacks || [];
+        for (const registered of callbacks) {
+          if (registered.callback === listener) {
+            // @todo check for scopes matching, very edge-case as scopes should be fixed.
+            return callbacks;
+          }
+        }
+        return [...callbacks, { callback: listener, scope }];
+      }
+    );
+
+    return listener;
+  }
+
+  removeEventListener<T>(
+    resource: Reference<TraversableEntityTypes>,
+    event: string,
+    listener: (e: any, resource: T) => void
+  ) {
+    if (!resource) {
+      return;
+    }
+    this.setMetaValue<Array<{ callback: Function; scope?: string[] }>>(
+      [resource.id, 'eventManager', event],
+      registeredCallbacks => {
+        return (registeredCallbacks || []).filter(registeredCallback => registeredCallback.callback !== listener);
+      }
+    );
   }
 }

@@ -16,7 +16,7 @@ export type ResourceContextType = {
   annotation?: string;
 };
 
-const ResourceReactContext = React.createContext<ResourceContextType>(defaultResourceContext);
+export const ResourceReactContext = React.createContext<ResourceContextType>(defaultResourceContext);
 
 export const useResourceContext = () => {
   return useContext(ResourceReactContext);
@@ -24,15 +24,12 @@ export const useResourceContext = () => {
 
 export const ResourceProvider: React.FC<{ value: ResourceContextType }> = ({ value, children }) => {
   const parentContext = useResourceContext();
-  const newContext = useMemo(
-    () => {
-      return {
-        ...parentContext,
-        ...value,
-      };
-    },
-    [value, parentContext]
-  );
+  const newContext = useMemo(() => {
+    return {
+      ...parentContext,
+      ...value,
+    };
+  }, [value, parentContext]);
 
   return <ResourceReactContext.Provider value={newContext}>{children}</ResourceReactContext.Provider>;
 };

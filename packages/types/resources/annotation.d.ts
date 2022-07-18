@@ -162,10 +162,10 @@ export declare type DataPositionSelector = RefinedBy & {
   end: number;
 };
 export declare type SvgSelector =
-  | RefinedBy & {
+  | (RefinedBy & {
       type: 'SvgSelector';
       value: string;
-    }
+    })
   | {
       type: 'SvgSelector';
       id: string;
@@ -177,6 +177,93 @@ export declare type RangeSelector<T> = {
   endSelector: T;
 };
 
+// IIIF Extensions
+
+/**
+ * The Image API Selector is used to describe the operations available via the Image API in order to retrieve a
+ * particular image representation. In this case the resource is the abstract image as identified by the IIIF Image
+ * API base URI plus identifier, and the retrieval process involves adding the correct parameters after that base URI.
+ * For example, the top left hand quadrant of an image has the region parameter of pct:0,0,50,50 which must be put into
+ * the requested URI to obtain the appropriate representation.
+ *
+ * In order to make this as easy as possible for the situations when a IIIF Image API endpoint exists, we introduce a
+ * new Selector class called ImageApiSelector. It has properties that give the parameter values needed to fill out the
+ * URL structure in the request. If the property is not given, then a default should be used.
+ *
+ * One use of this is within the IIIF Presentation API, when a Canvas is being painted by part of an image, or an image
+ * that requires rotation before display.
+ */
+type ImageApiSelector = {
+  type: 'ImageApiSelector';
+  /**
+   * The string to put in the region parameter of the URI.
+   * Default: "full"
+   */
+  region?: string;
+
+  /**
+   * The string to put in the size parameter of the URI.
+   * Default: "full"
+   */
+  size?: string;
+
+  /**
+   * The string to put in the rotation parameter of the URI. Note that this must be a string in order to allow
+   * mirroring, for example “!90”.
+   * Default: "0"
+   */
+  rotation?: string;
+
+  /**
+   * The string to put in the quality parameter of the URI.
+   * Default: "default"
+   */
+  quality?: string;
+
+  /**
+   * The string to put in the format parameter of the URI. Note that the ‘.’ character is not part of the format,
+   * just the URI syntax.
+   * Default: "jpg"
+   */
+  format?: string;
+};
+
+/**
+ * There are common use cases in which a point, rather than a range or area, is the target of the Annotation. For
+ * example, putting a pin in a map should result in an exact point, not a very small rectangle. Points in time are not
+ * very short durations, and user interfaces should also treat these differently. This is particularly important when
+ * zooming in (either spatially or temporally) beyond the scale of the frame of reference. Even if the point takes up a
+ * 10 by 10 pixel square at the user’s current resolution, it is not a rectangle bounding an area.
+ *
+ * It is not possible to select a point using URI Fragments with the Media Fragment specification, as zero-sized
+ * fragments are not allowed. In order to fulfill the use cases, this specification defines a new Selector class
+ * called PointSelector.
+ */
+export type PointSelector = {
+  type: 'PointSelector';
+  /**
+   * Optional. An integer giving the x coordinate of the point, relative to the dimensions of the target resource.
+   */
+  x?: number;
+  /**
+   * Optional. An integer giving the y coordinate of the point, relative to the dimensions of the target resource.
+   */
+  y?: number;
+  /**
+   * Optional. A floating point number giving the time of the point in seconds, relative to the duration of the target
+   * resource.
+   */
+  t?: number;
+};
+
+export type AudioContentSelector = {
+  type: 'AudioContentSelector';
+};
+
+export type VisualContentSelector = {
+  type: 'VisualContentSelector';
+};
+
 export declare type Selector =
   | string
   | FragmentSelector
@@ -186,13 +273,18 @@ export declare type Selector =
   | TextPositionSelector
   | DataPositionSelector
   | SvgSelector
+  | ImageApiSelector
+  | PointSelector
+  | AudioContentSelector
+  | VisualContentSelector
   | RangeSelector<FragmentSelector>
   | RangeSelector<CssSelector>
   | RangeSelector<XPathSelector>
   | RangeSelector<TextQuoteSelector>
   | RangeSelector<TextPositionSelector>
   | RangeSelector<DataPositionSelector>
-  | RangeSelector<SvgSelector>;
+  | RangeSelector<SvgSelector>
+  | RangeSelector<PointSelector>;
 
 export declare type State = BasicState | TimeState | RequestHeaderState;
 
@@ -213,17 +305,17 @@ export declare type RefinedByState = {
 };
 
 export declare type TimeState =
-  | RefinedByState & {
+  | (RefinedByState & {
       type: 'TimeState';
       sourceDate: string | string[];
       cached?: string | string[];
-    }
-  | RefinedByState & {
+    })
+  | (RefinedByState & {
       type: 'TimeState';
       sourceDateStart: string;
       sourceDateEnd: string;
       cached?: string | string[];
-    };
+    });
 
 export declare type RequestHeaderState = RefinedByState & {
   type: 'HttpRequestState';

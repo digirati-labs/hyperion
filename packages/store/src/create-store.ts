@@ -2,9 +2,15 @@ import { createStore as createReduxStore, applyMiddleware, combineReducers, comp
 import { mappingReducer } from './reducers/mapping';
 import { entityReducer } from './reducers/entities';
 import { requestReducer } from './reducers/request';
+import { metaReducer } from './reducers/meta';
 import { ReduxStore } from './types';
 
-export const reducers = combineReducers({ mapping: mappingReducer, entities: entityReducer, requests: requestReducer });
+export const reducers = combineReducers({
+  mapping: mappingReducer,
+  entities: entityReducer,
+  requests: requestReducer,
+  meta: metaReducer,
+});
 
 const composeEnhancers =
   typeof window !== 'undefined' ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;

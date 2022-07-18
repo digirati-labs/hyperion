@@ -12,7 +12,7 @@
 //    "forceConsistentCasingInFileNames": true,
 //    "importHelpers": true, // importing helper functions from tslib
 //    "noEmitHelpers": true, // disable emitting inline helper functions
-//    "jsx": "react",
+    "jsx": "react",
     "lib": [
       "dom",
       "esnext"
@@ -21,8 +21,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "esModuleInterop": true
-//    "noEmitOnError": true,
+    "esModuleInterop": true,
+    //    "noEmitOnError": true,
 //    "noFallthroughCasesInSwitch": true,
 //    "noImplicitAny": true,
 //    "noImplicitReturns": true,

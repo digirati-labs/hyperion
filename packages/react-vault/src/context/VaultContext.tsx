@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { StoreContext } from 'redux-react-hook';
 import { Vault, VaultOptions } from '@hyperion-framework/vault';
 import { ResourceContextType, ResourceProvider } from './ResourceContext';
 
@@ -30,9 +29,7 @@ export const VaultProvider: React.FC<{
 
   return (
     <ReactVaultContext.Provider value={{ vault: vaultInstance, setVaultInstance }}>
-      <StoreContext.Provider value={vaultInstance.getStore()}>
-        <ResourceProvider value={resources || {}}>{children}</ResourceProvider>
-      </StoreContext.Provider>
+      <ResourceProvider value={resources || {}}>{children}</ResourceProvider>
     </ReactVaultContext.Provider>
   );
 };

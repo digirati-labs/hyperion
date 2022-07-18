@@ -1,16 +1,16 @@
 import { useVault } from './useVault';
 import { HyperionStore } from '@hyperion-framework/types';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useVaultSelector<T>(selector: (state: HyperionStore) => T, deps: any[] = []) {
   const vault = useVault();
+  const [selectedState, setSelectedState] = useState<T>(() => selector(vault.getState()));
 
-  const item = vault.select(selector);
+  useEffect(() => {
+    return vault.subscribe(selector, state => {
+      setSelectedState(state);
+    });
+  }, deps);
 
-  return useMemo(
-    () => {
-      return item;
-    },
-    deps ? deps : Array.isArray(item) ? item : [item]
-  );
+  return selectedState as T;
 }

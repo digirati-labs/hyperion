@@ -13,8 +13,8 @@ export function globalVault(options?: VaultOptions) {
   try {
     let gv: Vault | null = globalThis
       ? (globalThis as any).__hyperionVault__
-      : typeof window !== 'undefined' && window.__hyperionVault__
-      ? window.__hyperionVault__
+      : typeof window !== 'undefined' && (window as any).__hyperionVault__
+      ? (window as any).__hyperionVault__
       : null;
 
     try {
@@ -53,7 +53,7 @@ export function globalVault(options?: VaultOptions) {
   }
 
   if (typeof window !== 'undefined') {
-    window.__hyperionVault__ = newVault;
+    (window as any).__hyperionVault__ = newVault;
   }
 
   return newVault;

@@ -22,16 +22,13 @@ export function useCanvas<T = CanvasNormalized>(
 
   const canvas = canvasId ? vault.select(s => s.hyperion.entities.Canvas[canvasId]) : undefined;
 
-  return useMemo(
-    () => {
-      if (!canvas) {
-        return undefined;
-      }
-      if (selector) {
-        return selector(canvas);
-      }
-      return canvas;
-    },
-    [canvas, selector, ...deps]
-  );
+  return useMemo(() => {
+    if (!canvas) {
+      return undefined;
+    }
+    if (selector) {
+      return selector(canvas);
+    }
+    return canvas;
+  }, [canvas, selector, ...deps]);
 }
